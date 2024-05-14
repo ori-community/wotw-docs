@@ -1,4 +1,5 @@
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import seedLanguage from "./grammars/seed";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -30,5 +31,6 @@ export default defineNuxtConfig({
         "remark-orimoji": {},
       },
     },
+    highlight: { langs: [seedLanguage], theme: "dark-plus" },
   },
 });

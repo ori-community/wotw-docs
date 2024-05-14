@@ -1,0 +1,10 @@
+{
+  "name": "remark-orimoji",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "mdast-util-find-and-replace": "^3.0.1"
+  }
+}

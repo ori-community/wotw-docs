@@ -1,0 +1,8 @@
+.v-list-item__overlay {
+  background-color: rgb(var(--v-theme-primary)) !important;
+}
+
+.backdrop {
+  background-color: rgba(var(--v-theme-background), 0.75) !important;
+  backdrop-filter: blur(8px);
+}

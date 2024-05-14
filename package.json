@@ -1,0 +1,22 @@
+{
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview"
+  },
+  "dependencies": {
+    "@fontsource/nunito-sans": "^5.0.13",
+    "@mdi/font": "^7.4.47",
+    "@nuxt/content": "^2.12.1",
+    "nuxt": "^3.11.2",
+    "remark-orimoji": "file:./remark/orimoji"
+  },
+  "devDependencies": {
+    "sass": "^1.77.1",
+    "vite-plugin-vuetify": "^2.0.3",
+    "vuetify": "^3.6.5"
+  }
+}

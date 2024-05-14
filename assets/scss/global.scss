@@ -1,0 +1,89 @@
+@use "@fontsource/nunito-sans/index.css";
+
+html {
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 1.1em;
+  line-height: 1.375em;
+  scroll-behavior: smooth;
+}
+
+article {
+  max-width: 1000px;
+  margin: auto;
+  hyphens: auto;
+  text-align: justify;
+
+  h2 {
+    border-bottom: thin solid
+      rgba(var(--v-border-color), var(--v-border-opacity));
+  }
+
+  :is(h2, h3, h4) a {
+    text-decoration: none;
+    color: inherit;
+  }
+  :is(h2, h3, h4) a:hover {
+    color: inherit;
+  }
+
+  a {
+    transition: color 200ms;
+    color: rgb(var(--v-theme-primary));
+  }
+  a:hover {
+    transition: color 50ms;
+    color: rgb(var(--v-theme-primary-darken-1));
+  }
+
+  img:not(.emoji) {
+    max-width: 100%;
+  }
+
+  ul {
+    margin-left: 1em;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  line-height: 1.4em;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-weight: 500;
+}
+
+p,
+pre {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+}
+
+.emoji {
+  height: 1.375em;
+  vertical-align: bottom;
+}
+
+pre {
+  white-space: pre-wrap;
+  hyphens: manual;
+}
+
+pre,
+code:not(pre code) {
+  background-color: rgb(var(--v-theme-code));
+  color: rgb(var(--v-theme-on-code));
+  border-radius: 4px;
+  line-height: 1.8;
+  font-size: 0.9em;
+  font-weight: normal;
+  padding: 0.2em 0.4em;
+}
+
+blockquote {
+  margin-left: 1em;
+  padding-left: 0.5em;
+  border-left: 5px solid rgba(var(--v-border-color), var(--v-border-opacity));
+}

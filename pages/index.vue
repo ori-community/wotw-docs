@@ -1,7 +1,7 @@
 <script setup lang="ts">
-await navigateTo("/docs/snippets", {
-  replace: true,
-});
+  await navigateTo('/docs/snippets', {
+    replace: true,
+  })
 </script>
 
 <template />

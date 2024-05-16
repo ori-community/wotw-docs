@@ -1,18 +1,18 @@
-import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
-import seedLanguage from "./grammars/seed";
+import vuetify, { transformAssetUrls } from 'vite-plugin-vuetify'
+import seedLanguage from './grammars/seed'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   build: {
-    transpile: ["vuetify"],
+    transpile: ['vuetify'],
   },
   modules: [
-    "@nuxt/content",
+    '@nuxt/content',
     (_options, nuxt) => {
-      nuxt.hooks.hook("vite:extendConfig", (config) => {
+      nuxt.hooks.hook('vite:extendConfig', (config) => {
         // @ts-expect-error
-        config.plugins.push(vuetify({ autoImport: true }));
-      });
+        config.plugins.push(vuetify({ autoImport: true }))
+      })
     },
   ],
   vite: {
@@ -28,9 +28,9 @@ export default defineNuxtConfig({
         searchDepth: 1,
       },
       remarkPlugins: {
-        "remark-orimoji": {},
+        'remark-orimoji': {},
       },
     },
-    highlight: { langs: [seedLanguage], theme: "dark-plus" },
+    highlight: { langs: [seedLanguage], theme: 'dark-plus' },
   },
-});
+})

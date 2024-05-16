@@ -1,27 +1,27 @@
-import { findAndReplace } from "mdast-util-find-and-replace";
+import { findAndReplace } from 'mdast-util-find-and-replace'
 
-const RE_EMOJI = /:\w+:/g;
+const RE_EMOJI = /:\w+:/g
 
 export default function plugin() {
   function replaceEmoji(match) {
-    const name = match.slice(1, -1);
+    const name = match.slice(1, -1)
     // https://github.com/syntax-tree/mdast#nodes
     return {
-      type: "image",
+      type: 'image',
       url: `/emoji/${name}.png`,
       title: name,
       alt: match,
       data: {
         hProperties: {
-          class: "emoji",
+          class: 'emoji',
         },
       },
-    };
+    }
   }
 
   function transformer(tree) {
-    findAndReplace(tree, [[RE_EMOJI, replaceEmoji]]);
+    findAndReplace(tree, [[RE_EMOJI, replaceEmoji]])
   }
 
-  return transformer;
+  return transformer
 }

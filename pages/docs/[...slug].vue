@@ -1,8 +1,8 @@
 <script setup lang="ts">
-const page = useCurrentContent();
-const toc = page.value?.body?.toc;
+  const page = useCurrentContent()
+  const toc = page.value?.body?.toc
 
-const showNavigation = ref(true);
+  const showNavigation = ref(true)
 </script>
 
 <template>
@@ -11,10 +11,7 @@ const showNavigation = ref(true);
       <v-icon icon="mdi-file-document" class="ms-4" />
     </template>
     <template #append>
-      <v-btn
-        icon="mdi-table-of-contents"
-        @click="showNavigation = !showNavigation"
-      />
+      <v-btn icon="mdi-table-of-contents" @click="showNavigation = !showNavigation" />
     </template>
   </v-app-bar>
   <v-navigation-drawer v-model="showNavigation" location="end" width="380">
@@ -32,8 +29,8 @@ const showNavigation = ref(true);
 </template>
 
 <style>
-:target,
-:is(h2, h3, h4)[id] {
-  scroll-margin-top: var(--v-layout-top);
-}
+  :target,
+  :is(h2, h3, h4)[id] {
+    scroll-margin-top: var(--v-layout-top);
+  }
 </style>

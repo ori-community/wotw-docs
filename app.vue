@@ -33,14 +33,14 @@ useHead({
   padding: 5vw 0 33vw 0;
 }
 .ceiling {
-  background-image: url("/ceiling.png");
+  background-image: url("@/assets/images/ceiling.png");
   background-position: 0 -12vw;
   top: 0;
   height: 21vw;
   transform: scaleX(-1);
 }
 .floor {
-  background-image: url("/floor.png");
+  background-image: url("@/assets/images/floor.png");
   background-position: 0 8vw;
   bottom: 0;
   height: 60vw;

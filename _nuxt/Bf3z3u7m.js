@@ -1,1 +1,0 @@
-import{ad as a,aE as n,aF as s}from"./CgJrJMKs.js";const c=a({__name:"index",async setup(r){let e,t;return[e,t]=n(()=>s("/docs/snippets",{replace:!0})),await e,t(),(_,o)=>null}});export{c as default};

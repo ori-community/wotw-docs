@@ -6,6 +6,11 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  nitro: {
+    prerender: {
+      routes: ['/docs/seedlang'],
+    },
+  },
   modules: [
     '@nuxt/content',
     (_options, nuxt) => {

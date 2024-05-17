@@ -176,7 +176,7 @@ on MarshSpawn.RockHC item_message_with_timeout("The emptyness haunts you...", 60
 
 ##### Notes
 
-See [Standard Functions](standard-functions) and [Function Definitions](#function-definitions) for more details.
+See [Standard Functions](#standard-functions) and [Function Definitions](#function-definitions) for more details.
 
 ## Standard Functions
 

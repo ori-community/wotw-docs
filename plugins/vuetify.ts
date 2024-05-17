@@ -35,7 +35,6 @@ export default defineNuxtPlugin((app) => {
       VAppBar: {
         flat: true,
         class: 'backdrop border-b',
-        density: 'compact',
       },
       VNavigationDrawer: {
         class: 'backdrop',

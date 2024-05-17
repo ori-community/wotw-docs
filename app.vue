@@ -47,6 +47,5 @@
     background-position: 0 8vw;
     bottom: 0;
     height: 60vw;
-    z-index: 1005;
   }
 </style>

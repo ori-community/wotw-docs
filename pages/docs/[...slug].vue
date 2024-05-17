@@ -8,13 +8,10 @@
 <template>
   <v-app-bar :title="page?.title">
     <template #prepend>
-      <v-icon icon="mdi-file-document" class="ms-4" />
-    </template>
-    <template #append>
       <v-btn icon="mdi-table-of-contents" @click="showNavigation = !showNavigation" />
     </template>
   </v-app-bar>
-  <v-navigation-drawer v-model="showNavigation" location="end" width="380">
+  <v-navigation-drawer v-model="showNavigation" permanent :width="280">
     <TableOfContents :toc="toc" />
   </v-navigation-drawer>
   <v-main>

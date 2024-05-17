@@ -1,8 +1,17 @@
-.v-list-item__overlay {
-  background-color: rgb(var(--v-theme-primary)) !important;
+.v-app-bar {
+  border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity)) !important;
 }
 
-.backdrop {
+.v-app-bar,
+.v-navigation-drawer {
   background-color: rgba(var(--v-theme-background), 0.75) !important;
   backdrop-filter: blur(8px);
+}
+
+.v-list {
+  background: inherit !important;
+}
+
+.v-list-item__overlay {
+  background-color: rgb(var(--v-theme-primary)) !important;
 }

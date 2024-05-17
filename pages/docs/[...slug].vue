@@ -1,4 +1,6 @@
 <script setup lang="ts">
+  import { mdiTableOfContents } from '@mdi/js'
+
   const page = useCurrentContent()
   const toc = page.value?.body?.toc
 
@@ -8,7 +10,7 @@
 <template>
   <v-app-bar :title="page?.title">
     <template #prepend>
-      <v-btn icon="mdi-table-of-contents" @click="showNavigation = !showNavigation" />
+      <v-btn :icon="mdiTableOfContents" @click="showNavigation = !showNavigation" />
     </template>
   </v-app-bar>
   <v-navigation-drawer v-model="showNavigation" permanent :width="280">

@@ -1,11 +1,17 @@
-import '@mdi/font/css/materialdesignicons.css'
-
-import 'vuetify/styles'
+import '@/styles/main.scss'
 import { createVuetify } from 'vuetify'
+import { aliases, mdi } from 'vuetify/iconsets/mdi-svg'
 
 export default defineNuxtPlugin((app) => {
   const vuetify = createVuetify({
     ssr: true,
+    icons: {
+      defaultSet: 'mdi',
+      aliases,
+      sets: {
+        mdi,
+      },
+    },
     theme: {
       defaultTheme: 'wotw',
       themes: {
@@ -34,10 +40,6 @@ export default defineNuxtPlugin((app) => {
       },
       VAppBar: {
         flat: true,
-        class: 'backdrop border-b',
-      },
-      VNavigationDrawer: {
-        class: 'backdrop',
       },
       VList: {
         density: 'compact',

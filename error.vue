@@ -13,7 +13,7 @@
 
 <template>
   <v-app>
-    <v-container class="fill-height flex-column justify-center text-center">
+    <v-container>
       <span>
         <v-img src="/emoji/orishy.png" alt="oriShy" :width="112" :height="112" />
       </span>
@@ -27,3 +27,14 @@
     </v-container>
   </v-app>
 </template>
+
+<style scoped>
+  .v-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+</style>

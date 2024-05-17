@@ -49,20 +49,24 @@
 </script>
 
 <template>
-  <v-list class="pt-0">
+  <v-list>
     <v-list-item subtitle="Contents" />
     <v-divider />
     <template v-if="props.toc" v-for="h2 in props.toc.links" :key="h2.id">
       <v-list-item density="compact" :to="`#${h2.id}`" :title="h2.text" :active="activeLink === h2.id" />
       <template v-for="h3 in h2.children" :key="h3.id">
-        <v-list-item :to="`#${h3.id}`" :subtitle="h3.text" :active="activeLink === h3.id" class="ps-8 tiny" />
+        <v-list-item :to="`#${h3.id}`" :subtitle="h3.text" :active="activeLink === h3.id" class="nested" />
       </template>
     </template>
   </v-list>
 </template>
 
-<style>
-  .tiny {
+<style scoped>
+  .v-list {
+    padding-top: 0;
+  }
+  .nested {
+    padding-inline-start: 32px !important;
     min-height: 32px !important;
   }
 </style>

@@ -6,9 +6,25 @@ Welcome :orihi:
 
 ## File Format
 
-Ori 2 Rando seeds are written as .wotws files. You can use them to write [snippets](https://wiki.orirando.com/seedgen/headers) that modify random seed generation, or to write a [plandomizer](https://wiki.orirando.com/plando), allowing you to place all the pickups manually to craft your own seed.
+The Seed Language is used for [snippets](https://wiki.orirando.com/seedgen/headers) and [plandomizers](https://wiki.orirando.com/plando). Both are written in .wotws files.
+
+Snippets only define a part of a seed. Any amount of them can be used during seed generation and locations not assigned anything by snippets will be randomly filled.
+
+Plandomizers define the entire seed. They have to be compiled by the seed generator, but it won't add any random placements.
 
 The randomizer ships with a set of [official snippets](https://github.com/SiriusAshling/wotw-seedgen/tree/new_seed_format/assets/snippets). This is how for instance goal modes and hints are implemented. You can use them as a baseline if you want to write similar snippets.
+
+### Editor support
+
+We're working on a [language server](https://github.com/ori-community/wotw-seed-lsp) that will provide useful features when writing the language. It's planned to release with VSCode support but should be reasonable to integrate into other editors that support language servers.
+
+### Using custom snippets
+
+Initially custom snippets will probably work like custom headers do now: In the launcher you have to paste them into a text field, in local seedgen you can use them with the same level of support as official snippets.
+
+### Compiling plandomizers
+
+A compiler will be integrated into the local seedgen. This is already implemented in a [seedgen fork](https://github.com/SiriusAshling/wotw-seedgen/tree/new_seed_format)
 
 ## UberStates
 
@@ -24,16 +40,16 @@ All pickup locations have aliases which you can find in [loc_data.csv](https://g
 
 ## Triggers
 
-#### Syntax
-
 `on <trigger> <action>`
 
-#### Example
+##### Example
 
 ```seed
 // When collecting the item right of spawn, the player will get 50 Spirit Light.
 on MarshSpawn.FirstEX spirit_light(50)
 ```
+
+##### Notes
 
 There are three different types of triggers:
 
@@ -43,16 +59,16 @@ There are three different types of triggers:
 
 ### Client Events
 
-#### Syntax
-
 `on <client_event> <action>`
 
-#### Example
+##### Example
 
 ```seed
 // This is what the Spawn With Sword snippet does.
 on spawn skill(Skill::Sword)
 ```
+
+##### Notes
 
 Client Events are special triggers for specific tasks. These are all of them:
 
@@ -78,11 +94,9 @@ Client Events are special triggers for specific tasks. These are all of them:
 
 ### UberState Bindings
 
-#### Syntax
-
 `on change <uber_state> <action>`
 
-#### Example
+##### Example
 
 ```seed
 // Whenever the player gains or loses gorlek ore they will see a message with their current amount.
@@ -91,11 +105,9 @@ on change player.gorlekOre item_message("I love ore and now I have " + player.go
 
 ### Conditions
 
-#### Syntax
-
 `on <condition> <action>`
 
-#### Example
+##### Examples
 
 ```seed
 // When collecting the item right of spawn, the player will get a gorlek ore.
@@ -106,6 +118,8 @@ on MarshSpawn.FirstEX gorlek_ore()
 // Once the player surpasses 4000 spirit light, they will see a message.
 on player.spiritLight > 4000 item_message("You're rich!")
 ```
+
+##### Notes
 
 Conditions trigger when their value changes from `false` to `true`.
 
@@ -118,16 +132,14 @@ Actions are instructions for the randomizer, such as giving items, showing messa
 There are three different types of actions:
 
 - [Multis](#multis)
-- [Conditionals](#conditionals)
-- [Function Calls](#function_calls)
+- [Ifs](#ifs)
+- [Function Calls](#function-calls)
 
 ### Multis
 
-#### Syntax
-
 `{ <action>... }`
 
-#### Example
+##### Example
 
 ```seed
 on MarshSpawn.RockHC {
@@ -136,13 +148,11 @@ on MarshSpawn.RockHC {
 }
 ```
 
-### Conditionals
-
-#### Syntax
+### Ifs
 
 `if <condition> <action>`
 
-#### Example
+##### Example
 
 ```seed
 // This will show a message everytime the player gains or loses spirit light and has more than 4000 afterwards.
@@ -154,239 +164,23 @@ on change player.spiritLight {
 
 ### Function calls
 
-#### Syntax
-
 `<function_name>(<args>...)`
 
-#### Example
+##### Example
 
 ```seed
-// This function is called "item_messsage_with_timeout" and has two arguments:
+// This function is called "item_message_with_timeout" and has two arguments:
 // The message and the timeout until it disappears in seconds.
-on MarshSpawn.RockHC item_messsage_with_timeout("The emptyness haunts you...", 60)
+on MarshSpawn.RockHC item_message_with_timeout("The emptyness haunts you...", 60)
 ```
 
-See [Function Definitions](#function-definitions) and [Functions](#functions) for more details.
+##### Notes
 
-## Function Definitions
+See [Standard Functions](standard-functions) and [Function Definitions](#function-definitions) for more details.
 
-#### Syntax
+## Standard Functions
 
-`fun <function_name>() { <action>... }`
-
-#### Example
-
-```seed
-// This defines a custom function called "exciting_gorlek_ore" which displays a message and gives a gorlek ore
-fun exciting_gorlek_ore() {
-    item_message("It's finally here! Fresh out of the mines!")
-    gorlek_ore()
-}
-// Now you can reuse the function to avoid repetition
-on MarshSpawn.FirstPickupEX exciting_gorlek_ore()
-on MarshSpawn.RockHC exciting_gorlek_ore()
-```
-
-## Reference
-
-### Functions
-
-#### fetch
-
-```seed
-fetch(uber_identifier: UberIdentifier) -> Boolean
-fetch(uber_identifier: UberIdentifier) -> Integer
-fetch(uber_identifier: UberIdentifier) -> Float
-```
-
-#### is_in_hitbox
-
-```seed
-is_in_hitbox(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
-```
-
-#### get_boolean
-
-```seed
-get_boolean(id: String) -> Boolean
-```
-
-#### get_integer
-
-```seed
-get_integer(id: String) -> Integer
-```
-
-#### to_integer
-
-```seed
-to_integer(float: Float) -> Integer
-```
-
-#### get_float
-
-```seed
-get_float(id: String) -> Float
-```
-
-#### to_float
-
-```seed
-to_float(integer: Integer) -> Float
-```
-
-#### get_string
-
-```seed
-get_string(id: String) -> String
-```
-
-#### to_string
-
-```seed
-to_string(boolean: Boolean) -> String
-to_string(integer: Integer) -> String
-to_string(float: Float) -> String
-to_string(string: String) -> String
-```
-
-#### spirit_light_string
-
-```seed
-spirit_light_string(amount: Integer) -> String
-```
-
-#### remove_spirit_light_string
-
-```seed
-remove_spirit_light_string(amount: Integer) -> String
-```
-
-#### gorlek_ore_string
-
-```seed
-gorlek_ore_string() -> String
-```
-
-#### remove_gorlek_ore_string
-
-```seed
-remove_gorlek_ore_string() -> String
-```
-
-#### keystone_string
-
-```seed
-keystone_string() -> String
-```
-
-#### remove_keystone_string
-
-```seed
-remove_keystone_string() -> String
-```
-
-#### shard_slot_string
-
-```seed
-shard_slot_string() -> String
-```
-
-#### remove_shard_slot_string
-
-```seed
-remove_shard_slot_string() -> String
-```
-
-#### health_fragment_string
-
-```seed
-health_fragment_string() -> String
-```
-
-#### remove_health_fragment_string
-
-```seed
-remove_health_fragment_string() -> String
-```
-
-#### energy_fragment_string
-
-```seed
-energy_fragment_string() -> String
-```
-
-#### remove_energy_fragment_string
-
-```seed
-remove_energy_fragment_string() -> String
-```
-
-#### skill_string
-
-```seed
-skill_string(skill: Skill) -> String
-```
-
-#### remove_skill_string
-
-```seed
-remove_skill_string(skill: Skill) -> String
-```
-
-#### shard_string
-
-```seed
-shard_string(shard: Shard) -> String
-```
-
-#### remove_shard_string
-
-```seed
-remove_shard_string(shard: Shard) -> String
-```
-
-#### teleporter_string
-
-```seed
-teleporter_string(teleporter: Teleporter) -> String
-```
-
-#### remove_teleporter_string
-
-```seed
-remove_teleporter_string(teleporter: Teleporter) -> String
-```
-
-#### clean_water_string
-
-```seed
-clean_water_string() -> String
-```
-
-#### remove_clean_water_string
-
-```seed
-remove_clean_water_string() -> String
-```
-
-#### weapon_upgrade_string
-
-```seed
-weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
-```
-
-#### remove_weapon_upgrade_string
-
-```seed
-remove_weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
-```
-
-#### current_zone
-
-```seed
-current_zone() -> Zone
-```
+### Common Items
 
 #### spirit_light
 
@@ -394,10 +188,15 @@ current_zone() -> Zone
 spirit_light(amount: Integer)
 ```
 
-#### remove_spirit_light
+##### Example
 
 ```seed
-remove_spirit_light(amount: Integer)
+on binding_1 spirit_light(50)
+// Equivalent to:
+on binding_1 {
+    store(player.spiritLight, player.spiritLight + 50)
+    item_message(spirit_light_string(50))
+}
 ```
 
 #### gorlek_ore
@@ -406,10 +205,15 @@ remove_spirit_light(amount: Integer)
 gorlek_ore()
 ```
 
-#### remove_gorlek_ore
+##### Example
 
 ```seed
-remove_gorlek_ore()
+on binding_1 gorlek_ore()
+// Equivalent to:
+on binding_1 {
+    store(player.gorlekOre, player.gorlekOre + 1)
+    item_message(gorlek_ore_string())
+}
 ```
 
 #### keystone
@@ -418,10 +222,15 @@ remove_gorlek_ore()
 keystone()
 ```
 
-#### remove_keystone
+##### Example
 
 ```seed
-remove_keystone()
+on binding_1 keystone()
+// Equivalent to:
+on binding_1 {
+    store(player.keystones, player.keystones + 1)
+    item_message(keystone_string())
+}
 ```
 
 #### shard_slot
@@ -430,10 +239,15 @@ remove_keystone()
 shard_slot()
 ```
 
-#### remove_shard_slot
+##### Example
 
 ```seed
-remove_shard_slot()
+on binding_1 shard_slot()
+// Equivalent to:
+on binding_1 {
+    store(player.shardSlots, player.shardSlots + 1)
+    item_message(shard_slot_string())
+}
 ```
 
 #### health_fragment
@@ -442,10 +256,16 @@ remove_shard_slot()
 health_fragment()
 ```
 
-#### remove_health_fragment
+##### Example
 
 ```seed
-remove_health_fragment()
+on binding_1 health_fragment()
+// Equivalent to:
+on binding_1 {
+    store(player.maxHealth, player.maxHealth + 5)
+    store(player.health, player.maxHealth)
+    item_message(health_fragment_string())
+}
 ```
 
 #### energy_fragment
@@ -454,10 +274,16 @@ remove_health_fragment()
 energy_fragment()
 ```
 
-#### remove_energy_fragment
+##### Example
 
 ```seed
-remove_energy_fragment()
+on binding_1 energy_fragment()
+// Equivalent to:
+on binding_1 {
+    store(player.maxEnergy, player.maxEnergy + 0.5)
+    store(player.energy, player.maxEnergy)
+    item_message(energy_fragment_string())
+}
 ```
 
 #### skill
@@ -466,11 +292,20 @@ remove_energy_fragment()
 skill(skill: Skill)
 ```
 
-#### remove_skill
+##### Example
 
 ```seed
-remove_skill(skill: Skill)
+on binding_1 skill(Skill::Shuriken)
+// Equivalent to:
+on binding_1 {
+    store(skills.shuriken, true)
+    item_message(skill_string(Skill::Shuriken))
+}
 ```
+
+##### Notes
+
+See [Skills](#skills) for possible values.
 
 #### shard
 
@@ -478,11 +313,20 @@ remove_skill(skill: Skill)
 shard(shard: Shard)
 ```
 
-#### remove_shard
+##### Example
 
 ```seed
-remove_shard(shard: Shard)
+on binding_1 shard(Shard::Deflector)
+// Equivalent to:
+on binding_1 {
+    store(shards.shuriken, true)
+    item_message(shard_string(Shard::Deflector))
+}
 ```
+
+##### Notes
+
+See [Shards](#shards) for possible values.
 
 #### teleporter
 
@@ -490,11 +334,20 @@ remove_shard(shard: Shard)
 teleporter(teleporter: Teleporter)
 ```
 
-#### remove_teleporter
+##### Example
 
 ```seed
-remove_teleporter(teleporter: Teleporter)
+on binding_1 teleporter(Teleporter::Shriek)
+// Equivalent to:
+on binding_1 {
+    store(16155|50867, true) // Teleporter uberStates often have ambiguous names
+    item_message(teleporter_string(Teleporter::Shriek))
+}
 ```
+
+##### Notes
+
+See [Teleporters](#teleporters) for possible values.
 
 #### clean_water
 
@@ -502,10 +355,15 @@ remove_teleporter(teleporter: Teleporter)
 clean_water()
 ```
 
-#### remove_clean_water
+##### Example
 
 ```seed
-remove_clean_water()
+on binding_1 clean_water()
+// Equivalent to:
+on binding_1 {
+    store(randoState.cleanWater, true)
+    item_message(clean_water_string())
+}
 ```
 
 #### weapon_upgrade
@@ -514,11 +372,311 @@ remove_clean_water()
 weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ```
 
+##### Example
+
+```seed
+on binding_1 weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+// Equivalent to:
+on binding_1 {
+    store(weapon_upgrades.chargeBlaze, true)
+    item_message(weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
+}
+```
+
+##### Notes
+
+See [Weapon Upgrades](#weapon-upgrades) for possible values.
+
+### Remove Items
+
+#### remove_spirit_light
+
+```seed
+remove_spirit_light(amount: Integer)
+```
+
+##### Example
+
+```seed
+on binding_1 remove_spirit_light(50)
+// Equivalent to:
+on binding_1 {
+    store(player.spiritLight, player.spiritLight - 50)
+    item_message(remove_spirit_light_string(50))
+}
+```
+
+#### remove_gorlek_ore
+
+```seed
+remove_gorlek_ore()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_gorlek_ore()
+// Equivalent to:
+on binding_1 {
+    store(player.gorlekOre, player.gorlekOre - 1)
+    item_message(remove_gorlek_ore_string())
+}
+```
+
+#### remove_keystone
+
+```seed
+remove_keystone()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_keystone()
+// Equivalent to:
+on binding_1 {
+    store(player.keystones, player.keystones - 1)
+    item_message(remove_keystone_string())
+}
+```
+
+#### remove_shard_slot
+
+```seed
+remove_shard_slot()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_shard_slot()
+// Equivalent to:
+on binding_1 {
+    store(player.shardSlots, player.shardSlots - 1)
+    item_message(remove_shard_slot_string())
+}
+```
+
+#### remove_health_fragment
+
+```seed
+remove_health_fragment()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_health_fragment()
+// Equivalent to:
+on binding_1 {
+    store(player.maxHealth, player.maxHealth - 5)
+    item_message(remove_health_fragment_string())
+}
+```
+
+#### remove_energy_fragment
+
+```seed
+remove_energy_fragment()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_energy_fragment()
+// Equivalent to:
+on binding_1 {
+    store(player.maxEnergy, player.maxEnergy - 0.5)
+    item_message(remove_energy_fragment_string())
+}
+```
+
+#### remove_skill
+
+```seed
+remove_skill(skill: Skill)
+```
+
+##### Example
+
+```seed
+on binding_1 remove_skill(Skill::Shuriken)
+// Equivalent to:
+on binding_1 {
+    store(skills.shuriken, false)
+    item_message(remove_skill_string(Skill::Shuriken))
+}
+```
+
+##### Notes
+
+See [Skills](#skills) for possible values.
+
+#### remove_shard
+
+```seed
+remove_shard(shard: Shard)
+```
+
+##### Example
+
+```seed
+on binding_1 remove_shard(Shard::Deflector)
+// Equivalent to:
+on binding_1 {
+    store(shards.shuriken, false)
+    item_message(remove_shard_string(Shard::Deflector))
+}
+```
+
+##### Notes
+
+See [Shards](#shards) for possible values.
+
+#### remove_teleporter
+
+```seed
+remove_teleporter(teleporter: Teleporter)
+```
+
+##### Example
+
+```seed
+on binding_1 remove_teleporter(Teleporter::Shriek)
+// Equivalent to:
+on binding_1 {
+    store(16155|50867, false) // Teleporter uberStates often have ambiguous names
+    item_message(remove_teleporter_string(Teleporter::Shriek))
+}
+```
+
+##### Notes
+
+See [Teleporters](#teleporters) for possible values.
+
+#### remove_clean_water
+
+```seed
+remove_clean_water()
+```
+
+##### Example
+
+```seed
+on binding_1 remove_clean_water()
+// Equivalent to:
+on binding_1 {
+    store(randoState.cleanWater, false)
+    item_message(remove_clean_water_string())
+}
+```
+
 #### remove_weapon_upgrade
 
 ```seed
 remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ```
+
+##### Example
+
+```seed
+on binding_1 remove_weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+// Equivalent to:
+on binding_1 {
+    store(weapon_upgrades.chargeBlaze, false)
+    item_message(remove_weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
+}
+```
+
+##### Notes
+
+See [Weapon Upgrades](#weapon-upgrades) for possible values.
+
+### Messages
+
+There are three different types of messages:
+
+- [Item Messages](#item_message)
+- [Priority Messages](#priority_message)
+- [Free Messages](#free_message)
+
+Usually item messages are used in reaction to world changes, priority messages are used in reaction to key presses and free messages are used for advanced applications with custom message layouts.
+
+You can use concatenation to include the return values of functions and uberStates into your messages.
+
+##### Example
+
+```seed
+on binding_1 item_message(player.spiritLight + " Spirit Light owned")
+```
+
+![example message with concatenation](/messageconcatenation.png)
+
+Additionally, the resulting message will be processed further by the game.
+
+##### Examples
+
+```seed
+on binding_1 {
+    item_message("This\nmessage\nhas\nfive\nlines.")
+    // Or, for better readability:
+    item_message(
+        "This\n" +
+        "message\n" +
+        "has\n" +
+        "five\n" +
+        "lines."
+    )
+}
+```
+
+![example message with five lines](/messagefivelines.png)
+
+```seed
+on binding_1 item_message(
+    "Here be colors: *blue*, #yellow#, @red@, $green$ and <purple>purple</>.\n" +
+    "As a side effect, it's impossible to show any of these symbols in a message: *#@$<>"
+)
+```
+
+![example message with colors](/messagecolors.png)
+
+```seed
+on binding_1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
+```
+
+![example message with hex colors](/messagehexcolors.png)
+
+```seed
+on binding_1 item_message("<s_3>*BIG HUG*</>")
+```
+
+![example message with font size](/messagefontsize.png)
+
+```seed
+on binding_1 item_message("<ls_1.5>Very \n far \n apart</>")
+```
+
+![example message with line size](/messagelinesize.png)
+
+```seed
+// This will insert the player's own keybind for the action.
+on binding_1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
+```
+
+![example message with keybind](/messagekeybind.png)
+
+See also: [List of possible values for keybind interpolation](https://github.com/ori-community/wotw-rando-client/blob/main/projects/Core/enums/actions.h)
+
+Some message properties can be changed after the message has been created:
+
+| Creation Function           | Destroy   | Text      | Timeout   | Background | Position  | Alignment | Screen Position |
+| --------------------------- | --------- | --------- | --------- | ---------- | --------- | --------- | --------------- |
+| item_message                | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
+| item_message_with_timeout   | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
+| priority_message            | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
+| controlled_priority_message | :orihype: | :orihype: | :orihype: | :orihype:  | ❌        | ❌        | ❌              |
+| free_message                | :orihype: | :orihype: | :orihype: | :orihype:  | :orihype: | :orihype: | :orihype:       |
 
 #### item_message
 
@@ -526,11 +684,31 @@ remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 item_message(message: String)
 ```
 
+##### Example
+
+```seed
+on binding_1 item_message("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.")
+```
+
+##### Notes
+
+Item messages will enter a queue in the top center region of the screen. Up to 7 item messages can be shown at once. If too many messages are already visible, new ones will wait until they have space to appear. By default item messages disappear after a 4 second timeout; the timeout only runs while they're visible.
+
 #### item_message_with_timeout
 
 ```seed
 item_message_with_timeout(message: String, timeout: Float)
 ```
+
+##### Example
+
+```seed
+on binding_1 item_message_with_timeout("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.", 2)
+```
+
+##### Notes
+
+Same as [item_message](#item_message) with a custom timeout.
 
 #### priority_message
 
@@ -538,11 +716,25 @@ item_message_with_timeout(message: String, timeout: Float)
 priority_message(message: String, timeout: Float)
 ```
 
+##### Example
+
+```seed
+on binding_1 priority_message("Pressing this bind fills you with determination", 6)
+```
+
+##### Notes
+
+Priority messages will appear instantly at the top center of the screen. Only 1 priority message can be visible at once, previous ones will be destroyed. Item messages will move out of the way as necessary to show the priority message.
+
 #### controlled_priority_message
 
 ```seed
 controlled_priority_message(id: String, message: String, timeout: Float)
 ```
+
+##### Notes
+
+Same as [priority_message](#priority_message) with an id to change its properties later. Note that the position of a priority message cannot be changed.
 
 #### free_message
 
@@ -550,10 +742,25 @@ controlled_priority_message(id: String, message: String, timeout: Float)
 free_message(id: String, message: String)
 ```
 
+##### Notes
+
+Free messages will not interact with other messages in any way. They can appear on top of other messages and on top of eachother. It's your responsibility to control their position. They won't disappear by themselves, you have to set their timeout or destroy them manually.
+
 #### destroy_message
 
 ```seed
 destroy_message(id: String)
+```
+
+##### Example
+
+```seed
+on binding_1 free_message(
+    "confirmation",
+    "Just making sure, you did read this message in its entirety?\n" +
+    "[Binding2] Yes"
+)
+on binding_2 destroy_message("confirmation")
 ```
 
 #### set_message_text
@@ -586,11 +793,201 @@ set_message_position(id: String, x: Float, y: Float)
 set_message_alignment(id: String, alignment: Alignment)
 ```
 
+##### Notes
+
+See [Alignments](#alignments) for possible values.
+
 #### set_message_screen_position
 
 ```seed
 set_message_screen_position(id: String, screen_position: ScreenPosition)
 ```
+
+##### Notes
+
+See [Screen Positions](#screen-positions) for possible values.
+
+### Common Item Texts
+
+#### spirit_light_string
+
+```seed
+spirit_light_string(amount: Integer) -> String
+```
+
+#### gorlek_ore_string
+
+```seed
+gorlek_ore_string() -> String
+```
+
+#### keystone_string
+
+```seed
+keystone_string() -> String
+```
+
+#### shard_slot_string
+
+```seed
+shard_slot_string() -> String
+```
+
+#### health_fragment_string
+
+```seed
+health_fragment_string() -> String
+```
+
+#### energy_fragment_string
+
+```seed
+energy_fragment_string() -> String
+```
+
+#### skill_string
+
+```seed
+skill_string(skill: Skill) -> String
+```
+
+##### Notes
+
+See [Skills](#skills) for possible values.
+
+#### shard_string
+
+```seed
+shard_string(shard: Shard) -> String
+```
+
+##### Notes
+
+See [Shards](#shards) for possible values.
+
+#### teleporter_string
+
+```seed
+teleporter_string(teleporter: Teleporter) -> String
+```
+
+##### Notes
+
+See [Teleporters](#teleporters) for possible values.
+
+#### clean_water_string
+
+```seed
+clean_water_string() -> String
+```
+
+#### weapon_upgrade_string
+
+```seed
+weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
+```
+
+##### Notes
+
+See [Weapon Upgrades](#weapon-upgrades) for possible values.
+
+### Remove Item Texts
+
+#### remove_spirit_light_string
+
+```seed
+remove_spirit_light_string(amount: Integer) -> String
+```
+
+#### remove_gorlek_ore_string
+
+```seed
+remove_gorlek_ore_string() -> String
+```
+
+#### remove_keystone_string
+
+```seed
+remove_keystone_string() -> String
+```
+
+#### remove_shard_slot_string
+
+```seed
+remove_shard_slot_string() -> String
+```
+
+#### remove_health_fragment_string
+
+```seed
+remove_health_fragment_string() -> String
+```
+
+#### remove_energy_fragment_string
+
+```seed
+remove_energy_fragment_string() -> String
+```
+
+#### remove_skill_string
+
+```seed
+remove_skill_string(skill: Skill) -> String
+```
+
+##### Notes
+
+See [Skills](#skills) for possible values.
+
+#### remove_shard_string
+
+```seed
+remove_shard_string(shard: Shard) -> String
+```
+
+##### Notes
+
+See [Shards](#shards) for possible values.
+
+#### remove_teleporter_string
+
+```seed
+remove_teleporter_string(teleporter: Teleporter) -> String
+```
+
+##### Notes
+
+See [Teleporters](#teleporters) for possible values.
+
+#### remove_clean_water_string
+
+```seed
+remove_clean_water_string() -> String
+```
+
+#### remove_weapon_upgrade_string
+
+```seed
+remove_weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
+```
+
+##### Notes
+
+See [Weapon Upgrades](#weapon-upgrades) for possible values.
+
+### UberState Interactions
+
+#### fetch
+
+```seed
+fetch(uber_identifier: UberIdentifier) -> Boolean
+fetch(uber_identifier: UberIdentifier) -> Integer
+fetch(uber_identifier: UberIdentifier) -> Float
+```
+
+##### Notes
+
+`fetch` is usually inferred automatically whenever you use an UberState identifier.
 
 #### store
 
@@ -607,6 +1004,14 @@ store_without_triggers(uber_identifier: UberIdentifier, value: Boolean)
 store_without_triggers(uber_identifier: UberIdentifier, value: Integer)
 store_without_triggers(uber_identifier: UberIdentifier, value: Float)
 ```
+
+##### Notes
+
+This prevents any [Triggers](#triggers) from happening.
+
+### Variables
+
+You can store temporary values in variables. This can be useful for calculations, or to pass values to custom functions. Variables will not be stored in the savefile, so you should never assume they stay around even until the next frame. If you need persistent values, use [!state](#state)
 
 #### set_boolean
 
@@ -630,6 +1035,213 @@ set_float(id: String, value: Float)
 
 ```seed
 set_string(id: String, value: String)
+```
+
+#### get_boolean
+
+```seed
+get_boolean(id: String) -> Boolean
+```
+
+#### get_integer
+
+```seed
+get_integer(id: String) -> Integer
+```
+
+#### get_float
+
+```seed
+get_float(id: String) -> Float
+```
+
+#### get_string
+
+```seed
+get_string(id: String) -> String
+```
+
+### Shops
+
+#### set_shop_item_data
+
+```seed
+set_shop_item_data(uber_identifier: UberIdentifier, price: Integer, name: String, description: String, icon: Icon)
+```
+
+##### Notes
+
+See [Icons](#icons) for possible values.
+
+#### set_shop_item_price
+
+```seed
+set_shop_item_price(uber_identifier: UberIdentifier, price: Integer)
+```
+
+#### set_shop_item_name
+
+```seed
+set_shop_item_name(uber_identifier: UberIdentifier, name: String)
+```
+
+#### set_shop_item_description
+
+```seed
+set_shop_item_description(uber_identifier: UberIdentifier, description: String)
+```
+
+#### set_shop_item_icon
+
+```seed
+set_shop_item_icon(uber_identifier: UberIdentifier, icon: Icon)
+```
+
+##### Notes
+
+See [Icons](#icons) for possible values.
+
+#### set_shop_item_hidden
+
+```seed
+set_shop_item_hidden(uber_identifier: UberIdentifier, hidden: Boolean)
+```
+
+#### set_shop_item_locked
+
+```seed
+set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
+```
+
+### Wheels
+
+See [Wheel Item Positions](#wheel-item-positions) for possible values.
+
+#### set_wheel_item_data
+
+```seed
+set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, description: String, icon: Icon, action: Action)
+```
+
+##### Notes
+
+See [Icons](#icons) for possible values.
+
+#### set_wheel_item_name
+
+```seed
+set_wheel_item_name(wheel: String, position: WheelItemPosition, name: String)
+```
+
+#### set_wheel_item_description
+
+```seed
+set_wheel_item_description(wheel: String, position: WheelItemPosition, description: String)
+```
+
+#### set_wheel_item_icon
+
+```seed
+set_wheel_item_icon(wheel: String, position: WheelItemPosition, icon: Icon)
+```
+
+##### Notes
+
+See [Icons](#icons) for possible values.
+
+#### set_wheel_item_color
+
+```seed
+set_wheel_item_color(wheel: String, position: WheelItemPosition, red: Integer, green: Integer, blue: Integer, alpha: Integer)
+```
+
+#### set_wheel_item_action
+
+```seed
+set_wheel_item_action(wheel: String, position: WheelItemPosition, bind: WheelBind, action: Action)
+```
+
+##### Notes
+
+See [Wheel Binds](#wheel-binds) for possible values.
+
+#### destroy_wheel_item
+
+```seed
+destroy_wheel_item(wheel: String, position: WheelItemPosition)
+```
+
+#### switch_wheel
+
+```seed
+switch_wheel(wheel: String)
+```
+
+#### set_wheel_pinned
+
+```seed
+set_wheel_pinned(wheel: String, pinned: Boolean)
+```
+
+#### clear_all_wheels
+
+```seed
+clear_all_wheels()
+```
+
+### Warp Icons
+
+#### create_warp_icon
+
+```seed
+create_warp_icon(id: String, x: Float, y: Float)
+```
+
+#### set_warp_icon_label
+
+```seed
+set_warp_icon_label(id: String, label: String)
+```
+
+#### destroy_warp_icon
+
+```seed
+destroy_warp_icon(id: String)
+```
+
+### Miscellaneous
+
+#### to_integer
+
+```seed
+to_integer(float: Float) -> Integer
+```
+
+#### to_float
+
+```seed
+to_float(integer: Integer) -> Float
+```
+
+#### to_string
+
+```seed
+to_string(boolean: Boolean) -> String
+to_string(integer: Integer) -> String
+to_string(float: Float) -> String
+to_string(string: String) -> String
+```
+
+#### is_in_hitbox
+
+```seed
+is_in_hitbox(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
+```
+
+#### current_zone
+
+```seed
+current_zone() -> Zone
 ```
 
 #### save
@@ -656,11 +1268,19 @@ warp(x: Float, y: Float)
 equip(slot: EquipSlot, equipment: Equipment)
 ```
 
+##### Notes
+
+See [Equip Slots](#equip-slots) and [Equipment](#equipment) for possible values.
+
 #### unequip
 
 ```seed
 unequip(equipment: Equipment)
 ```
+
+##### Notes
+
+See [Equipment](#equipment) for possible values.
 
 #### trigger_keybind
 
@@ -680,125 +1300,499 @@ enable_server_sync(uber_identifier: UberIdentifier)
 disable_server_sync(uber_identifier: UberIdentifier)
 ```
 
-#### create_warp_icon
+## Function Definitions
+
+`fun <function_name>() { <action>... }`
+
+##### Example
 
 ```seed
-create_warp_icon(id: String, x: Float, y: Float)
+// This defines a custom function called "exciting_gorlek_ore" which displays a message and gives a gorlek ore.
+fun exciting_gorlek_ore() {
+    item_message("It's finally here! Fresh out of the mines!")
+    gorlek_ore()
+}
+// Now you can reuse the function to avoid repetition.
+on MarshSpawn.FirstPickupEX exciting_gorlek_ore()
+on MarshSpawn.RockHC exciting_gorlek_ore()
 ```
 
-#### set_warp_icon_label
+##### Notes
+
+Passing arguments to custom functions is not currently supported. Use [variables](#variables) instead.
+
+## Commands
+
+While triggers and actions are instructions for the randomizer, commands are instructions for the compiler and seed generator. They provide features such as code splitting, adding settings to your snippet or customizing random placements.
+
+### Including Files
+
+#### include
 
 ```seed
-set_warp_icon_label(id: String, label: String)
+!include(<snippet>)
 ```
 
-#### destroy_warp_icon
+##### Example
 
 ```seed
-destroy_warp_icon(id: String)
+!include("wisps")  // wisps is the snippet adding the wisps goal mode
 ```
 
-#### set_shop_item_data
+##### Notes
+
+If you want to include custom snippets they need to be in the snippet or plandomizer folder.
+
+#### use
 
 ```seed
-set_shop_item_data(uber_identifier: UberIdentifier, price: Integer, name: String, description: String, icon: Icon)
+!use(<snippet>, <identifier>)
 ```
 
-#### set_shop_item_price
+##### Example
 
 ```seed
-set_shop_item_price(uber_identifier: UberIdentifier, price: Integer)
+!include("bonus_item_core")
+!use("bonus_item_core", extra_double_jump)
+
+on binding_1 extra_double_jump()
 ```
 
-#### set_shop_item_name
+#### share
 
 ```seed
-set_shop_item_name(uber_identifier: UberIdentifier, name: String)
+!share(<identifier>)
 ```
 
-#### set_shop_item_description
+##### Example
 
 ```seed
-set_shop_item_description(uber_identifier: UberIdentifier, description: String)
+fun cool_custom_item() {
+    item_message(":oricool:")
+}
+// This allows other snippets to !use cool_custom_item
+!share(cool_custom_item)
 ```
 
-#### set_shop_item_icon
+#### include_icon
 
 ```seed
-set_shop_item_icon(uber_identifier: UberIdentifier, icon: Icon)
+!include_icon(<identifier>, <path>)
 ```
 
-#### set_shop_item_hidden
+##### Example
 
 ```seed
-set_shop_item_hidden(uber_identifier: UberIdentifier, hidden: Boolean)
+!include_icon(explosions_icon, "icons/explosions.png")
+// Now you can use the icon anywhere
+on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, explosions_icon)
 ```
 
-#### set_shop_item_locked
+##### Notes
+
+The icon path starts in the snippet or plandomizer folder.
+
+After compilation the icon will be bundled into the seed, with this you can use custom icons in your plandomizer without requiring the players to download the icons separately.
+
+#### use_icon
 
 ```seed
-set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
+!use_icon(<identifier>, <path>)
 ```
 
-#### set_wheel_item_data
+##### Example
 
 ```seed
-set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, description: String, icon: Icon, action: Action)
+// This icon ships with the randomizer
+!use_icon(minimap_icon, "assets/icons/wheel/minimap.png")
+// Now you can use the icon anywhere
+on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, minimap_icon)
 ```
 
-#### set_wheel_item_name
+##### Notes
+
+The randomizer ships with a set of [preinstalled assets](https://github.com/ori-community/wotw-rando-assets). They will be installed into a folder called assets, which is why you need to prefix `assets/` in front of all the paths.
+
+### Custom UberStates
+
+#### state
 
 ```seed
-set_wheel_item_name(wheel: String, position: WheelItemPosition, name: String)
+!state(<identifier>, <type>)
 ```
 
-#### set_wheel_item_description
+##### Example
 
 ```seed
-set_wheel_item_description(wheel: String, position: WheelItemPosition, description: String)
+!state(triforce_fragments, Integer)
+
+fun triforce_fragment() {
+    store(triforce_fragments, triforce_fragments + 1)
+    if triforce_fragments < 8 {
+        item_message("Triforce Fragment (" + triforce_fragments + "/8)")
+    }
+    if triforce_fragments == 8 {
+        item_message("Triforce Fragment $(8/8)$")
+        store(gameStateGroup.gameFinished, true)
+        item_message("Thanks Link!")
+    }
+}
 ```
 
-#### set_wheel_item_icon
+##### Notes
+
+Only the types `Boolean`, `Integer` and `Float` are allowed here. It's not possible to persistently store strings.
+
+#### timer
 
 ```seed
-set_wheel_item_icon(wheel: String, position: WheelItemPosition, icon: Icon)
+!timer(<toggle>, <timer>)
 ```
 
-#### set_wheel_item_color
+##### Example
 
 ```seed
-set_wheel_item_color(wheel: String, position: WheelItemPosition, red: Integer, green: Integer, blue: Integer, alpha: Integer)
+!timer(timer_enabled, timer)
+
+on binding_1 {
+    store(timer, 0)
+    store(timer_enabled, true)
+}
+on timer > 7.5 {
+    store(timer_enabled, false)
+    item_message("This message shows with a delay of 7.5 seconds.")
+}
 ```
 
-#### set_wheel_item_action
+### Item Pool Changes
+
+Item pool changes are only relevant for snippets used in seed generation, they do nothing for plandos.
+
+#### add
 
 ```seed
-set_wheel_item_action(wheel: String, position: WheelItemPosition, bind: WheelBind, action: Action)
+!add(<action>, <amount>)
 ```
 
-#### destroy_wheel_item
+##### Example
 
 ```seed
-destroy_wheel_item(wheel: String, position: WheelItemPosition)
+// Add a second Burrow to the item pool
+!add(skill(Skill::Burrow), 1)
 ```
 
-#### switch_wheel
+#### remove
 
 ```seed
-switch_wheel(wheel: String)
+!remove(<action>, <amount>)
 ```
 
-#### set_wheel_pinned
+##### Example
 
 ```seed
-set_wheel_pinned(wheel: String, pinned: Boolean)
+// This is what the No Launch snippet does
+!remove(skill(Skill::Launch), 1)
 ```
 
-#### clear_all_wheels
+#### item_data
 
 ```seed
-clear_all_wheels()
+!item_data(<action>, <name>, <price>, <description>, <icon>, <map icon>)
 ```
+
+##### Example
+
+```seed
+fun custom_item() {}
+!item_data(
+    custom_item(),
+    "Custom Item",  // Name when being placed in a shop
+    1000,  // Base price when being placed in a shop
+    "I assure you it's great",  // Description when being placed in a shop
+    Equipment::Invisibility,  // Icon when being placed in a shop
+    MapIcon::BonusItem  // Map icon for the spoiler filter
+)
+```
+
+##### Notes
+
+See [Icons](#icons) and [Map Icons](#map-icons) for possible values.
+
+#### item_data_name
+
+```seed
+!item_data_name(<action>, <name>)
+```
+
+#### item_data_price
+
+```seed
+!item_data_price(<action>, <price>)
+```
+
+#### item_data_description
+
+```seed
+!item_data_description(<action>, <description>)
+```
+
+#### item_data_icon
+
+```seed
+!item_data_icon(<action>, <icon>)
+```
+
+##### Notes
+
+See [Icons](#icons) for possible values.
+
+### Snippet Settings
+
+#### config
+
+```seed
+!config(<identifier>, <description>, <type>, <default>)
+```
+
+##### Example
+
+```seed
+!config(treasure_size, "How much money is inside the treasure chest", Integer, 1000)
+
+fun treasure_chest() {
+    item_message("You found the #treasure chest#!")
+    spirit_light(treasure_size)
+}
+
+!add(treasure_chest())
+```
+
+##### Notes
+
+Snippet settings are only relevant for snippets used in seed generation, they do nothing for plandos.
+
+### Spawn Location
+
+#### spawn
+
+```seed
+!spawn(<x>, <y>)
+```
+
+##### Example
+
+```seed
+// This is a black box in the void. Useful if you want to have some kind of menu before starting the plandomizer.
+!spawn(-3537, -5881)
+```
+
+##### Notes
+
+Setting the spawn location is only relevant for plandos, it does nothing for snippets used in seed generation.
+
+### Compile-time evaluation
+
+#### let
+
+```seed
+!let(<identifier>, <value>)
+```
+
+##### Example
+
+```seed
+// In case you can't read hexcolors in your brain, giving them names might help
+!let(lime_green, "<hex_32cd32ff>")
+
+on binding_1 item_message(lime_green + "ooo fancy color")
+```
+
+#### if
+
+```seed
+!if <condition> { ... }
+```
+
+##### Example
+
+```seed
+!config(do_shenanigans, "Enable at your own risk", Boolean, false)
+
+!if do_shenanigans {
+    !add(item_message(skill_string(Skill::Burrow)))
+}
+!if do_shenanigans == false {
+    on spawn item_message("You didn't even enable shenanigans... Boring!")
+}
+```
+
+#### repeat
+
+```seed
+!repeat <amount> { ... }
+```
+
+##### Example
+
+```seed
+!config(motay_clones, "How many clones of Motay should assist you", Integer, 1)
+
+!repeat motay_clones {
+    on spawn item_message("Hey! I'm Motay! I will help you!")
+}
+```
+
+### Compile-time Randomness
+
+These values will be decided when the seed is generated or the plandomizer is compiled. If you want values that can change randomly while playing the seed, we still need to implement those.
+
+#### random_integer
+
+```seed
+!random_integer(<identifier>, <min>, <max>)
+```
+
+#### random_float
+
+```seed
+!random_float(<identifier>, <min>, <max>)
+```
+
+#### random_pool
+
+```seed
+!random_pool(<identifier>, <type>, [ <value>... ])
+```
+
+#### random_from_pool
+
+```seed
+!random_from_pool(<identifier>, <pool identifier>)
+```
+
+##### Example
+
+```seed
+!random_pool(greetings_pool, String, [
+    "Greetings",
+    "Welcome",
+    "Hello"
+])
+!random_from_pool(greeting, greetings_pool)
+on spawn item_message(greeting)
+```
+
+### Hint Data
+
+#### zone_of
+
+```seed
+!zone_of(<identifier>, <action>)
+```
+
+#### item_on
+
+```seed
+!item_on(<identifier>, <trigger>)
+```
+
+#### count_in_zone
+
+```seed
+!count_in_zone([ (<identifier>, <zone>),... ], [ <action>... ])
+```
+
+### Miscellaneous
+
+#### callback
+
+```seed
+!callback(<identifier>)
+```
+
+#### on_callback
+
+```seed
+!on_callback(<snippet>, <identifier>, <action>)
+```
+
+#### flag
+
+```seed
+!flag(<flag>,...)
+```
+
+#### set_logic_state
+
+```seed
+!set_logic_state(<name>)
+```
+
+#### preplace
+
+```seed
+!preplace(<action>, <zone>)
+```
+
+## Annotations
+
+Snippets may add annotations to influence how they are presented to the user. They do nothing in plandomizers.
+
+#### Hide
+
+```seed
+#hide
+```
+
+##### Notes
+
+The snippet will be invisible to the user. It only exists to be [included](#include) by other snippets.
+
+#### Category
+
+```seed
+#category(<string>)
+```
+
+##### Example
+
+```seed
+#category("World Changes")
+```
+
+##### Notes
+
+Snippets of the same category will be shown together.
+
+#### Name
+
+```seed
+#name(<string>)
+```
+
+##### Example
+
+```seed
+#name("Better Hornbug")
+```
+
+#### Description
+
+```seed
+#description(<string>)
+```
+
+##### Example
+
+```seed
+#description("This will change how you play the randomizer forever")
+```
+
+##### Notes
+
+Snippets of the same category will be shown together
+
+## Reference
 
 ### Skills
 
@@ -998,6 +1992,134 @@ Equipment::WeaponCharge
 Equipment::DamageUpgradeA
 Equipment::DamageUpgradeB
 Equipment::WaterBreath
+```
+
+### Icons
+
+In addition to the icons below, you may use [Shards](#shards) and [Equipments](#equipment) as icons.
+
+See also [!use_icon](#use_icon) and [!include_icon](#include_icon) to use images as icons.
+
+```seed
+OpherIcon::Sentry
+OpherIcon::RapidSentry
+OpherIcon::Hammer
+OpherIcon::HammerShockwave
+OpherIcon::Shuriken
+OpherIcon::StaticShuriken
+OpherIcon::Spear
+OpherIcon::ExplodingSpear
+OpherIcon::Blaze
+OpherIcon::ChargeBlaze
+OpherIcon::WaterBreath
+OpherIcon::FastTravel
+
+LupoIcon::EnergyFragmentsMap
+LupoIcon::HealthFragmentsMap
+LupoIcon::ShardsMap
+
+GromIcon::RepairTheSpiritWell
+GromIcon::DwellingRepairs
+GromIcon::ThornySituation
+GromIcon::RoofsOverHeads
+GromIcon::ClearTheCaveEntrance
+GromIcon::OnwardsAndUpwards
+GromIcon::TheGorlekTouch
+
+TuleyIcon::SelaFlowers
+TuleyIcon::StickyGrass
+TuleyIcon::Lightcatchers
+TuleyIcon::BlueMoon
+TuleyIcon::SpringPlants
+TuleyIcon::TheLastSeed
+```
+
+### Map Icons
+
+```seed
+MapIcon::Keystone
+MapIcon::Mapstone
+MapIcon::BreakableWall
+MapIcon::BreakableWallBroken
+MapIcon::StompableFloor
+MapIcon::StompableFloorBroken
+MapIcon::EnergyGateTwo
+MapIcon::EnergyGateOpen
+MapIcon::KeystoneDoorFour
+MapIcon::KeystoneDoorOpen
+MapIcon::AbilityPedestal
+MapIcon::HealthUpgrade
+MapIcon::EnergyUpgrade
+MapIcon::SavePedestal
+MapIcon::AbilityPoint
+MapIcon::KeystoneDoorTwo
+MapIcon::Invisible
+MapIcon::Experience
+MapIcon::MapstonePickup
+MapIcon::EnergyGateTwelve
+MapIcon::EnergyGateTen
+MapIcon::EnergyGateEight
+MapIcon::EnergyGateSix
+MapIcon::EnergyGateFour
+MapIcon::SpiritShard
+MapIcon::NPC
+MapIcon::QuestItem
+MapIcon::ShardSlotUpgrade
+MapIcon::Teleporter
+MapIcon::Ore
+MapIcon::QuestStart
+MapIcon::QuestEnd
+MapIcon::RaceStart
+MapIcon::HealthFragment
+MapIcon::EnergyFragment
+MapIcon::Seed
+MapIcon::RaceEnd
+MapIcon::Eyestone
+MapIcon::WatermillDoor
+MapIcon::TempleDoor
+MapIcon::SmallDoor
+MapIcon::Shrine
+MapIcon::Loremaster
+MapIcon::Weaponmaster
+MapIcon::Gardener
+MapIcon::Mapmaker
+MapIcon::Shardtrader
+MapIcon::Wanderer
+MapIcon::Treekeeper
+MapIcon::Builder
+MapIcon::Kwolok
+MapIcon::Statistician
+MapIcon::CreepHeart
+MapIcon::Miner
+MapIcon::Spiderling
+MapIcon::Moki
+MapIcon::MokiBrave
+MapIcon::MokiAdventurer
+MapIcon::MokiArtist
+MapIcon::MokiDarkness
+MapIcon::MokiFashionable
+MapIcon::MokiFisherman
+MapIcon::MokiFrozen
+MapIcon::MokiKwolokAmulet
+MapIcon::MokiSpyglass
+MapIcon::Ku
+MapIcon::IceFisher
+MapIcon::Siira
+MapIcon::SavePedestalInactive
+MapIcon::RaceStartUnfinished
+MapIcon::CleanWater
+MapIcon::BonusItem
+MapIcon::LaunchFragment
+MapIcon::PurpleFloor
+MapIcon::PurpleWall
+MapIcon::YellowWall
+MapIcon::OneWayWallLeft
+MapIcon::OneWayWallRight
+MapIcon::IceWall
+MapIcon::IceFloor
+MapIcon::VerticalDoor
+MapIcon::HorizontalDoor
+MapIcon::Lever
 ```
 
 ### Wheel Item Positions

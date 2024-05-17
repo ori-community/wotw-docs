@@ -1,7 +1,7 @@
-@use "@fontsource/nunito-sans/index.css";
+@use '@fontsource/nunito-sans/index.css';
 
 html {
-  font-family: "Nunito Sans", sans-serif;
+  font-family: 'Nunito Sans', sans-serif;
   font-size: 1.1em;
   line-height: 1.375em;
   scroll-behavior: smooth;
@@ -13,9 +13,13 @@ article {
   hyphens: auto;
   text-align: justify;
 
+  h2,
+  h3,
+  h4 {
+    border-bottom: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+  }
   h2 {
-    border-bottom: thin solid
-      rgba(var(--v-border-color), var(--v-border-opacity));
+    border-bottom-width: medium;
   }
 
   :is(h2, h3, h4) a {
@@ -42,6 +46,19 @@ article {
   ul {
     margin-left: 1em;
   }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  table th {
+    background: rgba(var(--v-theme-surface), var(--v-medium-emphasis-opacity));
+  }
+
+  table :is(td, th) {
+    padding: 6px 13px;
+    border: thin solid rgba(var(--v-border-color), var(--v-border-opacity));
+  }
 }
 
 h1,
@@ -53,6 +70,10 @@ h5 {
   margin-top: 1em;
   margin-bottom: 0.5em;
   font-weight: 500;
+}
+
+h5 {
+  opacity: var(--v-medium-emphasis-opacity);
 }
 
 p,

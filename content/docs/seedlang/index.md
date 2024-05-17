@@ -610,7 +610,7 @@ You can use concatenation to include the return values of functions and uberStat
 on binding_1 item_message(player.spiritLight + " Spirit Light owned")
 ```
 
-![example message with concatenation](/messageconcatenation.png)
+![example message with concatenation](/images/messageconcatenation.png)
 
 Additionally, the resulting message will be processed further by the game.
 
@@ -630,7 +630,7 @@ on binding_1 {
 }
 ```
 
-![example message with five lines](/messagefivelines.png)
+![example message with five lines](/images/messagefivelines.png)
 
 ```seed
 on binding_1 item_message(
@@ -639,32 +639,32 @@ on binding_1 item_message(
 )
 ```
 
-![example message with colors](/messagecolors.png)
+![example message with colors](/images/messagecolors.png)
 
 ```seed
 on binding_1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
 ```
 
-![example message with hex colors](/messagehexcolors.png)
+![example message with hex colors](/images/messagehexcolors.png)
 
 ```seed
 on binding_1 item_message("<s_3>*BIG HUG*</>")
 ```
 
-![example message with font size](/messagefontsize.png)
+![example message with font size](/images/messagefontsize.png)
 
 ```seed
 on binding_1 item_message("<ls_1.5>Very \n far \n apart</>")
 ```
 
-![example message with line size](/messagelinesize.png)
+![example message with line size](/images/messagelinesize.png)
 
 ```seed
 // This will insert the player's own keybind for the action.
 on binding_1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
 ```
 
-![example message with keybind](/messagekeybind.png)
+![example message with keybind](/images/messagekeybind.png)
 
 See also: [List of possible values for keybind interpolation](https://github.com/ori-community/wotw-rando-client/blob/main/projects/Core/enums/actions.h)
 

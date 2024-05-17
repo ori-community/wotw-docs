@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  await navigateTo('/docs/snippets', {
+  await navigateTo('/docs/seedlang', {
     replace: true,
   })
 </script>

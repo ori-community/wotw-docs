@@ -1,0 +1,1 @@
+import{ad as t,aE as n,aF as s}from"./BxHmn1SA.js";const p=t({__name:"index",async setup(r){let e,a;return[e,a]=n(()=>s("/docs/seedlang",{replace:!0})),await e,a(),(_,o)=>null}});export{p as default};

@@ -985,9 +985,17 @@ fetch(uber_identifier: UberIdentifier) -> Integer
 fetch(uber_identifier: UberIdentifier) -> Float
 ```
 
+##### Example
+
+```seed
+on binding_1 item_message("Gorlek Ore: " + fetch(player.gorlekOre))
+// Or, for convenience:
+on binding_1 item_message("Gorlek Ore: " + player.gorlekOre)
+```
+
 ##### Notes
 
-`fetch` is usually inferred automatically whenever you use an UberState identifier.
+Often you don't have to use `fetch` explicitely since it's inferred when you use an UberState identifier. The type of the return value depends on the type of the UberState.
 
 #### store
 
@@ -997,6 +1005,16 @@ store(uber_identifier: UberIdentifier, value: Integer)
 store(uber_identifier: UberIdentifier, value: Float)
 ```
 
+##### Example
+
+```seed
+on binding_1 store(player.health, -1) // Setting health to a negative value kills the player
+```
+
+##### Notes
+
+The expected type of the value depends on the type of the UberState.
+
 #### store_without_triggers
 
 ```seed
@@ -1005,13 +1023,19 @@ store_without_triggers(uber_identifier: UberIdentifier, value: Integer)
 store_without_triggers(uber_identifier: UberIdentifier, value: Float)
 ```
 
+##### Example
+
+```seed
+on spawn store_without_triggers(MarshSpawn.FirstPickupEX, true) // This will make the pickup disappear but not grant the reward
+```
+
 ##### Notes
 
-This prevents any [Triggers](#triggers) from happening.
+Identical to [store](#store), but prevents any [Triggers](#triggers) from happening as a direct consequence of this UberState change. The expected type of the value depends on the type of the UberState.
 
 ### Variables
 
-You can store temporary values in variables. This can be useful for calculations, or to pass values to custom functions. Variables will not be stored in the savefile, so you should never assume they stay around even until the next frame. If you need persistent values, use [!state](#state)
+You can store temporary values in variables. This can be useful for calculations, or to pass values to custom functions. Variables will not be stored in the savefile, so generally you should not assume they keep existing beyond the current frame. If you need persistent values, use [!state](#state)
 
 #### set_boolean
 
@@ -1071,6 +1095,8 @@ set_shop_item_data(uber_identifier: UberIdentifier, price: Integer, name: String
 
 ##### Notes
 
+Shorthand to use [set_shop_item_price](#set_shop_item_price), [set_shop_item_name](#set_shop_item_name), [set_shop_item_description](#set_shop_item_description) and [set_shop_item_icon](#set_shop_item_icon).
+
 See [Icons](#icons) for possible values.
 
 #### set_shop_item_price
@@ -1124,6 +1150,8 @@ set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, de
 ```
 
 ##### Notes
+
+Shorthand to use [set_wheel_item_name](#set_wheel_item_name), [set_wheel_item_description](#set_wheel_item_description), [set_wheel_item_icon](#set_wheel_item_icon) and [set_wheel_item_action](#set_wheel_item_action) with `WheelBind::All`.
 
 See [Icons](#icons) for possible values.
 
@@ -1217,11 +1245,19 @@ destroy_warp_icon(id: String)
 to_integer(float: Float) -> Integer
 ```
 
+##### Notes
+
+Often you don't have to use `to_integer` explicitely since it's inferred when you need an integer.
+
 #### to_float
 
 ```seed
 to_float(integer: Integer) -> Float
 ```
+
+##### Notes
+
+Often you don't have to use `to_float` explicitely since it's inferred when you need a float.
 
 #### to_string
 
@@ -1231,6 +1267,10 @@ to_string(integer: Integer) -> String
 to_string(float: Float) -> String
 to_string(string: String) -> String
 ```
+
+##### Notes
+
+Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
 
 #### is_in_hitbox
 
@@ -1288,11 +1328,19 @@ See [Equipment](#equipment) for possible values.
 trigger_keybind(bind: String)
 ```
 
+##### Notes
+
+See [Randomizer Actions](https://github.com/ori-community/wotw-rando-client/blob/main/projects/Core/enums/actions.h) for a list of possible values.
+
 #### enable_server_sync
 
 ```seed
 enable_server_sync(uber_identifier: UberIdentifier)
 ```
+
+##### Notes
+
+Currently only works to undo [disable_server_sync](#disable_server_sync), you cannot enable syncing for uberStates which aren't synced by default.
 
 #### disable_server_sync
 
@@ -1326,6 +1374,8 @@ Passing arguments to custom functions is not currently supported. Use [variables
 While triggers and actions are instructions for the randomizer, commands are instructions for the compiler and seed generator. They provide features such as code splitting, adding settings to your snippet or customizing random placements.
 
 ### Including Files
+
+You can include existing snippets, or split your plandomizer across multiple files if you want.
 
 #### include
 
@@ -1372,6 +1422,49 @@ fun cool_custom_item() {
 }
 // This allows other snippets to !use cool_custom_item
 !share(cool_custom_item)
+```
+
+#### callback
+
+```seed
+!callback(<identifier>)
+```
+
+##### Example
+
+```seed
+// Other snippets can reference this using on_callback and add actions to the keybind_callback function.
+!callback(keybind_callback)
+
+// You can call the function and whatever other snippets have added will happen.
+on binding_1 keybind_callback()
+```
+
+#### on_callback
+
+```seed
+!on_callback(<snippet>, <identifier>, <action>)
+```
+
+##### Example
+
+```seed
+// file: define_callback.wotws
+!callback(keybind_callback)
+// This will show a message and give a gorlek ore if the snippets below are used
+on binding_1 keybind_callback()
+```
+
+```seed
+// file: message_on_callback.wotws
+!include("define_callback")
+!on_callback("define_callback", keybind_callback, item_message("Hi!"))
+```
+
+```seed
+// file: ore_on_callback.wotws
+!include("define_callback")
+!on_callback("define_callback", keybind_callback, gorlek_ore())
 ```
 
 #### include_icon
@@ -1516,6 +1609,8 @@ fun custom_item() {}
 
 ##### Notes
 
+Shorthand to use [item_data_name](#item_data_name), [item_data_price](#item_data_price), [item_data_description](#item_data_description), [item_data_icon](#item_data_icon) and [item_data_map_icon](#item_data_map_icon) (yet to be implemented).
+
 See [Icons](#icons) and [Map Icons](#map-icons) for possible values.
 
 #### item_data_name
@@ -1592,6 +1687,8 @@ Setting the spawn location is only relevant for plandos, it does nothing for sni
 
 ### Compile-time evaluation
 
+You can use compile-time evaluation to conditionally include parts of your code depending on [Snippet Settings](#snippet-settings) or to improve code readability without hurting performance. Compile-time evaluation happens during seed generation or plandomizer compilation, it will be completely optimized away in the finished seed.
+
 #### let
 
 ```seed
@@ -1605,6 +1702,8 @@ Setting the spawn location is only relevant for plandos, it does nothing for sni
 !let(lime_green, "<hex_32cd32ff>")
 
 on binding_1 item_message(lime_green + "ooo fancy color")
+// In the resulting seed, this gives exactly the same output as:
+on binding_1 item_message("<hex_32cd32ff>ooo fancy color")
 ```
 
 #### if
@@ -1618,6 +1717,7 @@ on binding_1 item_message(lime_green + "ooo fancy color")
 ```seed
 !config(do_shenanigans, "Enable at your own risk", Boolean, false)
 
+// In the resulting seed, only one of the two sections below will be included
 !if do_shenanigans {
     !add(item_message(skill_string(Skill::Burrow)))
 }
@@ -1644,12 +1744,21 @@ on binding_1 item_message(lime_green + "ooo fancy color")
 
 ### Compile-time Randomness
 
-These values will be decided when the seed is generated or the plandomizer is compiled. If you want values that can change randomly while playing the seed, we still need to implement those.
+These values will be different every time the snippet is used or the plandomizer is compiled. In the finished seed, the value won't change anymore.
+
+Values that can change randomly while playing the seed still need to be implemented.
 
 #### random_integer
 
 ```seed
 !random_integer(<identifier>, <min>, <max>)
+```
+
+##### Example
+
+```seed
+!random_integer(number, 1, 100)
+on binding_1 item_message(number)
 ```
 
 #### random_float
@@ -1658,11 +1767,22 @@ These values will be decided when the seed is generated or the plandomizer is co
 !random_float(<identifier>, <min>, <max>)
 ```
 
+##### Example
+
+```seed
+!random_float(number, 0, 2.5)
+on binding_1 item_message(number)
+```
+
 #### random_pool
 
 ```seed
 !random_pool(<identifier>, <type>, [ <value>... ])
 ```
+
+##### Notes
+
+See [!random_from_pool](#random_from_pool) for more details.
 
 #### random_from_pool
 
@@ -1682,12 +1802,25 @@ These values will be decided when the seed is generated or the plandomizer is co
 on spawn item_message(greeting)
 ```
 
+##### Notes
+
+Using `random_from_pool` will remove one random value from the pool created with `random_pool`. If you draw from the same pool again, that value will be gone. If you attempt to draw from a pool which is already empty, compilation will fail.
+
 ### Hint Data
+
+These are very specialized commands to support our hint systems.
 
 #### zone_of
 
 ```seed
 !zone_of(<identifier>, <action>)
+```
+
+##### Example
+
+```seed
+!zone_of(burrow_zone, skill(Skill::Burrow))
+on binding_1 item_message("Burrow: " + burrow_zone)
 ```
 
 #### item_on
@@ -1696,30 +1829,58 @@ on spawn item_message(greeting)
 !item_on(<identifier>, <trigger>)
 ```
 
+##### Example
+
+```seed
+!item_on(inkwater_shrine_item, MarshPastOpher.CombatShrine)
+on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + inkwater_shrine_item)
+```
+
 #### count_in_zone
 
 ```seed
 !count_in_zone([ (<identifier>, <zone>),... ], [ <action>... ])
 ```
 
+##### Example
+
+```seed
+!count_in_zone(
+    [
+        (weapons_in_inkwater, Zone::Inkwater),
+        (weapons_in_hollow, Zone::Hollow),
+        (weapons_in_glades, Zone::Glades),
+    ],
+    [
+        skill(Skill::Grenade),
+        skill(Skill::Spear),
+        skill(Skill::Bow),
+        skill(Skill::Hammer),
+        skill(Skill::Sword),
+        skill(Skill::Shuriken),
+        skill(Skill::Blaze),
+        skill(Skill::Sentry),
+    ]
+)
+
+on binding_1 item_message("Inkwater Weapons - " + weapons_in_inkwater)
+on binding_2 item_message("Hollow Weapons - " + weapons_in_hollow)
+on binding_3 item_message("Glades Weapons - " + weapons_in_glades)
+```
+
 ### Miscellaneous
-
-#### callback
-
-```seed
-!callback(<identifier>)
-```
-
-#### on_callback
-
-```seed
-!on_callback(<snippet>, <identifier>, <action>)
-```
 
 #### flag
 
 ```seed
 !flag(<flag>,...)
+```
+
+##### Example
+
+```seed
+// This will be listed as one of the flags when starting a new save file
+!flag("Fun included")
 ```
 
 #### set_logic_state
@@ -1728,11 +1889,28 @@ on spawn item_message(greeting)
 !set_logic_state(<name>)
 ```
 
+##### Notes
+
+This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv) is reachable from spawn.
+
+This is useful when having to write custom logic for a snippet such as no combat.
+
 #### preplace
 
 ```seed
 !preplace(<action>, <zone>)
 ```
+
+##### Example
+
+```seed
+// Sword will be placed somewhere in Inkwater
+!preplace(skill(Skill::Sword), Zone::Inkwater)
+```
+
+##### Notes
+
+Preplacements happen before any logic, they are placed in a random location of the specified zone which is not already occupied by other preplacements.
 
 ## Annotations
 

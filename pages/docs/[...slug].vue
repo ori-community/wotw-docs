@@ -2,7 +2,6 @@
   import { mdiTableOfContents } from '@mdi/js'
 
   const page = useCurrentContent()
-  const toc = page.value?.body?.toc
 
   const showNavigation = ref(true)
 </script>
@@ -14,7 +13,7 @@
     </template>
   </v-app-bar>
   <v-navigation-drawer v-model="showNavigation" permanent :width="280">
-    <TableOfContents :toc="toc" />
+    <TableOfContents :toc="page?.body?.toc" />
   </v-navigation-drawer>
   <v-main>
     <v-container>

@@ -21,6 +21,9 @@ export default defineNuxtConfig({
     },
   ],
   vite: {
+    build: {
+      cssCodeSplit: false,
+    },
     vue: {
       template: {
         transformAssetUrls,

@@ -340,7 +340,7 @@ teleporter(teleporter: Teleporter)
 on binding_1 teleporter(Teleporter::Shriek)
 // Equivalent to:
 on binding_1 {
-    store(16155|50867, true) // Teleporter uberStates often have ambiguous names
+    store(16155|50867, true) // Teleporter UberStates often have ambiguous names
     item_message(teleporter_string(Teleporter::Shriek))
 }
 ```
@@ -545,7 +545,7 @@ remove_teleporter(teleporter: Teleporter)
 on binding_1 remove_teleporter(Teleporter::Shriek)
 // Equivalent to:
 on binding_1 {
-    store(16155|50867, false) // Teleporter uberStates often have ambiguous names
+    store(16155|50867, false) // Teleporter UberStates often have ambiguous names
     item_message(remove_teleporter_string(Teleporter::Shriek))
 }
 ```
@@ -602,7 +602,7 @@ There are three different types of messages:
 
 Usually item messages are used in reaction to world changes, priority messages are used in reaction to key presses and free messages are used for advanced applications with custom message layouts.
 
-You can use concatenation to include the return values of functions and uberStates into your messages.
+You can use concatenation to include the return values of functions and UberStates into your messages.
 
 ##### Example
 
@@ -1340,7 +1340,7 @@ enable_server_sync(uber_identifier: UberIdentifier)
 
 ##### Notes
 
-Currently only works to undo [disable_server_sync](#disable_server_sync), you cannot enable syncing for uberStates which aren't synced by default.
+Currently only works to undo [disable_server_sync](#disable_server_sync), you cannot enable syncing for UberStates which aren't synced by default.
 
 #### disable_server_sync
 

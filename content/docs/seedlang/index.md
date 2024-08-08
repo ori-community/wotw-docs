@@ -1290,10 +1290,10 @@ current_zone() -> Zone
 save()
 ```
 
-#### checkpoint
+#### save_to_memory
 
 ```seed
-checkpoint()
+save_to_memory()
 ```
 
 #### warp
@@ -1424,59 +1424,59 @@ fun cool_custom_item() {
 !share(cool_custom_item)
 ```
 
-#### callback
+#### event
 
 ```seed
-!callback(<identifier>)
+!event(<identifier>)
 ```
 
 ##### Example
 
 ```seed
-// Other snippets can reference this using on_callback and add actions to the keybind_callback function.
-!callback(keybind_callback)
+// Other snippets can reference this using on_event and add actions to the keybind_event function.
+!event(keybind_event)
 
 // You can call the function and whatever other snippets have added will happen.
-on binding_1 keybind_callback()
+on binding_1 keybind_event()
 ```
 
-#### on_callback
+#### on_event
 
 ```seed
-!on_callback(<snippet>, <identifier>, <action>)
+!on_event(<snippet>, <identifier>, <action>)
 ```
 
 ##### Example
 
 ```seed
-// file: define_callback.wotws
-!callback(keybind_callback)
+// file: define_event.wotws
+!event(keybind_event)
 // This will show a message and give a gorlek ore if the snippets below are used
-on binding_1 keybind_callback()
+on binding_1 keybind_event()
 ```
 
 ```seed
-// file: message_on_callback.wotws
-!include("define_callback")
-!on_callback("define_callback", keybind_callback, item_message("Hi!"))
+// file: message_on_event.wotws
+!include("define_event")
+!on_event("define_event", keybind_event, item_message("Hi!"))
 ```
 
 ```seed
-// file: ore_on_callback.wotws
-!include("define_callback")
-!on_callback("define_callback", keybind_callback, gorlek_ore())
+// file: ore_on_event.wotws
+!include("define_event")
+!on_event("define_event", keybind_event, gorlek_ore())
 ```
 
-#### include_icon
+#### bundle_icon
 
 ```seed
-!include_icon(<identifier>, <path>)
+!bundle_icon(<identifier>, <path>)
 ```
 
 ##### Example
 
 ```seed
-!include_icon(explosions_icon, "icons/explosions.png")
+!bundle_icon(explosions_icon, "icons/explosions.png")
 // Now you can use the icon anywhere
 on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, explosions_icon)
 ```
@@ -1487,17 +1487,17 @@ The icon path starts in the snippet or plandomizer folder.
 
 After compilation the icon will be bundled into the seed, with this you can use custom icons in your plandomizer without requiring the players to download the icons separately.
 
-#### use_icon
+#### builtin_icon
 
 ```seed
-!use_icon(<identifier>, <path>)
+!builtin_icon(<identifier>, <path>)
 ```
 
 ##### Example
 
 ```seed
 // This icon ships with the randomizer
-!use_icon(minimap_icon, "assets/icons/wheel/minimap.png")
+!builtin_icon(minimap_icon, "assets/icons/wheel/minimap.png")
 // Now you can use the icon anywhere
 on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, minimap_icon)
 ```
@@ -1870,17 +1870,17 @@ on binding_3 item_message("Glades Weapons - " + weapons_in_glades)
 
 ### Miscellaneous
 
-#### flag
+#### tags
 
 ```seed
-!flag(<flag>,...)
+!tags(<tag>,...)
 ```
 
 ##### Example
 
 ```seed
-// This will be listed as one of the flags when starting a new save file
-!flag("Fun included")
+// This will be listed as one of the tags when starting a new save file
+!tags("Fun included")
 ```
 
 #### set_logic_state
@@ -2176,7 +2176,7 @@ Equipment::WaterBreath
 
 In addition to the icons below, you may use [Shards](#shards) and [Equipments](#equipment) as icons.
 
-See also [!use_icon](#use_icon) and [!include_icon](#include_icon) to use images as icons.
+See also [!builtin_icon](#builtin_icon) and [!bundle_icon](#bundle_icon) to use images as icons.
 
 ```seed
 OpherIcon::Sentry

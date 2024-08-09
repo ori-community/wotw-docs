@@ -524,7 +524,7 @@ remove_shard(shard: Shard)
 on binding_1 remove_shard(Shard::Deflector)
 // Equivalent to:
 on binding_1 {
-    store(shards.shuriken, false)
+    store(shards.deflector, false)
     item_message(remove_shard_string(Shard::Deflector))
 }
 ```

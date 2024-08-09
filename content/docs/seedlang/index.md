@@ -1381,37 +1381,26 @@ You can include existing snippets, or split your plandomizer across multiple fil
 
 ```seed
 !include(<snippet>)
+!include(<snippet>, <identifier>, ...)
 ```
 
 ##### Example
 
 ```seed
 !include("wisps")  // wisps is the snippet adding the wisps goal mode
+!include("bonus_item_core", extra_double_jump)
+
+on binding_1 extra_double_jump()
 ```
 
 ##### Notes
 
 If you want to include custom snippets they need to be in the snippet or plandomizer folder.
 
-#### use
+#### export
 
 ```seed
-!use(<snippet>, <identifier>)
-```
-
-##### Example
-
-```seed
-!include("bonus_item_core")
-!use("bonus_item_core", extra_double_jump)
-
-on binding_1 extra_double_jump()
-```
-
-#### share
-
-```seed
-!share(<identifier>)
+!export(<identifier>)
 ```
 
 ##### Example
@@ -1420,8 +1409,8 @@ on binding_1 extra_double_jump()
 fun cool_custom_item() {
     item_message(":oricool:")
 }
-// This allows other snippets to !use cool_custom_item
-!share(cool_custom_item)
+// This allows other snippets to !include cool_custom_item
+!export(cool_custom_item)
 ```
 
 #### event
@@ -1916,10 +1905,10 @@ Preplacements happen before any logic, they are placed in a random location of t
 
 Snippets may add annotations to influence how they are presented to the user. They do nothing in plandomizers.
 
-#### Hide
+#### Hidden
 
 ```seed
-#hide
+#hidden
 ```
 
 ##### Notes

@@ -1821,8 +1821,8 @@ on binding_1 item_message("Burrow: " + burrow_zone)
 ##### Example
 
 ```seed
-!item_on(inkwater_shrine_item, MarshPastOpher.CombatShrine)
-on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + inkwater_shrine_item)
+!item_on(marsh_shrine_item, MarshPastOpher.CombatShrine)
+on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
 ```
 
 #### count_in_zone
@@ -1836,7 +1836,7 @@ on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + inkwate
 ```seed
 !count_in_zone(
     [
-        (weapons_in_inkwater, Zone::Inkwater),
+        (weapons_in_marsh, Zone::Marsh),
         (weapons_in_hollow, Zone::Hollow),
         (weapons_in_glades, Zone::Glades),
     ],
@@ -1852,7 +1852,7 @@ on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + inkwate
     ]
 )
 
-on binding_1 item_message("Inkwater Weapons - " + weapons_in_inkwater)
+on binding_1 item_message("Marsh Weapons - " + weapons_in_marsh)
 on binding_2 item_message("Hollow Weapons - " + weapons_in_hollow)
 on binding_3 item_message("Glades Weapons - " + weapons_in_glades)
 ```
@@ -1893,8 +1893,8 @@ This is useful when having to write custom logic for a snippet such as no combat
 ##### Example
 
 ```seed
-// Sword will be placed somewhere in Inkwater
-!preplace(skill(Skill::Sword), Zone::Inkwater)
+// Sword will be placed somewhere in Marsh
+!preplace(skill(Skill::Sword), Zone::Marsh)
 ```
 
 ##### Notes
@@ -1991,7 +1991,7 @@ Skill::Sentry
 Skill::Flap
 Skill::WeaponCharge
 Skill::GladesAncestralLight
-Skill::InkwaterAncestralLight
+Skill::MarshAncestralLight
 ```
 
 ### Shards
@@ -2033,7 +2033,7 @@ Shard::Arcing
 ### Teleporters
 
 ```seed
-Teleporter::Inkwater
+Teleporter::Marsh
 Teleporter::Den
 Teleporter::Hollow
 Teleporter::Glades
@@ -2043,8 +2043,8 @@ Teleporter::WoodsEntrance
 Teleporter::WoodsExit
 Teleporter::Reach
 Teleporter::Depths
-Teleporter::CentralLuma
-Teleporter::LumaBoss
+Teleporter::CentralPools
+Teleporter::PoolsBoss
 Teleporter::FeedingGrounds
 Teleporter::CentralWastes
 Teleporter::OuterRuins
@@ -2066,14 +2066,14 @@ WeaponUpgrade::RapidSentry
 ### Zones
 
 ```seed
-Zone::Inkwater
+Zone::Marsh
 Zone::Hollow
 Zone::Glades
 Zone::Wellspring
 Zone::Woods
 Zone::Reach
 Zone::Depths
-Zone::Luma
+Zone::Pools
 Zone::Wastes
 Zone::Ruins
 Zone::Willow

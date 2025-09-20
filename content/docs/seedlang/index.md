@@ -12,7 +12,7 @@ Snippets only define a part of a seed. Any amount of them can be used during see
 
 Plandomizers define the entire seed. They have to be compiled by the seed generator, but it won't add any random placements.
 
-The randomizer ships with a set of [official snippets](https://github.com/SiriusAshling/wotw-seedgen/tree/new_seed_format/assets/snippets). This is how for instance goal modes and hints are implemented. You can use them as a baseline if you want to write similar snippets.
+The randomizer ships with a set of [official snippets](https://github.com/ori-community/wotw-seedgen/tree/v5/assets/snippets). This is how for instance goal modes and hints are implemented. You can use them as a baseline if you want to write similar snippets.
 
 ### Editor support
 
@@ -24,7 +24,7 @@ Initially custom snippets will probably work like custom headers do now: In the 
 
 ### Compiling plandomizers
 
-A compiler will be integrated into the local seedgen. This is already implemented in a [seedgen fork](https://github.com/SiriusAshling/wotw-seedgen/tree/new_seed_format)
+A compiler will be integrated into the local seedgen. This is already implemented in the [v5 branch](https://github.com/ori-community/wotw-seedgen/tree/v5)
 
 ## UberStates
 

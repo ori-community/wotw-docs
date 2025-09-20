@@ -123,7 +123,7 @@ on player.spiritLight > 4000 item_message("You're rich!")
 
 Conditions trigger when their value changes from `false` to `true`.
 
-For example, `on player.spiritLight > 4000` will trigger once when the spirit light changes to above 4000, but it won't trigger on any future changes to the amount of spirit light. `on MarshSpawn.FirstEX || MarshSpawn.RockHC` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on MarshSpawn.FirstEX && MarshSpawn.RockHC` will only trigger once the player collected both pickups.
+For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on MarshSpawn.FirstEX || MarshSpawn.RockHC` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on MarshSpawn.FirstEX && MarshSpawn.RockHC` will only trigger once the player collected both pickups.
 
 ## Actions
 

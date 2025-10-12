@@ -692,7 +692,7 @@ on binding_1 item_message("Hi! You seem to have " + player.gorlekOre + " Gorlek 
 
 ##### Notes
 
-Item messages will enter a queue in the top center region of the screen. Up to 7 item messages can be shown at once. If too many messages are already visible, new ones will wait until they have space to appear. By default item messages disappear after a 4 second timeout; the timeout only runs while they're visible.
+Item messages will enter a queue in the top center region of the screen. If too many messages are already visible, new ones will wait until they have space to appear. By default item messages disappear after a 4 second timeout; the timeout only runs while they're visible.
 
 #### item_message_with_timeout
 

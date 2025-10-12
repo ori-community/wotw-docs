@@ -670,13 +670,13 @@ See also: [List of possible values for keybind interpolation](https://github.com
 
 Some message properties can be changed after the message has been created:
 
-| Creation Function           | Destroy   | Text      | Timeout   | Background | Position  | Alignment | Screen Position |
-| --------------------------- | --------- | --------- | --------- | ---------- | --------- | --------- | --------------- |
-| item_message                | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
-| item_message_with_timeout   | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
-| priority_message            | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌              |
-| controlled_priority_message | :orihype: | :orihype: | :orihype: | :orihype:  | ❌        | ❌        | ❌              |
-| free_message                | :orihype: | :orihype: | :orihype: | :orihype:  | :orihype: | :orihype: | :orihype:       |
+| Creation Function           | Destroy   | Text      | Timeout   | Background | Position  | Alignment | Anchor    |
+| --------------------------- | --------- | --------- | --------- | ---------- | --------- | --------- | --------- |
+| item_message                | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌        |
+| item_message_with_timeout   | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌        |
+| priority_message            | ❌        | ❌        | ❌        | ❌         | ❌        | ❌        | ❌        |
+| controlled_priority_message | :orihype: | :orihype: | :orihype: | :orihype:  | ❌        | ❌        | ❌        |
+| free_message                | :orihype: | :orihype: | :orihype: | :orihype:  | :orihype: | :orihype: | :orihype: |
 
 #### item_message
 
@@ -775,17 +775,33 @@ set_message_text(id: String, message: String)
 set_message_timeout(id: String, timeout: Float)
 ```
 
+##### Notes
+
+Starts a timeout for the message to disappear.
+
 #### set_message_background
 
 ```seed
 set_message_background(id: String, background: Boolean)
 ```
 
+##### Notes
+
+Controls whether the background box behind the text is rendered.
+
+Defaults to `true`.
+
 #### set_message_position
 
 ```seed
 set_message_position(id: String, x: Float, y: Float)
 ```
+
+##### Notes
+
+How the position is interpreted depends on the message's [horizontal anchor](#set_message_horizontal_anchor), [vertical anchor](#set_message_vertical_anchor) and [coordinate system](#set_message_coordinate_system)
+
+Defaults to (0.5, 0.114), which approximates the default position of other messages at the top center of the screen.
 
 #### set_message_alignment
 
@@ -795,7 +811,45 @@ set_message_alignment(id: String, alignment: Alignment)
 
 ##### Notes
 
+Controls the text alignment, which will only matter on multiline messages. `Alignment::Justify` exists but we're not sure if it works.
+
+For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+
+Defaults to `Alignment::Center`.
+
 See [Alignments](#alignments) for possible values.
+
+#### set_message_horizontal_anchor
+
+```seed
+set_message_horizontal_anchor(id: String, horizontal_anchor: HorizontalAnchor)
+```
+
+##### Notes
+
+Controls which part of the message box its [x position](#set_message_position) refers to.
+
+For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+
+Defaults to `HorizontalAnchor::Center`.
+
+See [Horizontal Anchors](#horizontal-anchors) for possible values.
+
+#### set_message_vertical_anchor
+
+```seed
+set_message_vertical_anchor(id: String, vertical_anchor: VerticalAnchor)
+```
+
+##### Notes
+
+Controls which part of the message box its [y position](#set_message_position) refers to.
+
+For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+
+Defaults to `VerticalAnchor::Top`.
+
+See [Vertical Anchors](#vertical-anchors) for possible values.
 
 #### set_message_screen_position
 
@@ -803,9 +857,57 @@ See [Alignments](#alignments) for possible values.
 set_message_screen_position(id: String, screen_position: ScreenPosition)
 ```
 
+##### Example
+
+```seed
+on binding_1 {
+    free_message("top_left", "I will appear in the top left corner.")
+    set_message_screen_position("top_left", ScreenPosition::TopLeft)
+}
+// Equivalent to:
+on binding_1 {
+    free_message("top_left", "I will appear in the top left corner.")
+    set_message_alignment("top_left", Alignment::Left)
+    set_message_horizontal_anchor("top_left", HorizontalAnchor::Left)
+    set_message_vertical_anchor("top_left", VerticalAnchor::Top)
+}
+```
+
 ##### Notes
 
+In essence, the first part of the screen position controls the [vertical anchor](#set_message_vertical_anchor) and the second part the [horizontal anchor](#set_message_horizontal_anchor) and [alignment](#set_message_alignment). This only allows for a subset of possible alignment and anchor combinations, but it's useful for the most common cases.
+
+Defaults to `ScreenPosition::TopCenter`.
+
 See [Screen Positions](#screen-positions) for possible values.
+
+#### set_message_box_width
+
+```seed
+set_message_box_width(id: String, width: Float)
+```
+
+##### Notes
+
+By default, message boxes fit their content. Using this you can instead set a fixed width.
+
+#### set_message_coordinate_system
+
+```seed
+set_message_coordinate_system(id: String, coordinate_system: CoordinateSystem)
+```
+
+##### Notes
+
+Controls how the message's [position](#set_message_position) is interpreted:
+
+- `CoordinateSystem::Absolute` uses the game's internal positioning, which doesn't account for different resolutions and is not recommended.
+- `CoordinateSystem::Relative` normalizes coordinates so that (0, 0) is the top left corner and (1, 1) the bottom right corner of the screen.
+- `CoordinateSystem::World` places the message at in-world coordinates, meaning it's not relative to the camera anymore at all.
+
+Defaults to `CoordinateSystem::Relative`.
+
+See [Coordinate Systems](#coordinate-systems) for possible values.
 
 ### Common Item Texts
 
@@ -2092,6 +2194,22 @@ Alignment::Right
 Alignment::Justify
 ```
 
+### Horizontal Anchors
+
+```seed
+HorizontalAnchor::Left
+HorizontalAnchor::Center
+HorizontalAnchor::Right
+```
+
+### Vertical Anchors
+
+```seed
+VerticalAnchor::Top
+VerticalAnchor::Middle
+VerticalAnchor::Bottom
+```
+
 ### Screen Positions
 
 ```seed
@@ -2104,6 +2222,14 @@ ScreenPosition::MiddleRight
 ScreenPosition::BottomLeft
 ScreenPosition::BottomCenter
 ScreenPosition::BottomRight
+```
+
+### Coordinate Systems
+
+```seed
+CoordinateSystem::Absolute
+CoordinateSystem::Relative
+CoordinateSystem::World
 ```
 
 ### Equip Slots

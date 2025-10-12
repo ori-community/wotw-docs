@@ -1,0 +1,1 @@
+import{ad as t,aF as n,aG as s}from"./zvMLikBt.js";const p=t({__name:"index",async setup(r){let e,a;return[e,a]=n(()=>s("/docs/seedlang",{replace:!0})),await e,a(),(_,o)=>null}});export{p as default};

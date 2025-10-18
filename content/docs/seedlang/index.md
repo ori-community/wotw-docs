@@ -1755,7 +1755,29 @@ fun treasure_chest() {
 
 ##### Notes
 
-Snippet settings are only relevant for snippets used in seed generation, they do nothing for plandos.
+Snippet settings will be available for configuration in the launcher or seedgen cli when generating random seeds with the snippet, but they can also be controlled by a plandomizer using [set_config](#set_config).
+
+#### set_config
+
+```seed
+!set_config(<snippet>, <identifier>, <value>)
+```
+
+##### Example
+
+```seed
+// Include knowledge hints (for example, in your plando), but turn off the regen hint (since it doesn't fit your plando's style/progression)
+!include("knowledge_hints")
+!set_config("knowledge_hints", regen_logic_hint, "false")
+```
+
+##### Notes
+
+This command is useful in plandomizers, when you want to include snippets out of your control and change their configuration.
+
+You probably shouldn't use it in snippets intended for seed generation, where configuration is supposed to be controller by the player generating the seed.
+
+Note that you have to put the value inside a string. This is because making good compilers is hard.
 
 ### Spawn Location
 

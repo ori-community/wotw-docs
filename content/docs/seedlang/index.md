@@ -75,11 +75,11 @@ Client Events are special triggers for specific tasks. These are all of them:
 - `spawn` - Trigger when starting a new file,
 - `reload` - Trigger when starting a new file or loading the seed into an active file,
 - `respawn` - Trigger when respawning after death, void etc.,
-- `binding_1` - Trigger on keybind,
-- `binding_2` - Trigger on keybind,
-- `binding_3` - Trigger on keybind,
-- `binding_4` - Trigger on keybind,
-- `binding_5` - Trigger on keybind,
+- `binding1` - Trigger on keybind,
+- `binding2` - Trigger on keybind,
+- `binding3` - Trigger on keybind,
+- `binding4` - Trigger on keybind,
+- `binding5` - Trigger on keybind,
 - `teleport` - Trigger on Teleport,
 - `progress_message` - Trigger on the Show Progress keybind,
 - `tick` - Trigger every frame,
@@ -191,9 +191,9 @@ spirit_light(amount: Integer)
 ##### Example
 
 ```seed
-on binding_1 spirit_light(50)
+on binding1 spirit_light(50)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.spiritLight, player.spiritLight + 50)
     item_message(spirit_light_string(50))
 }
@@ -208,9 +208,9 @@ gorlek_ore()
 ##### Example
 
 ```seed
-on binding_1 gorlek_ore()
+on binding1 gorlek_ore()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.gorlekOre, player.gorlekOre + 1)
     item_message(gorlek_ore_string())
 }
@@ -225,9 +225,9 @@ keystone()
 ##### Example
 
 ```seed
-on binding_1 keystone()
+on binding1 keystone()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.keystones, player.keystones + 1)
     item_message(keystone_string())
 }
@@ -242,9 +242,9 @@ shard_slot()
 ##### Example
 
 ```seed
-on binding_1 shard_slot()
+on binding1 shard_slot()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.shardSlots, player.shardSlots + 1)
     item_message(shard_slot_string())
 }
@@ -259,9 +259,9 @@ health_fragment()
 ##### Example
 
 ```seed
-on binding_1 health_fragment()
+on binding1 health_fragment()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.maxHealth, player.maxHealth + 5)
     store(player.health, player.maxHealth)
     item_message(health_fragment_string())
@@ -277,9 +277,9 @@ energy_fragment()
 ##### Example
 
 ```seed
-on binding_1 energy_fragment()
+on binding1 energy_fragment()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.maxEnergy, player.maxEnergy + 0.5)
     store(player.energy, player.maxEnergy)
     item_message(energy_fragment_string())
@@ -295,9 +295,9 @@ skill(skill: Skill)
 ##### Example
 
 ```seed
-on binding_1 skill(Skill::Shuriken)
+on binding1 skill(Skill::Shuriken)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(skills.shuriken, true)
     item_message(skill_string(Skill::Shuriken))
 }
@@ -316,9 +316,9 @@ shard(shard: Shard)
 ##### Example
 
 ```seed
-on binding_1 shard(Shard::Deflector)
+on binding1 shard(Shard::Deflector)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(shards.shuriken, true)
     item_message(shard_string(Shard::Deflector))
 }
@@ -337,9 +337,9 @@ teleporter(teleporter: Teleporter)
 ##### Example
 
 ```seed
-on binding_1 teleporter(Teleporter::Shriek)
+on binding1 teleporter(Teleporter::Shriek)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(16155|50867, true) // Teleporter UberStates often have ambiguous names
     item_message(teleporter_string(Teleporter::Shriek))
 }
@@ -358,9 +358,9 @@ clean_water()
 ##### Example
 
 ```seed
-on binding_1 clean_water()
+on binding1 clean_water()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(randoState.cleanWater, true)
     item_message(clean_water_string())
 }
@@ -375,9 +375,9 @@ weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ##### Example
 
 ```seed
-on binding_1 weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+on binding1 weapon_upgrade(WeaponUpgrade::ChargeBlaze)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(weapon_upgrades.chargeBlaze, true)
     item_message(weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
 }
@@ -398,9 +398,9 @@ remove_spirit_light(amount: Integer)
 ##### Example
 
 ```seed
-on binding_1 remove_spirit_light(50)
+on binding1 remove_spirit_light(50)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.spiritLight, player.spiritLight - 50)
     item_message(remove_spirit_light_string(50))
 }
@@ -415,9 +415,9 @@ remove_gorlek_ore()
 ##### Example
 
 ```seed
-on binding_1 remove_gorlek_ore()
+on binding1 remove_gorlek_ore()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.gorlekOre, player.gorlekOre - 1)
     item_message(remove_gorlek_ore_string())
 }
@@ -432,9 +432,9 @@ remove_keystone()
 ##### Example
 
 ```seed
-on binding_1 remove_keystone()
+on binding1 remove_keystone()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.keystones, player.keystones - 1)
     item_message(remove_keystone_string())
 }
@@ -449,9 +449,9 @@ remove_shard_slot()
 ##### Example
 
 ```seed
-on binding_1 remove_shard_slot()
+on binding1 remove_shard_slot()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.shardSlots, player.shardSlots - 1)
     item_message(remove_shard_slot_string())
 }
@@ -466,9 +466,9 @@ remove_health_fragment()
 ##### Example
 
 ```seed
-on binding_1 remove_health_fragment()
+on binding1 remove_health_fragment()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.maxHealth, player.maxHealth - 5)
     item_message(remove_health_fragment_string())
 }
@@ -483,9 +483,9 @@ remove_energy_fragment()
 ##### Example
 
 ```seed
-on binding_1 remove_energy_fragment()
+on binding1 remove_energy_fragment()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(player.maxEnergy, player.maxEnergy - 0.5)
     item_message(remove_energy_fragment_string())
 }
@@ -500,9 +500,9 @@ remove_skill(skill: Skill)
 ##### Example
 
 ```seed
-on binding_1 remove_skill(Skill::Shuriken)
+on binding1 remove_skill(Skill::Shuriken)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(skills.shuriken, false)
     item_message(remove_skill_string(Skill::Shuriken))
 }
@@ -521,9 +521,9 @@ remove_shard(shard: Shard)
 ##### Example
 
 ```seed
-on binding_1 remove_shard(Shard::Deflector)
+on binding1 remove_shard(Shard::Deflector)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(shards.deflector, false)
     item_message(remove_shard_string(Shard::Deflector))
 }
@@ -542,9 +542,9 @@ remove_teleporter(teleporter: Teleporter)
 ##### Example
 
 ```seed
-on binding_1 remove_teleporter(Teleporter::Shriek)
+on binding1 remove_teleporter(Teleporter::Shriek)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(16155|50867, false) // Teleporter UberStates often have ambiguous names
     item_message(remove_teleporter_string(Teleporter::Shriek))
 }
@@ -563,9 +563,9 @@ remove_clean_water()
 ##### Example
 
 ```seed
-on binding_1 remove_clean_water()
+on binding1 remove_clean_water()
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(randoState.cleanWater, false)
     item_message(remove_clean_water_string())
 }
@@ -580,9 +580,9 @@ remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ##### Example
 
 ```seed
-on binding_1 remove_weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+on binding1 remove_weapon_upgrade(WeaponUpgrade::ChargeBlaze)
 // Equivalent to:
-on binding_1 {
+on binding1 {
     store(weapon_upgrades.chargeBlaze, false)
     item_message(remove_weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
 }
@@ -607,7 +607,7 @@ You can use concatenation to include the return values of functions and UberStat
 ##### Example
 
 ```seed
-on binding_1 item_message(player.spiritLight + " Spirit Light owned")
+on binding1 item_message(player.spiritLight + " Spirit Light owned")
 ```
 
 ![example message with concatenation](/images/messageconcatenation.png)
@@ -617,7 +617,7 @@ Additionally, the resulting message will be processed further by the game.
 ##### Examples
 
 ```seed
-on binding_1 {
+on binding1 {
     item_message("This\nmessage\nhas\nfive\nlines.")
     // Or, for better readability:
     item_message(
@@ -633,7 +633,7 @@ on binding_1 {
 ![example message with five lines](/images/messagefivelines.png)
 
 ```seed
-on binding_1 item_message(
+on binding1 item_message(
     "Here be colors: *blue*, #yellow#, @red@, $green$ and <purple>purple</>.\n" +
     "As a side effect, it's impossible to show any of these symbols in a message: *#@$<>"
 )
@@ -642,26 +642,26 @@ on binding_1 item_message(
 ![example message with colors](/images/messagecolors.png)
 
 ```seed
-on binding_1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
+on binding1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
 ```
 
 ![example message with hex colors](/images/messagehexcolors.png)
 
 ```seed
-on binding_1 item_message("<s_3>*BIG HUG*</>")
+on binding1 item_message("<s_3>*BIG HUG*</>")
 ```
 
 ![example message with font size](/images/messagefontsize.png)
 
 ```seed
-on binding_1 item_message("<ls_1.5>Very \n far \n apart</>")
+on binding1 item_message("<ls_1.5>Very \n far \n apart</>")
 ```
 
 ![example message with line size](/images/messagelinesize.png)
 
 ```seed
 // This will insert the player's own keybind for the action.
-on binding_1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
+on binding1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
 ```
 
 ![example message with keybind](/images/messagekeybind.png)
@@ -687,7 +687,7 @@ item_message(message: String)
 ##### Example
 
 ```seed
-on binding_1 item_message("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.")
+on binding1 item_message("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.")
 ```
 
 ##### Notes
@@ -703,7 +703,7 @@ item_message_with_timeout(message: String, timeout: Float)
 ##### Example
 
 ```seed
-on binding_1 item_message_with_timeout("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.", 2)
+on binding1 item_message_with_timeout("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.", 2)
 ```
 
 ##### Notes
@@ -719,7 +719,7 @@ priority_message(message: String, timeout: Float)
 ##### Example
 
 ```seed
-on binding_1 priority_message("Pressing this bind fills you with determination", 6)
+on binding1 priority_message("Pressing this bind fills you with determination", 6)
 ```
 
 ##### Notes
@@ -755,12 +755,12 @@ destroy_message(id: String)
 ##### Example
 
 ```seed
-on binding_1 free_message(
+on binding1 free_message(
     "confirmation",
     "Just making sure, you did read this message in its entirety?\n" +
     "[Binding2] Yes"
 )
-on binding_2 destroy_message("confirmation")
+on binding2 destroy_message("confirmation")
 ```
 
 #### set_message_text
@@ -860,12 +860,12 @@ set_message_screen_position(id: String, screen_position: ScreenPosition)
 ##### Example
 
 ```seed
-on binding_1 {
+on binding1 {
     free_message("top_left", "I will appear in the top left corner.")
     set_message_screen_position("top_left", ScreenPosition::TopLeft)
 }
 // Equivalent to:
-on binding_1 {
+on binding1 {
     free_message("top_left", "I will appear in the top left corner.")
     set_message_alignment("top_left", Alignment::Left)
     set_message_horizontal_anchor("top_left", HorizontalAnchor::Left)
@@ -1090,9 +1090,9 @@ fetch(uber_identifier: UberIdentifier) -> Float
 ##### Example
 
 ```seed
-on binding_1 item_message("Gorlek Ore: " + fetch(player.gorlekOre))
+on binding1 item_message("Gorlek Ore: " + fetch(player.gorlekOre))
 // Or, for convenience:
-on binding_1 item_message("Gorlek Ore: " + player.gorlekOre)
+on binding1 item_message("Gorlek Ore: " + player.gorlekOre)
 ```
 
 ##### Notes
@@ -1110,7 +1110,7 @@ store(uber_identifier: UberIdentifier, value: Float)
 ##### Example
 
 ```seed
-on binding_1 store(player.health, -1) // Setting health to a negative value kills the player
+on binding1 store(player.health, -1) // Setting health to a negative value kills the player
 ```
 
 ##### Notes
@@ -1492,7 +1492,7 @@ You can include existing snippets, or split your plandomizer across multiple fil
 !include("wisps")  // wisps is the snippet adding the wisps goal mode
 !include("bonus_item_core", extra_double_jump)
 
-on binding_1 extra_double_jump()
+on binding1 extra_double_jump()
 ```
 
 ##### Notes
@@ -1528,7 +1528,7 @@ fun cool_custom_item() {
 !event(keybind_event)
 
 // You can call the function and whatever other snippets have added will happen.
-on binding_1 keybind_event()
+on binding1 keybind_event()
 ```
 
 #### on_event
@@ -1543,7 +1543,7 @@ on binding_1 keybind_event()
 // file: define_event.wotws
 !event(keybind_event)
 // This will show a message and give a gorlek ore if the snippets below are used
-on binding_1 keybind_event()
+on binding1 keybind_event()
 ```
 
 ```seed
@@ -1638,7 +1638,7 @@ Only the types `Boolean`, `Integer` and `Float` are allowed here. It's not possi
 ```seed
 !timer(timer_enabled, timer)
 
-on binding_1 {
+on binding1 {
     store(timer, 0)
     store(timer_enabled, true)
 }
@@ -1814,9 +1814,9 @@ You can use compile-time evaluation to conditionally include parts of your code 
 // In case you can't read hexcolors in your brain, giving them names might help
 !let(lime_green, "<hex_32cd32ff>")
 
-on binding_1 item_message(lime_green + "ooo fancy color")
+on binding1 item_message(lime_green + "ooo fancy color")
 // In the resulting seed, this gives exactly the same output as:
-on binding_1 item_message("<hex_32cd32ff>ooo fancy color")
+on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 ```
 
 #### if
@@ -1871,7 +1871,7 @@ Values that can change randomly while playing the seed still need to be implemen
 
 ```seed
 !random_integer(number, 1, 100)
-on binding_1 item_message(number)
+on binding1 item_message(number)
 ```
 
 #### random_float
@@ -1884,7 +1884,7 @@ on binding_1 item_message(number)
 
 ```seed
 !random_float(number, 0, 2.5)
-on binding_1 item_message(number)
+on binding1 item_message(number)
 ```
 
 #### random_pool
@@ -1933,7 +1933,7 @@ These are very specialized commands to support our hint systems.
 
 ```seed
 !zone_of(burrow_zone, skill(Skill::Burrow))
-on binding_1 item_message("Burrow: " + burrow_zone)
+on binding1 item_message("Burrow: " + burrow_zone)
 ```
 
 #### item_on
@@ -1946,7 +1946,7 @@ on binding_1 item_message("Burrow: " + burrow_zone)
 
 ```seed
 !item_on(marsh_shrine_item, MarshPastOpher.CombatShrine)
-on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
+on binding1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
 ```
 
 #### count_in_zone
@@ -1976,9 +1976,9 @@ on binding_1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_s
     ]
 )
 
-on binding_1 item_message("Marsh Weapons - " + weapons_in_marsh)
-on binding_2 item_message("Hollow Weapons - " + weapons_in_hollow)
-on binding_3 item_message("Glades Weapons - " + weapons_in_glades)
+on binding1 item_message("Marsh Weapons - " + weapons_in_marsh)
+on binding2 item_message("Hollow Weapons - " + weapons_in_hollow)
+on binding3 item_message("Glades Weapons - " + weapons_in_glades)
 ```
 
 ### Miscellaneous

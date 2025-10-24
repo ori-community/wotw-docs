@@ -16,7 +16,7 @@ The randomizer ships with a set of [official snippets](https://github.com/ori-co
 
 ### Editor support
 
-We're working on a [language server](https://github.com/ori-community/wotw-seed-lsp) that will provide useful features when writing the language. It's planned to release with VSCode support but should be reasonable to integrate into other editors that support language servers.
+Seedgen will include a language server (subcommand `lsp`) that can provide features such as UberState autocomplete. A [VSCode extension](https://github.com/ori-community/wotw-seedlang-vscode) integrating it is available. Any other editor supporting the language server protocol should be able to use it as well.
 
 ### Using custom snippets
 
@@ -24,7 +24,7 @@ Initially custom snippets will probably work like custom headers do now: In the 
 
 ### Compiling plandomizers
 
-A compiler will be integrated into the local seedgen. This is already implemented in the [v5 branch](https://github.com/ori-community/wotw-seedgen/tree/v5)
+A compiler will be integrated into the local seedgen. This is already implemented in the [v5 branch](https://github.com/ori-community/wotw-seedgen/tree/v5), see subcommand `plando`.
 
 ## UberStates
 
@@ -32,7 +32,7 @@ Ori 2 stores its world data in _UberStates_. It's important to understand them b
 
 Every UberState has a unique identifier consisting of two numbers. `21786|49485` is the UberState that tracks whether you collected the spirit light orb right of spawn.
 
-Every UberState has a name, although it might not be unique. The name of `21786|49485` is `swampStateGroup.smallExpA`. However another UberState - `21786|52026` - has this name as well, so it's impossible to address this specific UberState by its name.
+Every UberState has a name, although it might not be unique. The name of `21786|49485` is `swampStateGroup.smallExpA`. However another UberState (`21786|52026`) has the same name, so it's impossible to address this specific UberState by its name.
 
 To help with that we use aliases. The alias for `21786|49485` is `MarshSpawn.FirstPickupEX`. By convention, aliases start with capital letters so you can tell them apart from real UberState names.
 
@@ -340,7 +340,7 @@ teleporter(teleporter: Teleporter)
 on binding1 teleporter(Teleporter::Shriek)
 // Equivalent to:
 on binding1 {
-    store(16155|50867, true) // Teleporter UberStates often have ambiguous names
+    store(WillowsEnd.ShriekTeleporterActive, true)
     item_message(teleporter_string(Teleporter::Shriek))
 }
 ```
@@ -801,7 +801,7 @@ set_message_position(id: String, x: Float, y: Float)
 
 How the position is interpreted depends on the message's [horizontal anchor](#set_message_horizontal_anchor), [vertical anchor](#set_message_vertical_anchor) and [coordinate system](#set_message_coordinate_system)
 
-Defaults to (0.5, 0.114), which approximates the default position of other messages at the top center of the screen.
+Defaults to `0.5, 0.114`, which approximates the default position of other messages at the top center of the screen.
 
 #### set_message_alignment
 
@@ -863,6 +863,7 @@ set_message_screen_position(id: String, screen_position: ScreenPosition)
 on binding1 {
     free_message("top_left", "I will appear in the top left corner.")
     set_message_screen_position("top_left", ScreenPosition::TopLeft)
+    set_message_position("top_left", 0, 0)
 }
 // Equivalent to:
 on binding1 {
@@ -870,6 +871,7 @@ on binding1 {
     set_message_alignment("top_left", Alignment::Left)
     set_message_horizontal_anchor("top_left", HorizontalAnchor::Left)
     set_message_vertical_anchor("top_left", VerticalAnchor::Top)
+    set_message_position("top_left", 0, 0)
 }
 ```
 
@@ -916,6 +918,10 @@ See [Coordinate Systems](#coordinate-systems) for possible values.
 ```seed
 spirit_light_string(amount: Integer) -> String
 ```
+
+##### Notes
+
+Every instance of this function in your code will be assigned a random spirit light name. This way random spirit light names within the same seed always appear at the same places.
 
 #### gorlek_ore_string
 
@@ -1473,7 +1479,7 @@ Passing arguments to custom functions is not currently supported. Use [variables
 
 ## Commands
 
-While triggers and actions are instructions for the randomizer, commands are instructions for the compiler and seed generator. They provide features such as code splitting, adding settings to your snippet or customizing random placements.
+Where triggers and actions are instructions for the randomizer, commands are instructions for the compiler and seed generator. They provide features such as code splitting, adding settings to your snippet or customizing random placements.
 
 ### Including Files
 
@@ -1498,6 +1504,20 @@ on binding1 extra_double_jump()
 ##### Notes
 
 If you want to include custom snippets they need to be in the snippet or plandomizer folder.
+
+When making a plandomizer, you probably want to include some of the official snippets. You don't need to copy them anywhere, simply add them as includes. Most notably, `seed_core` is included in every generated seed and is responsible for many randomizer critical tasks such as enabling teleport anywhere. Here is a selection of includes to get your plandomizer into a similar starting point as a generated seed with the gorlek preset:
+
+```seed
+!include("seed_core")
+!include("progress_helper")
+!include("no_cutscenes")
+!include("shrine_hints")
+!include("trial_hints")
+!include("better_mechanics")
+!include("spawn_tuley")
+!include("no_rain")
+!include("knowledge_hints")
+```
 
 #### export
 

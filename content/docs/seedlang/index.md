@@ -1535,47 +1535,32 @@ fun cool_custom_item() {
 !export(cool_custom_item)
 ```
 
-#### event
+#### augment_fun
 
 ```seed
-!event(<identifier>)
-```
-
-##### Example
-
-```seed
-// Other snippets can reference this using on_event and add actions to the keybind_event function.
-!event(keybind_event)
-
-// You can call the function and whatever other snippets have added will happen.
-on binding1 keybind_event()
-```
-
-#### on_event
-
-```seed
-!on_event(<snippet>, <identifier>, <action>)
+!augment_fun(<identifier>, <action>)
 ```
 
 ##### Example
 
 ```seed
 // file: define_event.wotws
-!event(keybind_event)
+!export(keybind_event)
+fun keybind_event() {}
 // This will show a message and give a gorlek ore if the snippets below are used
 on binding1 keybind_event()
 ```
 
 ```seed
 // file: message_on_event.wotws
-!include("define_event")
-!on_event("define_event", keybind_event, item_message("Hi!"))
+!include("define_event", keybind_event)
+!augment_fun(keybind_event, item_message("Hi!"))
 ```
 
 ```seed
 // file: ore_on_event.wotws
-!include("define_event")
-!on_event("define_event", keybind_event, gorlek_ore())
+!include("define_event", keybind_event)
+!augment_fun(keybind_event, gorlek_ore())
 ```
 
 #### bundle_icon

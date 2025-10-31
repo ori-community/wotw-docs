@@ -1727,6 +1727,16 @@ See [Icons](#icons) and [Map Icons](#map-icons) for possible values.
 !item_data_description(<action>, <description>)
 ```
 
+#### item_data_map_icon
+
+```seed
+!item_data_map_icon(<action>, <map icon>)
+```
+
+##### Notes
+
+See [Map Icons](#map-icons) for possible values.
+
 #### item_data_icon
 
 ```seed
@@ -1941,6 +1951,10 @@ These are very specialized commands to support our hint systems.
 on binding1 item_message("Burrow: " + burrow_zone)
 ```
 
+##### Notes
+
+See [Zones](#zones) for possible values.
+
 #### item_on
 
 ```seed
@@ -1986,6 +2000,10 @@ on binding2 item_message("Hollow Weapons - " + weapons_in_hollow)
 on binding3 item_message("Glades Weapons - " + weapons_in_glades)
 ```
 
+##### Notes
+
+See [Zones](#zones) for possible values.
+
 ### Miscellaneous
 
 #### tags
@@ -2029,6 +2047,8 @@ This is useful when having to write custom logic for a snippet such as no combat
 ##### Notes
 
 Preplacements happen before any logic, they are placed in a random location of the specified zone which is not already occupied by other preplacements.
+
+See [Zones](#zones) for possible values.
 
 ## Annotations
 

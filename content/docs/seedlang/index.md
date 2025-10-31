@@ -65,7 +65,7 @@ There are three different types of triggers:
 
 ```seed
 // This is what the Spawn With Sword snippet does.
-on spawn skill(Skill::Sword)
+on spawn skill(Sword)
 ```
 
 ##### Notes
@@ -295,11 +295,11 @@ skill(skill: Skill)
 ##### Example
 
 ```seed
-on binding1 skill(Skill::Shuriken)
+on binding1 skill(Shuriken)
 // Equivalent to:
 on binding1 {
     store(skills.shuriken, true)
-    item_message(skill_string(Skill::Shuriken))
+    item_message(skill_string(Shuriken))
 }
 ```
 
@@ -316,11 +316,11 @@ shard(shard: Shard)
 ##### Example
 
 ```seed
-on binding1 shard(Shard::Deflector)
+on binding1 shard(Deflector)
 // Equivalent to:
 on binding1 {
     store(shards.shuriken, true)
-    item_message(shard_string(Shard::Deflector))
+    item_message(shard_string(Deflector))
 }
 ```
 
@@ -337,11 +337,11 @@ teleporter(teleporter: Teleporter)
 ##### Example
 
 ```seed
-on binding1 teleporter(Teleporter::Shriek)
+on binding1 teleporter(Shriek)
 // Equivalent to:
 on binding1 {
     store(WillowsEnd.ShriekTeleporterActive, true)
-    item_message(teleporter_string(Teleporter::Shriek))
+    item_message(teleporter_string(Shriek))
 }
 ```
 
@@ -375,11 +375,11 @@ weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ##### Example
 
 ```seed
-on binding1 weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+on binding1 weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
     store(weapon_upgrades.chargeBlaze, true)
-    item_message(weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
+    item_message(weapon_upgrade_string(ChargeBlaze))
 }
 ```
 
@@ -500,11 +500,11 @@ remove_skill(skill: Skill)
 ##### Example
 
 ```seed
-on binding1 remove_skill(Skill::Shuriken)
+on binding1 remove_skill(Shuriken)
 // Equivalent to:
 on binding1 {
     store(skills.shuriken, false)
-    item_message(remove_skill_string(Skill::Shuriken))
+    item_message(remove_skill_string(Shuriken))
 }
 ```
 
@@ -521,11 +521,11 @@ remove_shard(shard: Shard)
 ##### Example
 
 ```seed
-on binding1 remove_shard(Shard::Deflector)
+on binding1 remove_shard(Deflector)
 // Equivalent to:
 on binding1 {
     store(shards.deflector, false)
-    item_message(remove_shard_string(Shard::Deflector))
+    item_message(remove_shard_string(Deflector))
 }
 ```
 
@@ -542,11 +542,11 @@ remove_teleporter(teleporter: Teleporter)
 ##### Example
 
 ```seed
-on binding1 remove_teleporter(Teleporter::Shriek)
+on binding1 remove_teleporter(Shriek)
 // Equivalent to:
 on binding1 {
     store(16155|50867, false) // Teleporter UberStates often have ambiguous names
-    item_message(remove_teleporter_string(Teleporter::Shriek))
+    item_message(remove_teleporter_string(Shriek))
 }
 ```
 
@@ -580,11 +580,11 @@ remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ##### Example
 
 ```seed
-on binding1 remove_weapon_upgrade(WeaponUpgrade::ChargeBlaze)
+on binding1 remove_weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
     store(weapon_upgrades.chargeBlaze, false)
-    item_message(remove_weapon_upgrade_string(WeaponUpgrade::ChargeBlaze))
+    item_message(remove_weapon_upgrade_string(ChargeBlaze))
 }
 ```
 
@@ -811,11 +811,11 @@ set_message_alignment(id: String, alignment: Alignment)
 
 ##### Notes
 
-Controls the text alignment, which will only matter on multiline messages. `Alignment::Justify` exists but we're not sure if it works.
+Controls the text alignment, which will only matter on multiline messages. `Justify` exists but we're not sure if it works.
 
 For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
 
-Defaults to `Alignment::Center`.
+Defaults to `Center`.
 
 See [Alignments](#alignments) for possible values.
 
@@ -831,7 +831,7 @@ Controls which part of the message box its [x position](#set_message_position) r
 
 For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
 
-Defaults to `HorizontalAnchor::Center`.
+Defaults to `Center`.
 
 See [Horizontal Anchors](#horizontal-anchors) for possible values.
 
@@ -847,7 +847,7 @@ Controls which part of the message box its [y position](#set_message_position) r
 
 For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
 
-Defaults to `VerticalAnchor::Top`.
+Defaults to `Top`.
 
 See [Vertical Anchors](#vertical-anchors) for possible values.
 
@@ -862,15 +862,15 @@ set_message_screen_position(id: String, screen_position: ScreenPosition)
 ```seed
 on binding1 {
     free_message("top_left", "I will appear in the top left corner.")
-    set_message_screen_position("top_left", ScreenPosition::TopLeft)
+    set_message_screen_position("top_left", TopLeft)
     set_message_position("top_left", 0, 0)
 }
 // Equivalent to:
 on binding1 {
     free_message("top_left", "I will appear in the top left corner.")
-    set_message_alignment("top_left", Alignment::Left)
-    set_message_horizontal_anchor("top_left", HorizontalAnchor::Left)
-    set_message_vertical_anchor("top_left", VerticalAnchor::Top)
+    set_message_alignment("top_left", Left)
+    set_message_horizontal_anchor("top_left", Left)
+    set_message_vertical_anchor("top_left", Top)
     set_message_position("top_left", 0, 0)
 }
 ```
@@ -879,7 +879,7 @@ on binding1 {
 
 In essence, the first part of the screen position controls the [vertical anchor](#set_message_vertical_anchor) and the second part the [horizontal anchor](#set_message_horizontal_anchor) and [alignment](#set_message_alignment). This only allows for a subset of possible alignment and anchor combinations, but it's useful for the most common cases.
 
-Defaults to `ScreenPosition::TopCenter`.
+Defaults to `TopCenter`.
 
 See [Screen Positions](#screen-positions) for possible values.
 
@@ -903,11 +903,11 @@ set_message_coordinate_system(id: String, coordinate_system: CoordinateSystem)
 
 Controls how the message's [position](#set_message_position) is interpreted:
 
-- `CoordinateSystem::Absolute` uses the game's internal positioning, which doesn't account for different resolutions and is not recommended.
-- `CoordinateSystem::Relative` normalizes coordinates so that (0, 0) is the top left corner and (1, 1) the bottom right corner of the screen.
-- `CoordinateSystem::World` places the message at in-world coordinates, meaning it's not relative to the camera anymore at all.
+- `Absolute` uses the game's internal positioning, which doesn't account for different resolutions and is not recommended.
+- `Relative` normalizes coordinates so that (0, 0) is the top left corner and (1, 1) the bottom right corner of the screen.
+- `World` places the message at in-world coordinates, meaning it's not relative to the camera anymore at all.
 
-Defaults to `CoordinateSystem::Relative`.
+Defaults to `Relative`.
 
 See [Coordinate Systems](#coordinate-systems) for possible values.
 
@@ -1259,7 +1259,7 @@ set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, de
 
 ##### Notes
 
-Shorthand to use [set_wheel_item_name](#set_wheel_item_name), [set_wheel_item_description](#set_wheel_item_description), [set_wheel_item_icon](#set_wheel_item_icon) and [set_wheel_item_action](#set_wheel_item_action) with `WheelBind::All`.
+Shorthand to use [set_wheel_item_name](#set_wheel_item_name), [set_wheel_item_description](#set_wheel_item_description), [set_wheel_item_icon](#set_wheel_item_icon) and [set_wheel_item_action](#set_wheel_item_action) with `All`.
 
 See [Icons](#icons) for possible values.
 
@@ -1574,7 +1574,7 @@ on binding1 keybind_event()
 ```seed
 !bundle_icon(explosions_icon, "icons/explosions.png")
 // Now you can use the icon anywhere
-on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, explosions_icon)
+on reload set_wheel_item_icon("root", Bottom, explosions_icon)
 ```
 
 ##### Notes
@@ -1595,7 +1595,7 @@ After compilation the icon will be bundled into the seed, with this you can use 
 // This icon ships with the randomizer
 !builtin_icon(minimap_icon, "assets/icons/wheel/minimap.png")
 // Now you can use the icon anywhere
-on reload set_wheel_item_icon("root", WheelItemPosition::Bottom, minimap_icon)
+on reload set_wheel_item_icon("root", Bottom, minimap_icon)
 ```
 
 ##### Notes
@@ -1667,7 +1667,7 @@ Item pool changes are only relevant for snippets used in seed generation, they d
 
 ```seed
 // Add a second Burrow to the item pool
-!add(skill(Skill::Burrow), 1)
+!add(skill(Burrow), 1)
 ```
 
 #### remove
@@ -1680,7 +1680,7 @@ Item pool changes are only relevant for snippets used in seed generation, they d
 
 ```seed
 // This is what the No Launch snippet does
-!remove(skill(Skill::Launch), 1)
+!remove(skill(Launch), 1)
 ```
 
 #### item_data
@@ -1698,8 +1698,8 @@ fun custom_item() {}
     "Custom Item",  // Name when being placed in a shop
     1000,  // Base price when being placed in a shop
     "I assure you it's great",  // Description when being placed in a shop
-    Equipment::Invisibility,  // Icon when being placed in a shop
-    MapIcon::BonusItem  // Map icon for the spoiler filter
+    Invisibility,  // Icon when being placed in a shop
+    BonusItem  // Map icon for the spoiler filter
 )
 ```
 
@@ -1847,7 +1847,7 @@ on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 
 // In the resulting seed, only one of the two sections below will be included
 !if do_shenanigans {
-    !add(item_message(skill_string(Skill::Burrow)))
+    !add(item_message(skill_string(Burrow)))
 }
 !if do_shenanigans == false {
     on spawn item_message("You didn't even enable shenanigans... Boring!")
@@ -1947,7 +1947,7 @@ These are very specialized commands to support our hint systems.
 ##### Example
 
 ```seed
-!zone_of(burrow_zone, skill(Skill::Burrow))
+!zone_of(burrow_zone, skill(Burrow))
 on binding1 item_message("Burrow: " + burrow_zone)
 ```
 
@@ -1979,19 +1979,19 @@ on binding1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_sh
 ```seed
 !count_in_zone(
     [
-        (weapons_in_marsh, Zone::Marsh),
-        (weapons_in_hollow, Zone::Hollow),
-        (weapons_in_glades, Zone::Glades),
+        (weapons_in_marsh, Marsh),
+        (weapons_in_hollow, Hollow),
+        (weapons_in_glades, Glades),
     ],
     [
-        skill(Skill::Grenade),
-        skill(Skill::Spear),
-        skill(Skill::Bow),
-        skill(Skill::Hammer),
-        skill(Skill::Sword),
-        skill(Skill::Shuriken),
-        skill(Skill::Blaze),
-        skill(Skill::Sentry),
+        skill(Grenade),
+        skill(Spear),
+        skill(Bow),
+        skill(Hammer),
+        skill(Sword),
+        skill(Shuriken),
+        skill(Blaze),
+        skill(Sentry),
     ]
 )
 
@@ -2041,7 +2041,7 @@ This is useful when having to write custom logic for a snippet such as no combat
 
 ```seed
 // Sword will be placed somewhere in Marsh
-!preplace(skill(Skill::Sword), Zone::Marsh)
+!preplace(skill(Sword), Marsh)
 ```
 
 ##### Notes
@@ -2113,225 +2113,225 @@ Snippets of the same category will be shown together
 ### Skills
 
 ```seed
-Skill::Bash
-Skill::WallJump
-Skill::DoubleJump
-Skill::Launch
-Skill::Glide
-Skill::SpiritFlame
-Skill::WaterBreath
-Skill::Grenade
-Skill::Grapple
-Skill::Flash
-Skill::Spear
-Skill::Regenerate
-Skill::Bow
-Skill::Hammer
-Skill::Sword
-Skill::Burrow
-Skill::Dash
-Skill::WaterDash
-Skill::Shuriken
-Skill::Seir
-Skill::BowCharge
-Skill::Magnet
-Skill::Blaze
-Skill::Sentry
-Skill::Flap
-Skill::WeaponCharge
-Skill::GladesAncestralLight
-Skill::MarshAncestralLight
+Bash
+WallJump
+DoubleJump
+Launch
+Glide
+SpiritFlame
+WaterBreath
+Grenade
+Grapple
+Flash
+Spear
+Regenerate
+Bow
+Hammer
+Sword
+Burrow
+Dash
+WaterDash
+Shuriken
+Seir
+BowCharge
+Magnet
+Blaze
+Sentry
+Flap
+WeaponCharge
+GladesAncestralLight
+MarshAncestralLight
 ```
 
 ### Shards
 
 ```seed
-Shard::Overcharge
-Shard::TripleJump
-Shard::Wingclip
-Shard::Bounty
-Shard::Swap
-Shard::Magnet
-Shard::Splinter
-Shard::Reckless
-Shard::Quickshot
-Shard::Resilience
-Shard::SpiritLightHarvest
-Shard::Vitality
-Shard::LifeHarvest
-Shard::EnergyHarvest
-Shard::Energy
-Shard::LifePact
-Shard::LastStand
-Shard::Sense
-Shard::UltraBash
-Shard::UltraGrapple
-Shard::Overflow
-Shard::Thorn
-Shard::Catalyst
-Shard::Turmoil
-Shard::Sticky
-Shard::Finesse
-Shard::SpiritSurge
-Shard::Lifeforce
-Shard::Deflector
-Shard::Fracture
-Shard::Arcing
+Overcharge
+TripleJump
+Wingclip
+Bounty
+Swap
+Magnet
+Splinter
+Reckless
+Quickshot
+Resilience
+SpiritLightHarvest
+Vitality
+LifeHarvest
+EnergyHarvest
+Energy
+LifePact
+LastStand
+Sense
+UltraBash
+UltraGrapple
+Overflow
+Thorn
+Catalyst
+Turmoil
+Sticky
+Finesse
+SpiritSurge
+Lifeforce
+Deflector
+Fracture
+Arcing
 ```
 
 ### Teleporters
 
 ```seed
-Teleporter::Marsh
-Teleporter::Den
-Teleporter::Hollow
-Teleporter::Glades
-Teleporter::Wellspring
-Teleporter::Burrows
-Teleporter::WoodsEntrance
-Teleporter::WoodsExit
-Teleporter::Reach
-Teleporter::Depths
-Teleporter::CentralPools
-Teleporter::PoolsBoss
-Teleporter::FeedingGrounds
-Teleporter::CentralWastes
-Teleporter::OuterRuins
-Teleporter::InnerRuins
-Teleporter::Willow
-Teleporter::Shriek
+Marsh
+Den
+Hollow
+Glades
+Wellspring
+Burrows
+WoodsEntrance
+WoodsExit
+Reach
+Depths
+CentralPools
+PoolsBoss
+FeedingGrounds
+CentralWastes
+OuterRuins
+InnerRuins
+Willow
+Shriek
 ```
 
 ### Weapon Upgrades
 
 ```seed
-WeaponUpgrade::ExplodingSpear
-WeaponUpgrade::HammerShockwave
-WeaponUpgrade::StaticShuriken
-WeaponUpgrade::ChargeBlaze
-WeaponUpgrade::RapidSentry
+ExplodingSpear
+HammerShockwave
+StaticShuriken
+ChargeBlaze
+RapidSentry
 ```
 
 ### Zones
 
 ```seed
-Zone::Marsh
-Zone::Hollow
-Zone::Glades
-Zone::Wellspring
-Zone::Woods
-Zone::Reach
-Zone::Depths
-Zone::Pools
-Zone::Wastes
-Zone::Ruins
-Zone::Willow
-Zone::Burrows
-Zone::Spawn
-Zone::Shop
-Zone::Void
+Marsh
+Hollow
+Glades
+Wellspring
+Woods
+Reach
+Depths
+Pools
+Wastes
+Ruins
+Willow
+Burrows
+Spawn
+Shop
+Void
 ```
 
 ### Alignments
 
 ```seed
-Alignment::Left
-Alignment::Center
-Alignment::Right
-Alignment::Justify
+Left
+Center
+Right
+Justify
 ```
 
 ### Horizontal Anchors
 
 ```seed
-HorizontalAnchor::Left
-HorizontalAnchor::Center
-HorizontalAnchor::Right
+Left
+Center
+Right
 ```
 
 ### Vertical Anchors
 
 ```seed
-VerticalAnchor::Top
-VerticalAnchor::Middle
-VerticalAnchor::Bottom
+Top
+Middle
+Bottom
 ```
 
 ### Screen Positions
 
 ```seed
-ScreenPosition::TopLeft
-ScreenPosition::TopCenter
-ScreenPosition::TopRight
-ScreenPosition::MiddleLeft
-ScreenPosition::MiddleCenter
-ScreenPosition::MiddleRight
-ScreenPosition::BottomLeft
-ScreenPosition::BottomCenter
-ScreenPosition::BottomRight
+TopLeft
+TopCenter
+TopRight
+MiddleLeft
+MiddleCenter
+MiddleRight
+BottomLeft
+BottomCenter
+BottomRight
 ```
 
 ### Coordinate Systems
 
 ```seed
-CoordinateSystem::Absolute
-CoordinateSystem::Relative
-CoordinateSystem::World
+Absolute
+Relative
+World
 ```
 
 ### Equip Slots
 
 ```seed
-EquipSlot::Ability1
-EquipSlot::Ability2
-EquipSlot::Ability3
+Ability1
+Ability2
+Ability3
 ```
 
 ### Equipment
 
 ```seed
-Equipment::Hammer
-Equipment::Bow
-Equipment::Sword
-Equipment::Torch
-Equipment::Swordstaff
-Equipment::Chainsword
-Equipment::Shot
-Equipment::HomingMissiles
-Equipment::Wave
-Equipment::Whirl
-Equipment::Glow
-Equipment::LockOn
-Equipment::Shield
-Equipment::Invisibility
-Equipment::LifeAbsorb
-Equipment::Shards
-Equipment::Grenade
-Equipment::Sentry
-Equipment::Spear
-Equipment::Regenerate
-Equipment::Teleport
-Equipment::Shuriken
-Equipment::Blaze
-Equipment::Turret
-Equipment::Sein
-Equipment::Launch
-Equipment::Bash
-Equipment::Grapple
-Equipment::Burrow
-Equipment::Drill
-Equipment::DoubleJump
-Equipment::Flap
-Equipment::Dash
-Equipment::Bounce
-Equipment::Glide
-Equipment::ChargeJump
-Equipment::WaterDash
-Equipment::Climb
-Equipment::WeaponCharge
-Equipment::DamageUpgradeA
-Equipment::DamageUpgradeB
-Equipment::WaterBreath
+Hammer
+Bow
+Sword
+Torch
+Swordstaff
+Chainsword
+Shot
+HomingMissiles
+Wave
+Whirl
+Glow
+LockOn
+Shield
+Invisibility
+LifeAbsorb
+Shards
+Grenade
+Sentry
+Spear
+Regenerate
+Teleport
+Shuriken
+Blaze
+Turret
+Sein
+Launch
+Bash
+Grapple
+Burrow
+Drill
+DoubleJump
+Flap
+Dash
+Bounce
+Glide
+ChargeJump
+WaterDash
+Climb
+WeaponCharge
+DamageUpgradeA
+DamageUpgradeB
+WaterBreath
 ```
 
 ### Icons
@@ -2341,149 +2341,149 @@ In addition to the icons below, you may use [Shards](#shards) and [Equipments](#
 See also [!builtin_icon](#builtin_icon) and [!bundle_icon](#bundle_icon) to use images as icons.
 
 ```seed
-OpherIcon::Sentry
-OpherIcon::RapidSentry
-OpherIcon::Hammer
-OpherIcon::HammerShockwave
-OpherIcon::Shuriken
-OpherIcon::StaticShuriken
-OpherIcon::Spear
-OpherIcon::ExplodingSpear
-OpherIcon::Blaze
-OpherIcon::ChargeBlaze
-OpherIcon::WaterBreath
-OpherIcon::FastTravel
+Sentry
+RapidSentry
+Hammer
+HammerShockwave
+Shuriken
+StaticShuriken
+Spear
+ExplodingSpear
+Blaze
+ChargeBlaze
+WaterBreath
+FastTravel
 
-LupoIcon::EnergyFragmentsMap
-LupoIcon::HealthFragmentsMap
-LupoIcon::ShardsMap
+EnergyFragmentsMap
+HealthFragmentsMap
+ShardsMap
 
-GromIcon::RepairTheSpiritWell
-GromIcon::DwellingRepairs
-GromIcon::ThornySituation
-GromIcon::RoofsOverHeads
-GromIcon::ClearTheCaveEntrance
-GromIcon::OnwardsAndUpwards
-GromIcon::TheGorlekTouch
+RepairTheSpiritWell
+DwellingRepairs
+ThornySituation
+RoofsOverHeads
+ClearTheCaveEntrance
+OnwardsAndUpwards
+TheGorlekTouch
 
-TuleyIcon::SelaFlowers
-TuleyIcon::StickyGrass
-TuleyIcon::Lightcatchers
-TuleyIcon::BlueMoon
-TuleyIcon::SpringPlants
-TuleyIcon::TheLastSeed
+SelaFlowers
+StickyGrass
+Lightcatchers
+BlueMoon
+SpringPlants
+TheLastSeed
 ```
 
 ### Map Icons
 
 ```seed
-MapIcon::Keystone
-MapIcon::Mapstone
-MapIcon::BreakableWall
-MapIcon::BreakableWallBroken
-MapIcon::StompableFloor
-MapIcon::StompableFloorBroken
-MapIcon::EnergyGateTwo
-MapIcon::EnergyGateOpen
-MapIcon::KeystoneDoorFour
-MapIcon::KeystoneDoorOpen
-MapIcon::AbilityPedestal
-MapIcon::HealthUpgrade
-MapIcon::EnergyUpgrade
-MapIcon::SavePedestal
-MapIcon::AbilityPoint
-MapIcon::KeystoneDoorTwo
-MapIcon::Invisible
-MapIcon::Experience
-MapIcon::MapstonePickup
-MapIcon::EnergyGateTwelve
-MapIcon::EnergyGateTen
-MapIcon::EnergyGateEight
-MapIcon::EnergyGateSix
-MapIcon::EnergyGateFour
-MapIcon::SpiritShard
-MapIcon::NPC
-MapIcon::QuestItem
-MapIcon::ShardSlotUpgrade
-MapIcon::Teleporter
-MapIcon::Ore
-MapIcon::QuestStart
-MapIcon::QuestEnd
-MapIcon::RaceStart
-MapIcon::HealthFragment
-MapIcon::EnergyFragment
-MapIcon::Seed
-MapIcon::RaceEnd
-MapIcon::Eyestone
-MapIcon::WatermillDoor
-MapIcon::TempleDoor
-MapIcon::SmallDoor
-MapIcon::Shrine
-MapIcon::Loremaster
-MapIcon::Weaponmaster
-MapIcon::Gardener
-MapIcon::Mapmaker
-MapIcon::Shardtrader
-MapIcon::Wanderer
-MapIcon::Treekeeper
-MapIcon::Builder
-MapIcon::Kwolok
-MapIcon::Statistician
-MapIcon::CreepHeart
-MapIcon::Miner
-MapIcon::Spiderling
-MapIcon::Moki
-MapIcon::MokiBrave
-MapIcon::MokiAdventurer
-MapIcon::MokiArtist
-MapIcon::MokiDarkness
-MapIcon::MokiFashionable
-MapIcon::MokiFisherman
-MapIcon::MokiFrozen
-MapIcon::MokiKwolokAmulet
-MapIcon::MokiSpyglass
-MapIcon::Ku
-MapIcon::IceFisher
-MapIcon::Siira
-MapIcon::SavePedestalInactive
-MapIcon::RaceStartUnfinished
-MapIcon::CleanWater
-MapIcon::BonusItem
-MapIcon::LaunchFragment
-MapIcon::PurpleFloor
-MapIcon::PurpleWall
-MapIcon::YellowWall
-MapIcon::OneWayWallLeft
-MapIcon::OneWayWallRight
-MapIcon::IceWall
-MapIcon::IceFloor
-MapIcon::VerticalDoor
-MapIcon::HorizontalDoor
-MapIcon::Lever
+Keystone
+Mapstone
+BreakableWall
+BreakableWallBroken
+StompableFloor
+StompableFloorBroken
+EnergyGateTwo
+EnergyGateOpen
+KeystoneDoorFour
+KeystoneDoorOpen
+AbilityPedestal
+HealthUpgrade
+EnergyUpgrade
+SavePedestal
+AbilityPoint
+KeystoneDoorTwo
+Invisible
+Experience
+MapstonePickup
+EnergyGateTwelve
+EnergyGateTen
+EnergyGateEight
+EnergyGateSix
+EnergyGateFour
+SpiritShard
+NPC
+QuestItem
+ShardSlotUpgrade
+Teleporter
+Ore
+QuestStart
+QuestEnd
+RaceStart
+HealthFragment
+EnergyFragment
+Seed
+RaceEnd
+Eyestone
+WatermillDoor
+TempleDoor
+SmallDoor
+Shrine
+Loremaster
+Weaponmaster
+Gardener
+Mapmaker
+Shardtrader
+Wanderer
+Treekeeper
+Builder
+Kwolok
+Statistician
+CreepHeart
+Miner
+Spiderling
+Moki
+MokiBrave
+MokiAdventurer
+MokiArtist
+MokiDarkness
+MokiFashionable
+MokiFisherman
+MokiFrozen
+MokiKwolokAmulet
+MokiSpyglass
+Ku
+IceFisher
+Siira
+SavePedestalInactive
+RaceStartUnfinished
+CleanWater
+BonusItem
+LaunchFragment
+PurpleFloor
+PurpleWall
+YellowWall
+OneWayWallLeft
+OneWayWallRight
+IceWall
+IceFloor
+VerticalDoor
+HorizontalDoor
+Lever
 ```
 
 ### Wheel Item Positions
 
 ```seed
-WheelItemPosition::Top
-WheelItemPosition::TopRight
-WheelItemPosition::RightTop
-WheelItemPosition::Right
-WheelItemPosition::RightBottom
-WheelItemPosition::BottomRight
-WheelItemPosition::Bottom
-WheelItemPosition::BottomLeft
-WheelItemPosition::LeftBottom
-WheelItemPosition::Left
-WheelItemPosition::LeftTop
-WheelItemPosition::TopLeft
+Top
+TopRight
+RightTop
+Right
+RightBottom
+BottomRight
+Bottom
+BottomLeft
+LeftBottom
+Left
+LeftTop
+TopLeft
 ```
 
 ### Wheel Binds
 
 ```seed
-WheelBind::All
-WheelBind::Ability1
-WheelBind::Ability2
-WheelBind::Ability3
+All
+Ability1
+Ability2
+Ability3
 ```

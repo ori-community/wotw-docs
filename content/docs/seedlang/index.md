@@ -1563,16 +1563,16 @@ on binding1 keybind_event()
 !augment_fun(keybind_event, gorlek_ore())
 ```
 
-#### bundle_icon
+#### include_icon
 
 ```seed
-!bundle_icon(<identifier>, <path>)
+!include_icon(<identifier>, <path>)
 ```
 
 ##### Example
 
 ```seed
-!bundle_icon(explosions_icon, "icons/explosions.png")
+!include_icon(explosions_icon, "icons/explosions.png")
 // Now you can use the icon anywhere
 on reload set_wheel_item_icon("root", Bottom, explosions_icon)
 ```
@@ -1653,35 +1653,9 @@ on timer > 7.5 {
 }
 ```
 
-### Item Pool Changes
+### Item Data
 
-Item pool changes are only relevant for snippets used in seed generation, they do nothing for plandos.
-
-#### add
-
-```seed
-!add(<action>, <amount>)
-```
-
-##### Example
-
-```seed
-// Add a second Burrow to the item pool
-!add(skill(Burrow), 1)
-```
-
-#### remove
-
-```seed
-!remove(<action>, <amount>)
-```
-
-##### Example
-
-```seed
-// This is what the No Launch snippet does
-!remove(skill(Launch), 1)
-```
+You can provide item data for custom items to get the correct icons etc. in shops and on the spoiler map.
 
 #### item_data
 
@@ -1705,7 +1679,7 @@ fun custom_item() {}
 
 ##### Notes
 
-Shorthand to use [item_data_name](#item_data_name), [item_data_price](#item_data_price), [item_data_description](#item_data_description), [item_data_icon](#item_data_icon) and [item_data_map_icon](#item_data_map_icon) (yet to be implemented).
+Shorthand to use [item_data_name](#item_data_name), [item_data_price](#item_data_price), [item_data_description](#item_data_description), [item_data_icon](#item_data_icon) and [item_data_map_icon](#item_data_map_icon).
 
 See [Icons](#icons) and [Map Icons](#map-icons) for possible values.
 
@@ -1747,7 +1721,90 @@ See [Map Icons](#map-icons) for possible values.
 
 See [Icons](#icons) for possible values.
 
+### Random Placement Changes
+
+Changes to random placements are only relevant for snippets used in seed generation. Plandos don't receive random placements.
+
+#### add_item
+
+```seed
+!add_item(<action>, <amount>)
+```
+
+##### Example
+
+```seed
+// Add a second Burrow to the item pool
+!add_item(skill(Burrow), 1)
+```
+
+#### remove_item
+
+```seed
+!remove_item(<action>, <amount>)
+```
+
+##### Example
+
+```seed
+// This is what the No Launch snippet does
+!remove_item(skill(Launch), 1)
+```
+
+#### remove_location
+
+```seed
+!remove_location(<name>)
+```
+
+##### Example
+
+```seed
+on WindtornRuins.Seir skill(Launch)
+// Remove the location to avoid another random item being placed.
+!remove_location(WindtornRuins.Seir)
+```
+
+##### Notes
+
+Removing a location prevents it from receiving a random placement.
+
+This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv), since those are the only locations receiving random placements.
+
+#### set_logic_state
+
+```seed
+!set_logic_state(<name>)
+```
+
+##### Notes
+
+This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv) is reachable from spawn.
+
+This is useful when having to write custom logic for a snippet such as no combat.
+
+#### preplace
+
+```seed
+!preplace(<action>, <zone>)
+```
+
+##### Example
+
+```seed
+// Sword will be placed somewhere in Marsh
+!preplace(skill(Sword), Marsh)
+```
+
+##### Notes
+
+Preplacements happen before any logic, they are placed in a random location of the specified zone which is not already occupied by other preplacements.
+
+See [Zones](#zones) for possible values.
+
 ### Snippet Settings
+
+Snippets can be configured by the user during seed generation, or in plandos using [!set_config](#set_config)
 
 #### config
 
@@ -1765,7 +1822,7 @@ fun treasure_chest() {
     spirit_light(treasure_size)
 }
 
-!add(treasure_chest())
+!add_item(treasure_chest())
 ```
 
 ##### Notes
@@ -1794,7 +1851,9 @@ You probably shouldn't use it in snippets intended for seed generation, where co
 
 Note that you have to put the value inside a string. This is because making good compilers is hard.
 
-### Spawn Location
+### Main Menu data
+
+Some commands can provide functionality in the main menu before starting the seed
 
 #### spawn
 
@@ -1812,6 +1871,19 @@ Note that you have to put the value inside a string. This is because making good
 ##### Notes
 
 Setting the spawn location is only relevant for plandos, it does nothing for snippets used in seed generation.
+
+#### tags
+
+```seed
+!tags(<tag>,...)
+```
+
+##### Example
+
+```seed
+// This will be listed as one of the tags when starting a new save file
+!tags("Fun included")
+```
 
 ### Compile-time evaluation
 
@@ -1847,7 +1919,7 @@ on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 
 // In the resulting seed, only one of the two sections below will be included
 !if do_shenanigans {
-    !add(item_message(skill_string(Burrow)))
+    !add_item(item_message(skill_string(Burrow)))
 }
 !if do_shenanigans == false {
     on spawn item_message("You didn't even enable shenanigans... Boring!")
@@ -2001,52 +2073,6 @@ on binding3 item_message("Glades Weapons - " + weapons_in_glades)
 ```
 
 ##### Notes
-
-See [Zones](#zones) for possible values.
-
-### Miscellaneous
-
-#### tags
-
-```seed
-!tags(<tag>,...)
-```
-
-##### Example
-
-```seed
-// This will be listed as one of the tags when starting a new save file
-!tags("Fun included")
-```
-
-#### set_logic_state
-
-```seed
-!set_logic_state(<name>)
-```
-
-##### Notes
-
-This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv) is reachable from spawn.
-
-This is useful when having to write custom logic for a snippet such as no combat.
-
-#### preplace
-
-```seed
-!preplace(<action>, <zone>)
-```
-
-##### Example
-
-```seed
-// Sword will be placed somewhere in Marsh
-!preplace(skill(Sword), Marsh)
-```
-
-##### Notes
-
-Preplacements happen before any logic, they are placed in a random location of the specified zone which is not already occupied by other preplacements.
 
 See [Zones](#zones) for possible values.
 
@@ -2338,7 +2364,7 @@ WaterBreath
 
 In addition to the icons below, you may use [Shards](#shards) and [Equipments](#equipment) as icons.
 
-See also [!builtin_icon](#builtin_icon) and [!bundle_icon](#bundle_icon) to use images as icons.
+See also [!builtin_icon](#builtin_icon) and [!include_icon](#include_icon) to use images as icons.
 
 ```seed
 Sentry

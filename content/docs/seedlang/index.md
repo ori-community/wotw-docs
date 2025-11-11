@@ -713,18 +713,34 @@ Same as [item_message](#item_message) with a custom timeout.
 #### priority_message
 
 ```seed
-priority_message(message: String, timeout: Float)
+priority_message(message: String)
 ```
 
 ##### Example
 
 ```seed
-on binding1 priority_message("Pressing this bind fills you with determination", 6)
+on binding1 priority_message("Pressing this bind fills you with determination")
 ```
 
 ##### Notes
 
-Priority messages will appear instantly at the top center of the screen. Only 1 priority message can be visible at once, previous ones will be destroyed. Item messages will move out of the way as necessary to show the priority message.
+Priority messages will appear instantly at the top center of the screen. Only 1 priority message can be visible at once, previous ones will be destroyed. Item messages will move out of the way as necessary to show the priority message. By default priority messages disappear after a 4 second timeout.
+
+#### priority_message_with_timeout
+
+```seed
+priority_message_with_timeout(message: String, timeout: Float)
+```
+
+##### Example
+
+```seed
+on binding1 priority_message_with_timeout("Pressing this bind fills you with determination", 6)
+```
+
+##### Notes
+
+Same as [priority_message](#priority_message) with a custom timeout.
 
 #### controlled_priority_message
 
@@ -734,7 +750,7 @@ controlled_priority_message(id: String, message: String, timeout: Float)
 
 ##### Notes
 
-Same as [priority_message](#priority_message) with an id to change its properties later. Note that the position of a priority message cannot be changed.
+Same as [priority_message_with_timeout](#priority_message_with_timeout) with an id to change its properties later. Note that the position of a priority message cannot be changed.
 
 #### free_message
 
@@ -1141,6 +1157,26 @@ on spawn store_without_triggers(MarshSpawn.FirstPickupEX, true) // This will mak
 
 Identical to [store](#store), but prevents any [Triggers](#triggers) from happening as a direct consequence of this UberState change. The expected type of the value depends on the type of the UberState.
 
+#### store_defaults
+
+```seed
+store_defaults()
+```
+
+##### Notes
+
+Sets all UberStates to the value they have by default after starting a new file on an empty seed. You may want to `trigger_client_event(spawn)` afterwards to restore the state after spawning.
+
+#### store_defaults_exclude
+
+```seed
+store_defaults_exclude(regex: String)
+```
+
+##### Notes
+
+Identical to [store_defaults](#store_defaults), but allows excluding some UberStates using a regex on their id (the numbers, not the names).
+
 ### Variables
 
 You can store temporary values in variables. This can be useful for calculations, or to pass values to custom functions. Variables will not be stored in the savefile, so generally you should not assume they keep existing beyond the current frame. If you need persistent values, use [!state](#state)
@@ -1441,6 +1477,18 @@ unequip(equipment: Equipment)
 ##### Notes
 
 See [Equipment](#equipment) for possible values.
+
+#### trigger_client_event
+
+```seed
+trigger_client_event(client_event: ClientEvent)
+```
+
+##### Notes
+
+Triggers everything that's `on <client_event>`.
+
+See [Client Events](#client-events) for a list of possible values.
 
 #### trigger_keybind
 

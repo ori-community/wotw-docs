@@ -1404,6 +1404,18 @@ save()
 save_to_memory()
 ```
 
+#### save_at
+
+```seed
+save_at(x: Float, y: Float)
+```
+
+#### save_to_memory_at
+
+```seed
+save_to_memory_at(x: Float, y: Float)
+```
+
 #### warp
 
 ```seed

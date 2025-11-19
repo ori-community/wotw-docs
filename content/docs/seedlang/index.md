@@ -1101,6 +1101,12 @@ See [Weapon Upgrades](#weapon-upgrades) for possible values.
 
 ### UberState Interactions
 
+UberStates are values that are stored in the savefile, meaning they will persist when quitting to menu or restarting the game and they will be reset accordingly when the player dies or loads a backup.
+
+Most stateful things in the game use UberStates, for example walls, levers and collectibles. Using UberState interactions, you can check os change these states.
+
+You can also introduce entirely custom states using [!state](#state).
+
 #### fetch
 
 ```seed
@@ -1231,6 +1237,24 @@ get_string(id: String) -> String
 
 ### Shops
 
+You can customize the prices, texts and icons in shops.
+
+If you don't manually specify anything, seedgen will do its best to insert reasonable defaults for you.
+
+#### Example
+
+```seed
+on TwillenShop.Overcharge shard(Secret)
+
+on reload set_shop_item_data(
+    TwillenShop.Overcharge,
+    1000,
+    shard_string(Secret),
+    "What does it do? Who knows! It's a #secret#!",
+    Secret
+)
+```
+
 #### set_shop_item_data
 
 ```seed
@@ -1329,7 +1353,25 @@ is_in_box(id: String) -> Boolean
 
 ### Wheels
 
-See [Wheel Item Positions](#wheel-item-positions) for possible values.
+You can customize the randomizer wheel, which is bound by default to V on keyboard and LeftTrigger + RightTrigger on controller.
+
+It looks like the weapon wheel: A ring with 12 selectable items. Each item can have up to three different actions, bound to the three equipment keys.
+
+The `OpenRandoWheel` bind initially opens the `"root"` wheel, which has a default item at `TopLeft` for all the builtin randomizer actions. Any other items in the root wheel you might be familiar with come from snippets, most notably `progress_helper`.
+
+#### Example
+
+```seed
+on reload {
+    set_wheel_item_data("root", Top, "Shard Lexicon", "[Ability1]View", Overcharge, switch_wheel("shards"))
+
+    set_wheel_item_data("shards", Top, "Overcharge", "[Ability1]Details", Overcharge, priority_message("Halves energy costs"))
+    set_wheel_item_data("shards", TopRight, "TripleJump", "[Ability1]Details", TripleJump, priority_message("Gives another Double Jump"))
+    set_wheel_item_data("shards", RightTop, "Wingclip", "Double damage against flying enemies, except for Shriek, "[Ability1]Details", Wingclip, priority_message(but including Willow Stone"))
+}
+```
+
+See [Wheel Item Positions](#wheel-item-positions) for possible values in the second argument of most wheel related functions.
 
 #### set_wheel_item_data
 
@@ -1406,6 +1448,8 @@ clear_all_wheels()
 ```
 
 ### Warp Icons
+
+You can create teleporter icons anywhere on the map that the player can warp to.
 
 #### create_warp_icon
 

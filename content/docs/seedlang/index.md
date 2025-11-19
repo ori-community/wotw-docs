@@ -1283,6 +1283,50 @@ set_shop_item_hidden(uber_identifier: UberIdentifier, hidden: Boolean)
 set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 ```
 
+### Box Triggers
+
+#### box_trigger
+
+```seed
+box_trigger(id: String, x1: Float, y1: Float, x2: Float, y2: Float)
+```
+
+Creates a new box trigger in the rectangle defined by points `x1, y1` and `x2, y2`. This won't have an effect on its own, but you can reference the `id` using the below functions.
+
+#### box_trigger_destroy
+
+```seed
+box_trigger_destroy(id: String)
+```
+
+Destroys the box trigger `id`.
+
+#### box_trigger_enter_callback
+
+```seed
+box_trigger_enter_callback(id: String, action: Action)
+```
+
+##### Notes
+
+`action` will trigger when Ori enters the box.
+
+#### box_trigger_leave_callback
+
+```seed
+box_trigger_leave_callback(id: String, action: Action)
+```
+
+##### Notes
+
+`action` will trigger when Ori leaves the box.
+
+#### is_in_box
+
+```seed
+is_in_box(id: String) -> Boolean
+```
+
 ### Wheels
 
 See [Wheel Item Positions](#wheel-item-positions) for possible values.
@@ -1415,12 +1459,6 @@ to_string(string: String) -> String
 ##### Notes
 
 Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
-
-#### is_in_hitbox
-
-```seed
-is_in_hitbox(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
-```
 
 #### current_zone
 

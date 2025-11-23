@@ -1315,6 +1315,8 @@ set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 box_trigger(id: String, x1: Float, y1: Float, x2: Float, y2: Float)
 ```
 
+##### Notes
+
 Creates a new box trigger in the rectangle defined by points `x1, y1` and `x2, y2`. This won't have an effect on its own, but you can reference the `id` using the below functions.
 
 #### box_trigger_destroy
@@ -1322,6 +1324,8 @@ Creates a new box trigger in the rectangle defined by points `x1, y1` and `x2, y
 ```seed
 box_trigger_destroy(id: String)
 ```
+
+##### Notes
 
 Destroys the box trigger `id`.
 
@@ -1348,8 +1352,12 @@ box_trigger_leave_callback(id: String, action: Action)
 #### is_in_box
 
 ```seed
-is_in_box(id: String) -> Boolean
+is_in_box(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
 ```
+
+##### Notes
+
+Returns `true` if Ori is in the rectangle defined by points `x1, y1` and `x2, y2`.
 
 ### Wheels
 

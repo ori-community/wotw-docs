@@ -1725,6 +1725,8 @@ The icon path starts in the snippet or plandomizer folder.
 
 After compilation the icon will be bundled into the seed, with this you can use custom icons in your plandomizer without requiring the players to download the icons separately.
 
+Note that the game can only correctly render images with an alpha channel. PNGs are known to work.
+
 #### builtin_icon
 
 ```seed

@@ -602,6 +602,8 @@ There are three different types of messages:
 
 Usually item messages are used in reaction to world changes, priority messages are used in reaction to key presses and free messages are used for advanced applications with custom message layouts.
 
+#### Concatenation
+
 You can use concatenation to include the return values of functions and UberStates into your messages.
 
 ##### Example
@@ -612,7 +614,13 @@ on binding1 item_message(player.spiritLight + " Spirit Light owned")
 
 ![example message with concatenation](/images/messageconcatenation.png)
 
-Additionally, the resulting message will be processed further by the game.
+#### Special characters
+
+Certain characters have special effects on text rendering:
+
+- `\n` causes a line break.
+- `*`, `#`, `@` and `$` create color styles.
+- `<` and `>` are used for XML tags.
 
 ##### Examples
 
@@ -621,10 +629,10 @@ on binding1 {
     item_message("This\nmessage\nhas\nfive\nlines.")
     // Or, for better readability:
     item_message(
-        "This\n" +
-        "message\n" +
-        "has\n" +
-        "five\n" +
+        "This" + "\n" +
+        "message" + "\n" +
+        "has" + "\n" +
+        "five" + "\n" +
         "lines."
     )
 }
@@ -640,6 +648,16 @@ on binding1 item_message(
 ```
 
 ![example message with colors](/images/messagecolors.png)
+
+#### XML Tags
+
+You can further customize messages styles with XML tags:
+
+- `<hex_(color)>(text)</>` will apply `(color)` to `(text)`. `(color)` has to be 8 hexadecimal digits, two each for red, green, blue and alpha.
+- `<s_(font size)>(text)</>` will apply `(font size)` to `(text)`. `(font size)` is 1.14 by default.
+- `<ls_(line scale)>(text)</>` will apply `(line scale)` to `(text)`. `(line scale)` is ~0.82 by default. This has many caveats, see the notes below.
+
+##### Examples
 
 ```seed
 on binding1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
@@ -659,14 +677,33 @@ on binding1 item_message("<ls_1.5>Very \n far \n apart</>")
 
 ![example message with line size](/images/messagelinesize.png)
 
+##### Notes
+
+Line scale may behave strangely - it's vanilla behaviour, we can't change it easily.
+
+If a line scale is started inside a font size tag, it will inherit that font size and use it as a multiplier. So for example, `<s_2><ls_2>TEXT` will render the text at font size 2 and at line scale 4. To avoid confusion, always put the line scale tag outside. `<ls_2><s_2>TEXT` will render at line scale 2 and font size 2 like you'd expect.
+
+Additionally, the line height won't be calculated correctly if any part of the line is not inside the line scale tag. For example, `<ls_0.5>Line 1\nLine 2\nLine 3` will not produce three evenly spaced lines because the start of the first line is not inside the line scale tag (even though there are no visible characters there), so the first line will be bigger. As a workaround, you might be able to use something like `<ls_0.2><ls_-0.4>\n\n</><s_0.5>Line 1\nLine 2\nLine 3`, utilizing negative line scale to undo the incorrectly scaled first line (which contains no visible text in this case). Note the lack of closing tags - if you would close the line scale tag with `</>`, the end of the last line will not have the line scale anymore, so its height would be calculated incorrectly.
+
+#### Controls
+
+You can interpolate the player's current keybinds to get the correct icons for either keyboard or controller.
+
+The vanilla game uses this in message like "Hold [Jump] to jump higher".
+
+##### Example
+
 ```seed
-// This will insert the player's own keybind for the action.
 on binding1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
 ```
 
 ![example message with keybind](/images/messagekeybind.png)
 
+##### Notes
+
 See also: [List of possible values for keybind interpolation](https://github.com/ori-community/wotw-rando-client/blob/main/projects/Core/enums/actions.h)
+
+#### Changing messages after creation
 
 Some message properties can be changed after the message has been created:
 

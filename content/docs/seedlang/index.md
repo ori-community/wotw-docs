@@ -689,7 +689,7 @@ Additionally, the line height won't be calculated correctly if any part of the l
 
 You can interpolate the player's current keybinds to get the correct icons for either keyboard or controller.
 
-The vanilla game uses this in message like "Hold [Jump] to jump higher".
+The vanilla game uses this in message like "Hold \[Jump\] to jump higher".
 
 ##### Example
 

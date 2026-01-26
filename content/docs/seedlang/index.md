@@ -1990,13 +1990,16 @@ Snippets can be configured by the user during seed generation, or in plandos usi
 #### config
 
 ```seed
-!config(<identifier>, <description>, <type>, <default>)
+!config(<identifier>, <name>, <type>, <default>)
+
+// With description
+!config(<identifier>, <name>, <description>, <type>, <default>)
 ```
 
 ##### Example
 
 ```seed
-!config(treasure_size, "How much money is inside the treasure chest", Integer, 1000)
+!config(treasure_size, "Treasure Value", "How much money is inside the treasure chest", Integer, 1000)
 
 fun treasure_chest() {
     item_message("You found the #treasure chest#!")

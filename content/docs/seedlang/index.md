@@ -2573,6 +2573,8 @@ In addition to the icons below, you may use [Shards](#shards) and [Equipments](#
 See also [!builtin_icon](#builtin_icon) and [!include_icon](#include_icon) to use images as icons.
 
 ```seed
+Placeholder
+
 Sentry
 RapidSentry
 Hammer

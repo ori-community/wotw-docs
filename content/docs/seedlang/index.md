@@ -791,6 +791,18 @@ free_message(id: String, message: String)
 
 Free messages will not interact with other messages in any way. They can appear on top of other messages and on top of eachother. It's your responsibility to control their position. They won't disappear by themselves, you have to set their timeout or destroy them manually.
 
+This function immediately shows the message. If you want to start with an empty, hidden message, use [free_message_uninitialized](#free_message_uninitialized).
+
+#### free_message_uninitialized
+
+```seed
+free_message(id: String)
+```
+
+##### Notes
+
+Same as [free_message](#free_message), but starting empty and hidden. This means nothing will be visible until you use at least [set_message_text](#set_message_text) and [free_message_show](#free_message_show)
+
 #### destroy_message
 
 ```seed
@@ -948,6 +960,26 @@ Controls how the message's [position](#set_message_position) is interpreted:
 Defaults to `Relative`.
 
 See [Coordinate Systems](#coordinate-systems) for possible values.
+
+#### free_message_show
+
+```seed
+free_message_show(id: String, fade: Boolean, sound: Boolean)
+```
+
+##### Notes
+
+Shows a free message created with [free_message_uninitialized](#free_message_uninitialized) or previously hidden with [free_message_hide](#free_message_hide).
+
+#### free_message_hide
+
+```seed
+free_message_hide(id: String, fade: Boolean)
+```
+
+##### Notes
+
+Hides a free message. It can later be shown again with [free_message_show](#free_message_show).
 
 ### Common Item Texts
 

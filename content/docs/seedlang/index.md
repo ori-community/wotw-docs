@@ -858,7 +858,7 @@ set_message_alignment(id: String, alignment: Alignment)
 
 Controls the text alignment, which will only matter on multiline messages. `Justify` exists but we're not sure if it works.
 
-For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
 
 Defaults to `Center`.
 
@@ -874,7 +874,7 @@ set_message_horizontal_anchor(id: String, horizontal_anchor: HorizontalAnchor)
 
 Controls which part of the message box its [x position](#set_message_position) refers to.
 
-For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
 
 Defaults to `Center`.
 
@@ -890,7 +890,7 @@ set_message_vertical_anchor(id: String, vertical_anchor: VerticalAnchor)
 
 Controls which part of the message box its [y position](#set_message_position) refers to.
 
-For most cases you may prefer to use [`set_message_screen_position`](#set_message_screen_position)
+For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
 
 Defaults to `Top`.
 

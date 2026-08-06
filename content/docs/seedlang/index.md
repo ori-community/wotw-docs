@@ -836,6 +836,37 @@ Controls whether the background box behind the text is rendered.
 
 Defaults to `true`.
 
+#### set_message_corner
+
+```seed
+set_message_corner(id: String, corner: Corner)
+```
+
+##### Example
+
+```seed
+on binding1 {
+    free_message("top_left", "I will appear in the top left corner")
+    set_message_corner("top_left", TopLeft)
+}
+// Equivalent to:
+on binding1 {
+    free_message("top_left", "I will appear in the top left corner")
+    set_message_alignment("top_left", Left)
+    set_message_horizontal_anchor("top_left", Left)
+    set_message_vertical_anchor("top_left", Top)
+    set_message_position("top_left", 0.01, 0.01)
+}
+```
+
+##### Notes
+
+Shorthand to use one of eight predefined sets of [set_message_position](#set_message_position), [set_message_alignment](#set_message_alignment), [set_message_horizontal_anchor](#set_message_horizontal_anchor) and [set_message_vertical_anchor](#set_message_vertical_anchor).
+
+The first word of the "corner" controls the [vertical anchor](#set_message_vertical_anchor) and [y position](#set_message_position), the second part the [horizontal anchor](#set_message_horizontal_anchor), [alignment](#set_message_alignment) and [x position](#set_message_position). This is useful if you want to place a message in a corner, but it does not represent all possible useful configurations, use the underlying functions directly if you need more control.
+
+See [Corners](#corners) for possible values.
+
 #### set_message_position
 
 ```seed
@@ -858,8 +889,6 @@ set_message_alignment(id: String, alignment: Alignment)
 
 Controls the text alignment, which will only matter on multiline messages. `Justify` exists but we're not sure if it works.
 
-For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
-
 Defaults to `Center`.
 
 See [Alignments](#alignments) for possible values.
@@ -873,8 +902,6 @@ set_message_horizontal_anchor(id: String, horizontal_anchor: HorizontalAnchor)
 ##### Notes
 
 Controls which part of the message box its [x position](#set_message_position) refers to.
-
-For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
 
 Defaults to `Center`.
 
@@ -890,43 +917,9 @@ set_message_vertical_anchor(id: String, vertical_anchor: VerticalAnchor)
 
 Controls which part of the message box its [y position](#set_message_position) refers to.
 
-For most cases you may prefer to use [set_message_screen_position](#set_message_screen_position)
-
 Defaults to `Top`.
 
 See [Vertical Anchors](#vertical-anchors) for possible values.
-
-#### set_message_screen_position
-
-```seed
-set_message_screen_position(id: String, screen_position: ScreenPosition)
-```
-
-##### Example
-
-```seed
-on binding1 {
-    free_message("top_left", "I will appear in the top left corner.")
-    set_message_screen_position("top_left", TopLeft)
-    set_message_position("top_left", 0, 0)
-}
-// Equivalent to:
-on binding1 {
-    free_message("top_left", "I will appear in the top left corner.")
-    set_message_alignment("top_left", Left)
-    set_message_horizontal_anchor("top_left", Left)
-    set_message_vertical_anchor("top_left", Top)
-    set_message_position("top_left", 0, 0)
-}
-```
-
-##### Notes
-
-In essence, the first part of the screen position controls the [vertical anchor](#set_message_vertical_anchor) and the second part the [horizontal anchor](#set_message_horizontal_anchor) and [alignment](#set_message_alignment). This only allows for a subset of possible alignment and anchor combinations, but it's useful for the most common cases.
-
-Defaults to `TopCenter`.
-
-See [Screen Positions](#screen-positions) for possible values.
 
 #### set_message_box_width
 
@@ -2582,6 +2575,20 @@ Shop
 Void
 ```
 
+### Corners
+
+```seed
+TopLeft
+TopCenter
+TopRight
+MiddleLeft
+MiddleCenter
+MiddleRight
+BottomLeft
+BottomCenter
+BottomRight
+```
+
 ### Alignments
 
 ```seed
@@ -2605,20 +2612,6 @@ Right
 Top
 Middle
 Bottom
-```
-
-### Screen Positions
-
-```seed
-TopLeft
-TopCenter
-TopRight
-MiddleLeft
-MiddleCenter
-MiddleRight
-BottomLeft
-BottomCenter
-BottomRight
 ```
 
 ### Coordinate Systems

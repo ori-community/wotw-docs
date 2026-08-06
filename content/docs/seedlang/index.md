@@ -1758,6 +1758,36 @@ Creates a stats entry at the current time and place.
 
 See [Map Icons](#map-icons) for possible values.
 
+#### close_menu
+
+```seed
+close_menu()
+```
+
+##### Notes
+
+Forcefully closes any currently open menu. This is primarily intended to close shops as you buy something, other uses may lead to broken behaviour.
+
+#### close_weapon_wheel
+
+```seed
+close_weapon_wheel()
+```
+
+##### Notes
+
+Forcefully closes the weapon wheel if it is currently open.
+
+#### debug_log
+
+```seed
+debug_log(message: String)
+```
+
+##### Notes
+
+Writes the message into the client log.
+
 ## Function Definitions
 
 `fun <function_name>() { <action>... }`

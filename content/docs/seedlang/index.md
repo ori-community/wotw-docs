@@ -1400,11 +1400,15 @@ The `OpenRandoWheel` bind initially opens the `"root"` wheel, which has a defaul
 
 ```seed
 on reload {
-    set_wheel_item_data("root", Top, "Shard Lexicon", "[Ability1]View", Overcharge, switch_wheel("shards"))
+    set_wheel_item_data("root", Top, "Shard Lexicon", "[Ability1]View", Overcharge)
+    set_wheel_item_all_actions("root", Top, switch_wheel("shards"))
 
-    set_wheel_item_data("shards", Top, "Overcharge", "[Ability1]Details", Overcharge, priority_message("Halves energy costs"))
-    set_wheel_item_data("shards", TopRight, "TripleJump", "[Ability1]Details", TripleJump, priority_message("Gives another Double Jump"))
-    set_wheel_item_data("shards", RightTop, "Wingclip", "Double damage against flying enemies, except for Shriek, "[Ability1]Details", Wingclip, priority_message(but including Willow Stone"))
+    set_wheel_item_data("shards", Top, "Overcharge", "[Ability1]Details", Overcharge)
+    set_wheel_item_all_actions("shards", Top, priority_message("Halves energy costs"))
+    set_wheel_item_data("shards", TopRight, "TripleJump", "[Ability1]Details", TripleJump)
+    set_wheel_item_all_actions("shards", TopRight, priority_message("Gives another Double Jump"))
+    set_wheel_item_data("shards", RightTop, "Wingclip", "[Ability1]Details", Wingclip)
+    set_wheel_item_all_actions("shards", RightTop, priority_message("Double damage against flying enemies, except for Shriek but including Willow Stone"))
 }
 ```
 
@@ -1413,12 +1417,26 @@ See [Wheel Item Positions](#wheel-item-positions) for possible values in the sec
 #### set_wheel_item_data
 
 ```seed
-set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, description: String, icon: Icon, action: Action)
+set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, description: String, icon: Icon)
+```
+
+##### Example
+
+```seed
+on reload set_wheel_item_data("root", Bottom, "Mysterious letter", "1612125 92019 41147518152119 2015 715 11215145", Placeholder)
+// Equivalent to:
+on reload {
+    set_wheel_item_name("root", Bottom, "Mysterious letter")
+    set_wheel_item_description("root", Bottom, "1612125 92019 41147518152119 2015 715 11215145")
+    set_wheel_item_icon("root", Bottom, Placeholder)
+}
 ```
 
 ##### Notes
 
-Shorthand to use [set_wheel_item_name](#set_wheel_item_name), [set_wheel_item_description](#set_wheel_item_description), [set_wheel_item_icon](#set_wheel_item_icon) and [set_wheel_item_action](#set_wheel_item_action) with `All`.
+Shorthand to use [set_wheel_item_name](#set_wheel_item_name), [set_wheel_item_description](#set_wheel_item_description) and [set_wheel_item_icon](#set_wheel_item_icon).
+
+See below for more properties you can set on wheel items.
 
 See [Icons](#icons) for possible values.
 
@@ -1450,11 +1468,47 @@ See [Icons](#icons) for possible values.
 set_wheel_item_color(wheel: String, position: WheelItemPosition, red: Integer, green: Integer, blue: Integer, alpha: Integer)
 ```
 
+#### set_wheel_item_all_actions
+
+```seed
+set_wheel_item_all_actions(wheel: String, position: WheelItemPosition, action: Action)
+```
+
+##### Examples
+
+```seed
+on reload {
+    set_wheel_item_data("root", Top, "Echo", "[Ability1]Shout", Ricochet)
+    set_wheel_item_all_actions("root", Top, priority_message("Echo"))
+}
+// Equivalent to:
+on reload {
+    set_wheel_item_name("root", Top, "Echo")
+    set_wheel_item_description("root", Top, "[Ability1]Shout")
+    set_wheel_item_icon("root", Top, Ricochet)
+    set_wheel_item_action("root", Top, Ability1, priority_message("Echo"))
+    set_wheel_item_action("root", Top, Ability2, priority_message("Echo"))
+    set_wheel_item_action("root", Top, Ability3, priority_message("Echo"))
+}
+```
+
+##### Notes
+
+Sets an action to perform when any ability bind is pressed while the wheel item is selected.
+
+See [set_wheel_item_action](#set_wheel_item_action) to control individual binds.
+
 #### set_wheel_item_action
 
 ```seed
 set_wheel_item_action(wheel: String, position: WheelItemPosition, bind: WheelBind, action: Action)
 ```
+
+##### Notes
+
+Sets an action to perform when the specified ability bind is pressed while the wheel item is selected.
+
+See [set_wheel_item_all_actions](#set_wheel_item_all_actions) to set all ability binds at once.
 
 ##### Notes
 

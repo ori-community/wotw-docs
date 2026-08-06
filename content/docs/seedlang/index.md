@@ -1494,6 +1494,10 @@ You can create teleporter icons anywhere on the map that the player can warp to.
 create_warp_icon(id: String, x: Float, y: Float)
 ```
 
+##### Notes
+
+See [warp](#warp) and [instant_warp](#instant_warp) to forcefully warp Ori instead of creating a map icon.
+
 #### set_warp_icon_label
 
 ```seed
@@ -1576,6 +1580,24 @@ save_to_memory_at(x: Float, y: Float)
 ```seed
 warp(x: Float, y: Float)
 ```
+
+##### Notes
+
+Forcefully warps Ori to `x, y` using the normal warp animation.
+
+See [create_warp_icon](#create_warp_icon) to create a permanent icon on the map instead or [instant_warp](#instant_warp) to skip the animation.
+
+#### instant_warp
+
+```seed
+instant_warp(x: Float, y: Float)
+```
+
+##### Notes
+
+Forcefully warps Ori to `x, y` without any animation. Note that this increases the risk of falling out of bounds at the destination since the warp animation is also responsible for preloading.
+
+See [create_warp_icon](#create_warp_icon) to create a permanent icon on the map instead or [warp](#warp) to warp more safely with an animation.
 
 #### equip
 
@@ -2692,7 +2714,6 @@ TopLeft
 ### Wheel Binds
 
 ```seed
-All
 Ability1
 Ability2
 Ability3

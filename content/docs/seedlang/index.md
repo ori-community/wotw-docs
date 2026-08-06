@@ -1711,6 +1711,16 @@ Currently only works to undo [disable_server_sync](#disable_server_sync), you ca
 disable_server_sync(uber_identifier: UberIdentifier)
 ```
 
+#### set_trial_hint
+
+```seed
+set_trial_hint(uber_identifier: UberIdentifier, text: String)
+```
+
+##### Notes
+
+Sets the text displayed above an activated trial start pedestal.
+
 ## Function Definitions
 
 `fun <function_name>() { <action>... }`

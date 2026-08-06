@@ -1974,6 +1974,25 @@ Removing a location prevents it from receiving a random placement.
 
 This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv), since those are the only locations receiving random placements.
 
+#### location_slots
+
+```seed
+!location_slots(<name>, <slots>)
+```
+
+##### Example
+
+```seed
+// Place three items on Seir to make the location more rewarding.
+!location_slots(WindtornRuins.Seir, 3)
+```
+
+##### Notes
+
+The slots correspond to the amount of random placements the location will receive, which is usually one.
+
+This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv), since those are the only locations receiving random placements.
+
 #### set_logic_state
 
 ```seed

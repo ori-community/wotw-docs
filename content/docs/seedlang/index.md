@@ -2573,8 +2573,10 @@ In addition to the icons below, you may use [Shards](#shards) and [Equipments](#
 See also [!builtin_icon](#builtin_icon) and [!include_icon](#include_icon) to use images as icons.
 
 ```seed
+// Placeholder icon
 Placeholder
 
+// Opher shop icons
 Sentry
 RapidSentry
 Hammer
@@ -2588,10 +2590,12 @@ ChargeBlaze
 WaterBreath
 FastTravel
 
+// Lupo shop icons
 EnergyFragmentsMap
 HealthFragmentsMap
 ShardsMap
 
+// Grom building icons
 RepairTheSpiritWell
 DwellingRepairs
 ThornySituation
@@ -2600,6 +2604,7 @@ ClearTheCaveEntrance
 OnwardsAndUpwards
 TheGorlekTouch
 
+// Tuley plant icons
 SelaFlowers
 StickyGrass
 Lightcatchers

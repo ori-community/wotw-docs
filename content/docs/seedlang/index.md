@@ -1721,6 +1721,18 @@ set_trial_hint(uber_identifier: UberIdentifier, text: String)
 
 Sets the text displayed above an activated trial start pedestal.
 
+#### create_stats_entry
+
+```seed
+create_stats_entry(icon: MapIcon, label: String)
+```
+
+##### Notes
+
+Creates a stats entry at the current time and place.
+
+See [Map Icons](#map-icons) for possible values.
+
 ## Function Definitions
 
 `fun <function_name>() { <action>... }`

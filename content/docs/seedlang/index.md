@@ -2008,6 +2008,29 @@ Changes to random placements are only relevant for snippets used in seed generat
 !remove_item(skill(Launch), 1)
 ```
 
+#### add_spirit_light
+
+```seed
+!add_spirit_light(<amount>)
+```
+
+##### Example
+
+```seed
+// Increase the total spirit light from 20000 to 30000
+!add_spirit_light(10000)
+```
+
+#### remove_spirit_light
+
+```seed
+!remove_spirit_light(<amount>)
+```
+
+##### Notes
+
+The spirit light placement generator is not made for very small amounts of spirit light, you can't for instance remove all the spirit light.
+
 #### remove_location
 
 ```seed

@@ -2326,7 +2326,7 @@ on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 
 These values will be different every time the snippet is used or the plandomizer is compiled. In the finished seed, the value won't change anymore.
 
-Values that can change randomly while playing the seed still need to be implemented.
+Values that are random every time even while playing can be read from the `randomValueGenerator` UberState group.
 
 #### random_boolean
 

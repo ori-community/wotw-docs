@@ -262,7 +262,7 @@ health_fragment()
 on binding1 health_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.maxHealth, player.maxHealth + 5)
+    store(player.baseMaxHealth, player.baseMaxHealth + 5)
     store(player.health, player.maxHealth)
     item_message(health_fragment_string())
 }
@@ -280,7 +280,7 @@ energy_fragment()
 on binding1 energy_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.maxEnergy, player.maxEnergy + 0.5)
+    store(player.baseMaxEnergy, player.baseMaxEnergy + 0.5)
     store(player.energy, player.maxEnergy)
     item_message(energy_fragment_string())
 }
@@ -469,7 +469,7 @@ remove_health_fragment()
 on binding1 remove_health_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.maxHealth, player.maxHealth - 5)
+    store(player.baseMaxHealth, player.baseMaxHealth - 5)
     item_message(remove_health_fragment_string())
 }
 ```
@@ -486,7 +486,7 @@ remove_energy_fragment()
 on binding1 remove_energy_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.maxEnergy, player.maxEnergy - 0.5)
+    store(player.baseMaxEnergy, player.baseMaxEnergy - 0.5)
     item_message(remove_energy_fragment_string())
 }
 ```
@@ -545,7 +545,8 @@ remove_teleporter(teleporter: Teleporter)
 on binding1 remove_teleporter(Shriek)
 // Equivalent to:
 on binding1 {
-    store(16155|50867, false) // Teleporter UberStates often have ambiguous names
+    store(mapSegments.segment146432, false)
+    store(WillowsEnd.ShriekTeleporterActive, false)
     item_message(remove_teleporter_string(Shriek))
 }
 ```

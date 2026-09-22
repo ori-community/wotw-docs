@@ -2244,8 +2244,10 @@ Some commands can provide functionality in the main menu before starting the see
 ##### Example
 
 ```seed
-// This is a black box in the void. Useful if you want to have some kind of menu before starting the plandomizer.
-!spawn(-3537, -5881)
+// This is in a prologue transition where the entire screen is black.
+// Useful if you want to have some kind of menu before starting the plandomizer.
+// Don't forget to set `player.inputLocked` if you do that though.
+!spawn(-3219, -5935)
 ```
 
 ##### Notes

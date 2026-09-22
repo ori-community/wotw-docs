@@ -1362,57 +1362,93 @@ set_shop_item_hidden(uber_identifier: UberIdentifier, hidden: Boolean)
 set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 ```
 
-### Box Triggers
+### Position Triggers
 
-#### box_trigger
+You can detect when Ori enters or leaves places in the world using position triggers.
+
+They are generally recommended over using `player.positionX` / `player.positionY`. If you want to detect the current zone as a whole, you can use `player.currentArea`.
+
+#### position_trigger_rectangle
 
 ```seed
-box_trigger(id: String, x1: Float, y1: Float, x2: Float, y2: Float)
+position_trigger_rectangle(id: String, x1: Float, y1: Float, x2: Float, y2: Float)
 ```
 
 ##### Notes
 
-Creates a new box trigger in the rectangle defined by points `x1, y1` and `x2, y2`. This won't have an effect on its own, but you can reference the `id` using the below functions.
+Creates a new position trigger in the shape of a rectangle defined by points `x1, y1` and `x2, y2`. This won't have an effect on its own, but you can reference the `id` using the functions below.
 
-#### box_trigger_destroy
+#### position_trigger_circle
 
 ```seed
-box_trigger_destroy(id: String)
+position_trigger_circle(id: String, x: Float, y: Float, r: Float)
 ```
 
 ##### Notes
 
-Destroys the box trigger `id`.
+Creates a new position trigger in the shape of a circle around `x, y` with radius `r`. This won't have an effect on its own, but you can reference the `id` using the functions below.
 
-#### box_trigger_enter_callback
+#### position_trigger_destroy
 
 ```seed
-box_trigger_enter_callback(id: String, action: Action)
+position_trigger_destroy(id: String)
 ```
 
 ##### Notes
 
-`action` will trigger when Ori enters the box.
+Destroys the position trigger `id`.
 
-#### box_trigger_leave_callback
+Note that this will not trigger the `position_trigger_leave_callback`, so if any cleanup is required in case the player is currently inside, you have to do it yourself.
+
+#### position_trigger_enter_callback
 
 ```seed
-box_trigger_leave_callback(id: String, action: Action)
+position_trigger_enter_callback(id: String, action: Action)
 ```
 
 ##### Notes
 
-`action` will trigger when Ori leaves the box.
+`action` will trigger when Ori enters the shape defined by the position trigger.
 
-#### is_in_box
+#### position_trigger_leave_callback
 
 ```seed
-is_in_box(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
+position_trigger_leave_callback(id: String, action: Action)
+```
+
+##### Notes
+
+`action` will trigger when Ori leaves the shape defined by the position trigger.
+
+#### is_in_position_trigger
+
+```seed
+is_in_position_trigger(id: String) -> Boolean
+```
+
+##### Notes
+
+Returns `true` if Ori is in the shape defined by the position trigger.
+
+#### is_in_rectangle
+
+```seed
+is_in_rectangle(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
 ```
 
 ##### Notes
 
 Returns `true` if Ori is in the rectangle defined by points `x1, y1` and `x2, y2`.
+
+#### is_in_circle
+
+```seed
+is_in_circle(x: Float, y: Float, r: Float) -> Boolean
+```
+
+##### Notes
+
+Returns `true` if Ori is in the circle around `x, y` with radius `r`.
 
 ### Wheels
 

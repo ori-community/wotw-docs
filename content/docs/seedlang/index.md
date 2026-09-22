@@ -2328,6 +2328,19 @@ These values will be different every time the snippet is used or the plandomizer
 
 Values that can change randomly while playing the seed still need to be implemented.
 
+#### random_boolean
+
+```seed
+!random_boolean(<identifier>)
+```
+
+##### Example
+
+```seed
+!random_boolean(boolean)
+on binding1 item_message(boolean)
+```
+
 #### random_integer
 
 ```seed

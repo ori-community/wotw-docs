@@ -788,6 +788,18 @@ Same as [priority_message_with_timeout](#priority_message_with_timeout) with an 
 free_message(id: String, message: String)
 ```
 
+##### Example
+
+```seed
+on binding1 free_message("<3", "Forever with you!")
+// Equivalent to:
+on binding1 {
+    free_message_uninitialized("<3")
+    set_message_text("<3", "Forever with you!")
+    free_message_show("<3", true, true)
+}
+```
+
 ##### Notes
 
 Free messages will not interact with other messages in any way. They can appear on top of other messages and on top of eachother. It's your responsibility to control their position. They won't disappear by themselves, you have to set their timeout or destroy them manually.
@@ -797,7 +809,17 @@ This function immediately shows the message. If you want to start with an empty,
 #### free_message_uninitialized
 
 ```seed
-free_message(id: String)
+free_message_uninitialized(id: String)
+```
+
+##### Example
+
+```seed
+on spawn {
+    free_message_uninitialized("mouse_pos")
+    free_message_show("mouse_pos", false, false) // No fade or sound effect
+}
+on tick set_message_text("mouse_pos", input.mouseWorldPositionX + ", " + input.mouseWorldPositionY)
 ```
 
 ##### Notes

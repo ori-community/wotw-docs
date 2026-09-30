@@ -378,7 +378,7 @@ weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 on binding1 weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
-    store(weapon_upgrades.chargeBlaze, true)
+    store(playerUberStateGroupDescriptor.blazeChargeUpgradeLevel, 1)
     item_message(weapon_upgrade_string(ChargeBlaze))
 }
 ```
@@ -584,7 +584,7 @@ remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 on binding1 remove_weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
-    store(weapon_upgrades.chargeBlaze, false)
+    store(playerUberStateGroupDescriptor.blazeChargeUpgradeLevel, 0)
     item_message(remove_weapon_upgrade_string(ChargeBlaze))
 }
 ```

@@ -2325,6 +2325,46 @@ Setting the spawn location is only relevant for plandos, it does nothing for sni
 !tags("Fun included")
 ```
 
+#### difficulty_visible
+
+```seed
+!difficulty_visible(<difficulty>, <boolean>)
+```
+
+##### Notes
+
+If you want to restrict the in-game difficulties (Easy, Normal, Hard) that the seed can be played on, you can make some of them invisible.
+
+This command is mostly intended for plandos, random seeds may overwrite this based on the settings.
+
+See [Game Difficulties](#game-difficulties) for possible values.
+
+#### difficulty_label
+
+```seed
+!difficulty_label(<difficulty>, <label>)
+```
+
+##### Notes
+
+The labels are what the user selects when choosing the in-game difficulty. By default they are "Easy", "Normal" and "Hard".
+
+See [Game Difficulties](#game-difficulties) for possible values.
+
+#### difficulty_confirmation
+
+```seed
+!difficulty_confirmation(<difficulty>, <message>)
+```
+
+##### Notes
+
+You can set confirmation messages like the vanilla confirmation message when starting on Hard.
+
+This command is mostly intended for plandos, random seeds may overwrite this based on the settings.
+
+See [Game Difficulties](#game-difficulties) for possible values.
+
 ### Compile-time evaluation
 
 You can use compile-time evaluation to conditionally include parts of your code depending on [Snippet Settings](#snippet-settings) or to improve code readability without hurting performance. Compile-time evaluation happens during seed generation or plandomizer compilation, it will be completely optimized away in the finished seed.
@@ -2971,4 +3011,12 @@ TopLeft
 Ability1
 Ability2
 Ability3
+```
+
+### Game Difficulties
+
+```seed
+Easy
+Normal
+Hard
 ```

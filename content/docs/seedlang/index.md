@@ -2241,19 +2241,10 @@ See [Zones](#zones) for possible values.
 
 Snippets can be configured by the user during seed generation, or in plandos using [!set_config](#set_config)
 
-#### config
+#### Example
 
 ```seed
-!config(<identifier>, <name>, <type>, <default>)
-
-// With description
-!config(<identifier>, <name>, <description>, <type>, <default>)
-```
-
-##### Example
-
-```seed
-!config(treasure_size, "Treasure Value", "How much money is inside the treasure chest", Integer, 1000)
+!config_integer(treasure_size, 1000, "Treasure Value", "How much money is inside the treasure chest")
 
 fun treasure_chest() {
     item_message("You found the #treasure chest#!")
@@ -2263,9 +2254,45 @@ fun treasure_chest() {
 !add_item(treasure_chest())
 ```
 
-##### Notes
+#### config_boolean
 
-Snippet settings will be available for configuration in the launcher or seedgen cli when generating random seeds with the snippet, but they can also be controlled by a plandomizer using [set_config](#set_config).
+```seed
+!config_boolean(<identifier>, <default>, <name>)
+// Or with description
+!config_boolean(<identifier>, <default>, <name>, <description>)
+```
+
+#### config_integer
+
+```seed
+!config_integer(<identifier>, <default>, <name>)
+// Or with description
+!config_integer(<identifier>, <default>, <name>, <description>)
+```
+
+#### config_integer_range
+
+```seed
+!config_integer_range(<identifier>, <default>, <min>, <max>, <name>)
+// Or with description
+!config_integer_range(<identifier>, <default>, <min>, <max>, <name>, <description>)
+```
+
+#### config_float
+
+```seed
+!config_float(<identifier>, <default>, <name>)
+// Or with description
+!config_float(<identifier>, <default>, <name>, <description>)
+```
+
+#### config_float_range
+
+```seed
+!config_float_range(<identifier>, <default>, <min>, <max>, <name>)
+// Or with description
+!config_float_range(<identifier>, <default>, <min>, <max>, <name>, <description>)
+```
 
 #### set_config
 

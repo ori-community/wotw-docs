@@ -93,11 +93,11 @@ on player.maxHealth >= 100 item_message("You look healthy today!")
 
 Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_data.csv` (online: [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv)) and `<install>/seedgen/logic/state_data.csv` (online: [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv)). You cannot add custom aliases.
 
-The alias for `21786|49485` is `MarshSpawn.FirstPickupEX`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
+The alias for `21786|49485` is `Marsh.Spawn.RightSL`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
 
 ```seed
 // Equivalent to the earlier example, but easier to read
-on MarshSpawn.FirstPickupEX item_message("right is right!")
+on Marsh.Spawn.RightSL item_message("right is right!")
 ```
 
 If an UberState has an alias, this usually means logic was written for it. The example below removes the bone wall between spawn and Opher:
@@ -116,7 +116,7 @@ Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), yo
 
 ```seed
 // When collecting the item right of spawn, the player will get 50 Spirit Light.
-on MarshSpawn.FirstEX spirit_light(50)
+on Marsh.Spawn.RightSL spirit_light(50)
 ```
 
 ##### Notes
@@ -181,7 +181,7 @@ on change player.gorlekOre item_message("I love ore and now I have " + player.go
 
 ```seed
 // When collecting the item right of spawn, the player will get a gorlek ore.
-on MarshSpawn.FirstEX gorlek_ore()
+on Marsh.Spawn.RightSL gorlek_ore()
 ```
 
 ```seed
@@ -193,7 +193,7 @@ on player.spiritLight > 4000 item_message("You're rich!")
 
 Conditions trigger when their value changes from `false` to `true`.
 
-For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on MarshSpawn.FirstEX || MarshSpawn.RockHC` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on MarshSpawn.FirstEX && MarshSpawn.RockHC` will only trigger once the player collected both pickups.
+For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on Marsh.Spawn.RightSL || Marsh.Spawn.LeftHF` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on Marsh.Spawn.RightSL && Marsh.Spawn.LeftHF` will only trigger once the player collected both pickups.
 
 ## Actions
 
@@ -212,7 +212,7 @@ There are three different types of actions:
 ##### Example
 
 ```seed
-on MarshSpawn.RockHC {
+on Marsh.Spawn.LeftHF {
     spirit_light(1)
     item_message("That's why you go team right...")
 }
@@ -241,7 +241,7 @@ on change player.spiritLight {
 ```seed
 // This function is called "item_message_with_timeout" and has two arguments:
 // The message and the timeout until it disappears in seconds.
-on MarshSpawn.RockHC item_message_with_timeout("The emptyness haunts you...", 60)
+on Marsh.Spawn.LeftHF item_message_with_timeout("The emptyness haunts you...", 60)
 ```
 
 ##### Notes
@@ -1303,7 +1303,7 @@ store_without_triggers(uber_identifier: UberIdentifier, value: Float)
 ##### Example
 
 ```seed
-on spawn store_without_triggers(MarshSpawn.FirstPickupEX, true) // This will make the pickup disappear but not grant the reward
+on spawn store_without_triggers(Marsh.Spawn.RightSL, true) // This will make the pickup disappear but not grant the reward
 ```
 
 ##### Notes
@@ -1391,10 +1391,10 @@ If you don't manually specify anything, seedgen will do its best to insert reaso
 #### Example
 
 ```seed
-on TwillenShop.Overcharge shard(Secret)
+on Twillen.Shop.Slot1 shard(Secret)
 
 on reload set_shop_item_data(
-    TwillenShop.Overcharge,
+    Twillen.Shop.Slot1,
     1000,
     shard_string(Secret),
     "What does it do? Who knows! It's a #secret#!",
@@ -1930,8 +1930,8 @@ fun exciting_gorlek_ore() {
     gorlek_ore()
 }
 // Now you can reuse the function to avoid repetition.
-on MarshSpawn.FirstPickupEX exciting_gorlek_ore()
-on MarshSpawn.RockHC exciting_gorlek_ore()
+on Marsh.Spawn.RightSL exciting_gorlek_ore()
+on Marsh.Spawn.LeftHF exciting_gorlek_ore()
 ```
 
 ##### Notes
@@ -2246,9 +2246,9 @@ The spirit light placement generator is not made for very small amounts of spiri
 ##### Example
 
 ```seed
-on WindtornRuins.Seir skill(Launch)
+on Ruins.Wisp skill(Launch)
 // Remove the location to avoid another random item being placed.
-!remove_location(WindtornRuins.Seir)
+!remove_location(Ruins.Wisp)
 ```
 
 ##### Notes
@@ -2267,7 +2267,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 ```seed
 // Place three items on Seir to make the location more rewarding.
-!location_slots(WindtornRuins.Seir, 3)
+!location_slots(Ruins.Wisp, 3)
 ```
 
 ##### Notes

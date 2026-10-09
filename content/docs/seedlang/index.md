@@ -28,7 +28,7 @@ Once you add `.wotws` files to this folder, they will appear in the Seed Generat
 
 You can try it out by creating `<user>/seedgen/snippets/test.wotws` with the following content:
 
-```seed
+```wotws
 #name("Test")
 on spawn item_message("Test successful!")
 ```
@@ -75,7 +75,7 @@ Ori 2 stores its world data in _UberStates_. It's important to understand them b
 
 Every UberState has a unique identifier consisting of two numbers. `21786|49485` is the UberState that tracks whether you collected the spirit light orb right of spawn.
 
-```seed
+```wotws
 on 21786|49485 item_message("right is right!")
 ```
 
@@ -85,7 +85,7 @@ Using the identifiers always works, but you may prefer the other methods below f
 
 Every UberState has a name. The name of `21786|49485` is `swampStateGroup.smallExpA`. However, names are not always unique. Here, `21786|52026` (an unused vanilla UberState) is also called `swampStateGroup.smallExpA`. In such cases, attempting to use the name will produce an error. But names are still often useful, especially with UberStates added by the randomizer.
 
-```seed
+```wotws
 on player.maxHealth >= 100 item_message("You look healthy today!")
 ```
 
@@ -95,14 +95,14 @@ Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_
 
 The alias for `21786|49485` is `Marsh.Spawn.RightSL`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
 
-```seed
+```wotws
 // Equivalent to the earlier example, but easier to read
 on Marsh.Spawn.RightSL item_message("right is right!")
 ```
 
 If an UberState has an alias, this usually means logic was written for it. The example below removes the bone wall between spawn and Opher:
 
-```seed
+```wotws
 on spawn store(MarshSpawn.ToOpherBarrier, true)
 ```
 
@@ -114,7 +114,7 @@ Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), yo
 
 ##### Example
 
-```seed
+```wotws
 // When collecting the item right of spawn, the player will get 50 Spirit Light.
 on Marsh.Spawn.RightSL spirit_light(50)
 ```
@@ -133,7 +133,7 @@ There are three different types of triggers:
 
 ##### Example
 
-```seed
+```wotws
 // This is what the Spawn With Sword snippet does.
 on spawn skill(Sword)
 ```
@@ -168,7 +168,7 @@ Client Events are special triggers for specific tasks. These are all of them:
 
 ##### Example
 
-```seed
+```wotws
 // Whenever the player gains or loses gorlek ore they will see a message with their current amount.
 on change player.gorlekOre item_message("I love ore and now I have " + player.gorlekOre)
 ```
@@ -179,12 +179,12 @@ on change player.gorlekOre item_message("I love ore and now I have " + player.go
 
 ##### Examples
 
-```seed
+```wotws
 // When collecting the item right of spawn, the player will get a gorlek ore.
 on Marsh.Spawn.RightSL gorlek_ore()
 ```
 
-```seed
+```wotws
 // Once the player surpasses 4000 spirit light, they will see a message.
 on player.spiritLight > 4000 item_message("You're rich!")
 ```
@@ -211,7 +211,7 @@ There are three different types of actions:
 
 ##### Example
 
-```seed
+```wotws
 on Marsh.Spawn.LeftHF {
     spirit_light(1)
     item_message("That's why you go team right...")
@@ -224,7 +224,7 @@ on Marsh.Spawn.LeftHF {
 
 ##### Example
 
-```seed
+```wotws
 // This will show a message everytime the player gains or loses spirit light and has more than 4000 afterwards.
 // The braces are just for easier reading.
 on change player.spiritLight {
@@ -238,7 +238,7 @@ on change player.spiritLight {
 
 ##### Example
 
-```seed
+```wotws
 // This function is called "item_message_with_timeout" and has two arguments:
 // The message and the timeout until it disappears in seconds.
 on Marsh.Spawn.LeftHF item_message_with_timeout("The emptyness haunts you...", 60)
@@ -254,13 +254,13 @@ See [Standard Functions](#standard-functions) and [Function Definitions](#functi
 
 #### spirit_light
 
-```seed
+```wotws
 spirit_light(amount: Integer)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 spirit_light(50)
 // Equivalent to:
 on binding1 {
@@ -271,13 +271,13 @@ on binding1 {
 
 #### gorlek_ore
 
-```seed
+```wotws
 gorlek_ore()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 gorlek_ore()
 // Equivalent to:
 on binding1 {
@@ -288,13 +288,13 @@ on binding1 {
 
 #### keystone
 
-```seed
+```wotws
 keystone()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 keystone()
 // Equivalent to:
 on binding1 {
@@ -305,13 +305,13 @@ on binding1 {
 
 #### shard_slot
 
-```seed
+```wotws
 shard_slot()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 shard_slot()
 // Equivalent to:
 on binding1 {
@@ -322,13 +322,13 @@ on binding1 {
 
 #### health_fragment
 
-```seed
+```wotws
 health_fragment()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 health_fragment()
 // Equivalent to:
 on binding1 {
@@ -340,13 +340,13 @@ on binding1 {
 
 #### energy_fragment
 
-```seed
+```wotws
 energy_fragment()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 energy_fragment()
 // Equivalent to:
 on binding1 {
@@ -358,13 +358,13 @@ on binding1 {
 
 #### skill
 
-```seed
+```wotws
 skill(skill: Skill)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 skill(Shuriken)
 // Equivalent to:
 on binding1 {
@@ -379,13 +379,13 @@ See [Skills](#skills) for possible values.
 
 #### shard
 
-```seed
+```wotws
 shard(shard: Shard)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 shard(Deflector)
 // Equivalent to:
 on binding1 {
@@ -400,13 +400,13 @@ See [Shards](#shards) for possible values.
 
 #### teleporter
 
-```seed
+```wotws
 teleporter(teleporter: Teleporter)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 teleporter(Shriek)
 // Equivalent to:
 on binding1 {
@@ -421,13 +421,13 @@ See [Teleporters](#teleporters) for possible values.
 
 #### clean_water
 
-```seed
+```wotws
 clean_water()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 clean_water()
 // Equivalent to:
 on binding1 {
@@ -438,13 +438,13 @@ on binding1 {
 
 #### weapon_upgrade
 
-```seed
+```wotws
 weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
@@ -461,13 +461,13 @@ See [Weapon Upgrades](#weapon-upgrades) for possible values.
 
 #### remove_spirit_light
 
-```seed
+```wotws
 remove_spirit_light(amount: Integer)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_spirit_light(50)
 // Equivalent to:
 on binding1 {
@@ -478,13 +478,13 @@ on binding1 {
 
 #### remove_gorlek_ore
 
-```seed
+```wotws
 remove_gorlek_ore()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_gorlek_ore()
 // Equivalent to:
 on binding1 {
@@ -495,13 +495,13 @@ on binding1 {
 
 #### remove_keystone
 
-```seed
+```wotws
 remove_keystone()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_keystone()
 // Equivalent to:
 on binding1 {
@@ -512,13 +512,13 @@ on binding1 {
 
 #### remove_shard_slot
 
-```seed
+```wotws
 remove_shard_slot()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_shard_slot()
 // Equivalent to:
 on binding1 {
@@ -529,13 +529,13 @@ on binding1 {
 
 #### remove_health_fragment
 
-```seed
+```wotws
 remove_health_fragment()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_health_fragment()
 // Equivalent to:
 on binding1 {
@@ -546,13 +546,13 @@ on binding1 {
 
 #### remove_energy_fragment
 
-```seed
+```wotws
 remove_energy_fragment()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_energy_fragment()
 // Equivalent to:
 on binding1 {
@@ -563,13 +563,13 @@ on binding1 {
 
 #### remove_skill
 
-```seed
+```wotws
 remove_skill(skill: Skill)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_skill(Shuriken)
 // Equivalent to:
 on binding1 {
@@ -584,13 +584,13 @@ See [Skills](#skills) for possible values.
 
 #### remove_shard
 
-```seed
+```wotws
 remove_shard(shard: Shard)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_shard(Deflector)
 // Equivalent to:
 on binding1 {
@@ -605,13 +605,13 @@ See [Shards](#shards) for possible values.
 
 #### remove_teleporter
 
-```seed
+```wotws
 remove_teleporter(teleporter: Teleporter)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_teleporter(Shriek)
 // Equivalent to:
 on binding1 {
@@ -627,13 +627,13 @@ See [Teleporters](#teleporters) for possible values.
 
 #### remove_clean_water
 
-```seed
+```wotws
 remove_clean_water()
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_clean_water()
 // Equivalent to:
 on binding1 {
@@ -644,13 +644,13 @@ on binding1 {
 
 #### remove_weapon_upgrade
 
-```seed
+```wotws
 remove_weapon_upgrade(weapon_upgrade: WeaponUpgrade)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 remove_weapon_upgrade(ChargeBlaze)
 // Equivalent to:
 on binding1 {
@@ -679,7 +679,7 @@ You can use concatenation to include the return values of functions and UberStat
 
 ##### Example
 
-```seed
+```wotws
 on binding1 item_message(player.spiritLight + " Spirit Light owned")
 ```
 
@@ -695,7 +695,7 @@ Certain characters have special effects on text rendering:
 
 ##### Examples
 
-```seed
+```wotws
 on binding1 {
     item_message("This\nmessage\nhas\nfive\nlines.")
     // Or, for better readability:
@@ -711,7 +711,7 @@ on binding1 {
 
 ![example message with five lines](/images/messagefivelines.png)
 
-```seed
+```wotws
 on binding1 item_message(
     "Here be colors: *blue*, #yellow#, @red@, $green$ and <purple>purple</>.\n" +
     "As a side effect, it's impossible to show any of these symbols in a message: *#@$<>"
@@ -730,19 +730,19 @@ You can further customize messages styles with XML tags:
 
 ##### Examples
 
-```seed
+```wotws
 on binding1 item_message("Other colors <hex_32cd32ff>are possible</> by using their hexadecimal rgba")
 ```
 
 ![example message with hex colors](/images/messagehexcolors.png)
 
-```seed
+```wotws
 on binding1 item_message("<s_3>*BIG HUG*</>")
 ```
 
 ![example message with font size](/images/messagefontsize.png)
 
-```seed
+```wotws
 on binding1 item_message("<ls_1.5>Very\n" + "far\n" + "apart</>")
 ```
 
@@ -756,7 +756,7 @@ The vanilla game uses this in message like "Hold \[Jump\] to jump higher".
 
 ##### Example
 
-```seed
+```wotws
 on binding1 item_message("Press [OpenRandoWheel] to open the rando wheel.")
 ```
 
@@ -780,13 +780,13 @@ Some message properties can be changed after the message has been created:
 
 #### item_message
 
-```seed
+```wotws
 item_message(message: String)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 item_message("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.")
 ```
 
@@ -796,13 +796,13 @@ Item messages will enter a queue in the top center region of the screen. If too 
 
 #### item_message_with_timeout
 
-```seed
+```wotws
 item_message_with_timeout(message: String, timeout: Float)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 item_message_with_timeout("Hi! You seem to have " + player.gorlekOre + " Gorlek Ore.", 2)
 ```
 
@@ -812,13 +812,13 @@ Same as [item_message](#item_message) with a custom timeout.
 
 #### priority_message
 
-```seed
+```wotws
 priority_message(message: String)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 priority_message("Pressing this bind fills you with determination")
 ```
 
@@ -828,13 +828,13 @@ Priority messages will appear instantly at the top center of the screen. Only 1 
 
 #### priority_message_with_timeout
 
-```seed
+```wotws
 priority_message_with_timeout(message: String, timeout: Float)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 priority_message_with_timeout("Pressing this bind fills you with determination", 6)
 ```
 
@@ -844,7 +844,7 @@ Same as [priority_message](#priority_message) with a custom timeout.
 
 #### controlled_priority_message
 
-```seed
+```wotws
 controlled_priority_message(id: String, message: String, timeout: Float)
 ```
 
@@ -854,13 +854,13 @@ Same as [priority_message_with_timeout](#priority_message_with_timeout) with an 
 
 #### free_message
 
-```seed
+```wotws
 free_message(id: String, message: String)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 free_message("<3", "Forever with you!")
 // Equivalent to:
 on binding1 {
@@ -878,13 +878,13 @@ This function immediately shows the message. If you want to start with an empty,
 
 #### free_message_uninitialized
 
-```seed
+```wotws
 free_message_uninitialized(id: String)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on spawn {
     free_message_uninitialized("mouse_pos")
     free_message_show("mouse_pos", false, false) // No fade or sound effect
@@ -898,13 +898,13 @@ Same as [free_message](#free_message), but starting empty and hidden. This means
 
 #### destroy_message
 
-```seed
+```wotws
 destroy_message(id: String)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 free_message(
     "confirmation",
     "Just making sure, you did read this message in its entirety?\n" +
@@ -915,13 +915,13 @@ on binding2 destroy_message("confirmation")
 
 #### set_message_text
 
-```seed
+```wotws
 set_message_text(id: String, message: String)
 ```
 
 #### set_message_timeout
 
-```seed
+```wotws
 set_message_timeout(id: String, timeout: Float)
 ```
 
@@ -931,7 +931,7 @@ Starts a timeout for the message to disappear.
 
 #### set_message_background
 
-```seed
+```wotws
 set_message_background(id: String, background: Boolean)
 ```
 
@@ -943,13 +943,13 @@ Defaults to `true`.
 
 #### set_message_corner
 
-```seed
+```wotws
 set_message_corner(id: String, corner: Corner)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on binding1 {
     free_message("top_left", "I will appear in the top left corner")
     set_message_corner("top_left", TopLeft)
@@ -974,7 +974,7 @@ See [Corners](#corners) for possible values.
 
 #### set_message_position
 
-```seed
+```wotws
 set_message_position(id: String, x: Float, y: Float)
 ```
 
@@ -986,7 +986,7 @@ Defaults to `0.5, 0.114`, which approximates the default position of other messa
 
 #### set_message_alignment
 
-```seed
+```wotws
 set_message_alignment(id: String, alignment: Alignment)
 ```
 
@@ -1000,7 +1000,7 @@ See [Alignments](#alignments) for possible values.
 
 #### set_message_horizontal_anchor
 
-```seed
+```wotws
 set_message_horizontal_anchor(id: String, horizontal_anchor: HorizontalAnchor)
 ```
 
@@ -1014,7 +1014,7 @@ See [Horizontal Anchors](#horizontal-anchors) for possible values.
 
 #### set_message_vertical_anchor
 
-```seed
+```wotws
 set_message_vertical_anchor(id: String, vertical_anchor: VerticalAnchor)
 ```
 
@@ -1028,7 +1028,7 @@ See [Vertical Anchors](#vertical-anchors) for possible values.
 
 #### set_message_box_width
 
-```seed
+```wotws
 set_message_box_width(id: String, width: Float)
 ```
 
@@ -1038,7 +1038,7 @@ By default, message boxes fit their content. Using this you can instead set a fi
 
 #### set_message_coordinate_system
 
-```seed
+```wotws
 set_message_coordinate_system(id: String, coordinate_system: CoordinateSystem)
 ```
 
@@ -1056,7 +1056,7 @@ See [Coordinate Systems](#coordinate-systems) for possible values.
 
 #### free_message_show
 
-```seed
+```wotws
 free_message_show(id: String, fade: Boolean, sound: Boolean)
 ```
 
@@ -1066,7 +1066,7 @@ Shows a free message created with [free_message_uninitialized](#free_message_uni
 
 #### free_message_hide
 
-```seed
+```wotws
 free_message_hide(id: String, fade: Boolean)
 ```
 
@@ -1078,7 +1078,7 @@ Hides a free message. It can later be shown again with [free_message_show](#free
 
 #### spirit_light_string
 
-```seed
+```wotws
 spirit_light_string(amount: Integer) -> String
 ```
 
@@ -1088,37 +1088,37 @@ Every instance of this function in your code will be assigned a random spirit li
 
 #### gorlek_ore_string
 
-```seed
+```wotws
 gorlek_ore_string() -> String
 ```
 
 #### keystone_string
 
-```seed
+```wotws
 keystone_string() -> String
 ```
 
 #### shard_slot_string
 
-```seed
+```wotws
 shard_slot_string() -> String
 ```
 
 #### health_fragment_string
 
-```seed
+```wotws
 health_fragment_string() -> String
 ```
 
 #### energy_fragment_string
 
-```seed
+```wotws
 energy_fragment_string() -> String
 ```
 
 #### skill_string
 
-```seed
+```wotws
 skill_string(skill: Skill) -> String
 ```
 
@@ -1128,7 +1128,7 @@ See [Skills](#skills) for possible values.
 
 #### shard_string
 
-```seed
+```wotws
 shard_string(shard: Shard) -> String
 ```
 
@@ -1138,7 +1138,7 @@ See [Shards](#shards) for possible values.
 
 #### teleporter_string
 
-```seed
+```wotws
 teleporter_string(teleporter: Teleporter) -> String
 ```
 
@@ -1148,13 +1148,13 @@ See [Teleporters](#teleporters) for possible values.
 
 #### clean_water_string
 
-```seed
+```wotws
 clean_water_string() -> String
 ```
 
 #### weapon_upgrade_string
 
-```seed
+```wotws
 weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
 ```
 
@@ -1166,43 +1166,43 @@ See [Weapon Upgrades](#weapon-upgrades) for possible values.
 
 #### remove_spirit_light_string
 
-```seed
+```wotws
 remove_spirit_light_string(amount: Integer) -> String
 ```
 
 #### remove_gorlek_ore_string
 
-```seed
+```wotws
 remove_gorlek_ore_string() -> String
 ```
 
 #### remove_keystone_string
 
-```seed
+```wotws
 remove_keystone_string() -> String
 ```
 
 #### remove_shard_slot_string
 
-```seed
+```wotws
 remove_shard_slot_string() -> String
 ```
 
 #### remove_health_fragment_string
 
-```seed
+```wotws
 remove_health_fragment_string() -> String
 ```
 
 #### remove_energy_fragment_string
 
-```seed
+```wotws
 remove_energy_fragment_string() -> String
 ```
 
 #### remove_skill_string
 
-```seed
+```wotws
 remove_skill_string(skill: Skill) -> String
 ```
 
@@ -1212,7 +1212,7 @@ See [Skills](#skills) for possible values.
 
 #### remove_shard_string
 
-```seed
+```wotws
 remove_shard_string(shard: Shard) -> String
 ```
 
@@ -1222,7 +1222,7 @@ See [Shards](#shards) for possible values.
 
 #### remove_teleporter_string
 
-```seed
+```wotws
 remove_teleporter_string(teleporter: Teleporter) -> String
 ```
 
@@ -1232,13 +1232,13 @@ See [Teleporters](#teleporters) for possible values.
 
 #### remove_clean_water_string
 
-```seed
+```wotws
 remove_clean_water_string() -> String
 ```
 
 #### remove_weapon_upgrade_string
 
-```seed
+```wotws
 remove_weapon_upgrade_string(weapon_upgrade: WeaponUpgrade) -> String
 ```
 
@@ -1256,7 +1256,7 @@ You can also introduce entirely custom states using [!state](#state).
 
 #### fetch
 
-```seed
+```wotws
 fetch(uber_identifier: UberIdentifier) -> Boolean
 fetch(uber_identifier: UberIdentifier) -> Integer
 fetch(uber_identifier: UberIdentifier) -> Float
@@ -1264,7 +1264,7 @@ fetch(uber_identifier: UberIdentifier) -> Float
 
 ##### Example
 
-```seed
+```wotws
 on binding1 item_message("Gorlek Ore: " + fetch(player.gorlekOre))
 // Or, for convenience:
 on binding1 item_message("Gorlek Ore: " + player.gorlekOre)
@@ -1276,7 +1276,7 @@ Often you don't have to use `fetch` explicitely since it's inferred when you use
 
 #### store
 
-```seed
+```wotws
 store(uber_identifier: UberIdentifier, value: Boolean)
 store(uber_identifier: UberIdentifier, value: Integer)
 store(uber_identifier: UberIdentifier, value: Float)
@@ -1284,7 +1284,7 @@ store(uber_identifier: UberIdentifier, value: Float)
 
 ##### Example
 
-```seed
+```wotws
 on binding1 store(player.health, -1) // Setting health to a negative value kills the player
 ```
 
@@ -1294,7 +1294,7 @@ The expected type of the value depends on the type of the UberState.
 
 #### store_without_triggers
 
-```seed
+```wotws
 store_without_triggers(uber_identifier: UberIdentifier, value: Boolean)
 store_without_triggers(uber_identifier: UberIdentifier, value: Integer)
 store_without_triggers(uber_identifier: UberIdentifier, value: Float)
@@ -1302,7 +1302,7 @@ store_without_triggers(uber_identifier: UberIdentifier, value: Float)
 
 ##### Example
 
-```seed
+```wotws
 on spawn store_without_triggers(Marsh.Spawn.RightSL, true) // This will make the pickup disappear but not grant the reward
 ```
 
@@ -1312,7 +1312,7 @@ Identical to [store](#store), but prevents any [Triggers](#triggers) from happen
 
 #### store_defaults
 
-```seed
+```wotws
 store_defaults()
 ```
 
@@ -1322,7 +1322,7 @@ Sets all UberStates to the value they have by default after starting a new file 
 
 #### store_defaults_exclude
 
-```seed
+```wotws
 store_defaults_exclude(regex: String)
 ```
 
@@ -1336,49 +1336,49 @@ You can store temporary values in variables. This can be useful for calculations
 
 #### set_boolean
 
-```seed
+```wotws
 set_boolean(id: String, value: Boolean)
 ```
 
 #### set_integer
 
-```seed
+```wotws
 set_integer(id: String, value: Integer)
 ```
 
 #### set_float
 
-```seed
+```wotws
 set_float(id: String, value: Float)
 ```
 
 #### set_string
 
-```seed
+```wotws
 set_string(id: String, value: String)
 ```
 
 #### get_boolean
 
-```seed
+```wotws
 get_boolean(id: String) -> Boolean
 ```
 
 #### get_integer
 
-```seed
+```wotws
 get_integer(id: String) -> Integer
 ```
 
 #### get_float
 
-```seed
+```wotws
 get_float(id: String) -> Float
 ```
 
 #### get_string
 
-```seed
+```wotws
 get_string(id: String) -> String
 ```
 
@@ -1390,7 +1390,7 @@ If you don't manually specify anything, seedgen will do its best to insert reaso
 
 #### Example
 
-```seed
+```wotws
 on Twillen.Shop.Slot1 shard(Secret)
 
 on reload set_shop_item_data(
@@ -1404,7 +1404,7 @@ on reload set_shop_item_data(
 
 #### set_shop_item_data
 
-```seed
+```wotws
 set_shop_item_data(uber_identifier: UberIdentifier, price: Integer, name: String, description: String, icon: Icon)
 ```
 
@@ -1416,25 +1416,25 @@ See [Icons](#icons) for possible values.
 
 #### set_shop_item_price
 
-```seed
+```wotws
 set_shop_item_price(uber_identifier: UberIdentifier, price: Integer)
 ```
 
 #### set_shop_item_name
 
-```seed
+```wotws
 set_shop_item_name(uber_identifier: UberIdentifier, name: String)
 ```
 
 #### set_shop_item_description
 
-```seed
+```wotws
 set_shop_item_description(uber_identifier: UberIdentifier, description: String)
 ```
 
 #### set_shop_item_icon
 
-```seed
+```wotws
 set_shop_item_icon(uber_identifier: UberIdentifier, icon: Icon)
 ```
 
@@ -1444,13 +1444,13 @@ See [Icons](#icons) for possible values.
 
 #### set_shop_item_hidden
 
-```seed
+```wotws
 set_shop_item_hidden(uber_identifier: UberIdentifier, hidden: Boolean)
 ```
 
 #### set_shop_item_locked
 
-```seed
+```wotws
 set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 ```
 
@@ -1462,7 +1462,7 @@ They are generally recommended over using `player.positionX` / `player.positionY
 
 #### position_trigger_rectangle
 
-```seed
+```wotws
 position_trigger_rectangle(id: String, x1: Float, y1: Float, x2: Float, y2: Float)
 ```
 
@@ -1472,7 +1472,7 @@ Creates a new position trigger in the shape of a rectangle defined by points `x1
 
 #### position_trigger_circle
 
-```seed
+```wotws
 position_trigger_circle(id: String, x: Float, y: Float, r: Float)
 ```
 
@@ -1482,7 +1482,7 @@ Creates a new position trigger in the shape of a circle around `x, y` with radiu
 
 #### position_trigger_destroy
 
-```seed
+```wotws
 position_trigger_destroy(id: String)
 ```
 
@@ -1494,7 +1494,7 @@ Note that this will not trigger the `position_trigger_leave_callback`, so if any
 
 #### position_trigger_enter_callback
 
-```seed
+```wotws
 position_trigger_enter_callback(id: String, action: Action)
 ```
 
@@ -1504,7 +1504,7 @@ position_trigger_enter_callback(id: String, action: Action)
 
 #### position_trigger_leave_callback
 
-```seed
+```wotws
 position_trigger_leave_callback(id: String, action: Action)
 ```
 
@@ -1514,7 +1514,7 @@ position_trigger_leave_callback(id: String, action: Action)
 
 #### is_in_position_trigger
 
-```seed
+```wotws
 is_in_position_trigger(id: String) -> Boolean
 ```
 
@@ -1524,7 +1524,7 @@ Returns `true` if Ori is in the shape defined by the position trigger.
 
 #### is_in_rectangle
 
-```seed
+```wotws
 is_in_rectangle(x1: Float, y1: Float, x2: Float, y2: Float) -> Boolean
 ```
 
@@ -1534,7 +1534,7 @@ Returns `true` if Ori is in the rectangle defined by points `x1, y1` and `x2, y2
 
 #### is_in_circle
 
-```seed
+```wotws
 is_in_circle(x: Float, y: Float, r: Float) -> Boolean
 ```
 
@@ -1552,7 +1552,7 @@ The `OpenRandoWheel` bind initially opens the `"root"` wheel, which has a defaul
 
 #### Example
 
-```seed
+```wotws
 on reload {
     set_wheel_item_data("root", Top, "Shard Lexicon", "[Ability1]View", Overcharge)
     set_wheel_item_all_actions("root", Top, switch_wheel("shards"))
@@ -1570,13 +1570,13 @@ See [Wheel Item Positions](#wheel-item-positions) for possible values in the sec
 
 #### set_wheel_item_data
 
-```seed
+```wotws
 set_wheel_item_data(wheel: String, position: WheelItemPosition, name: String, description: String, icon: Icon)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on reload set_wheel_item_data("root", Bottom, "Mysterious letter", "1612125 92019 41147518152119 2015 715 11215145", Placeholder)
 // Equivalent to:
 on reload {
@@ -1596,19 +1596,19 @@ See [Icons](#icons) for possible values.
 
 #### set_wheel_item_name
 
-```seed
+```wotws
 set_wheel_item_name(wheel: String, position: WheelItemPosition, name: String)
 ```
 
 #### set_wheel_item_description
 
-```seed
+```wotws
 set_wheel_item_description(wheel: String, position: WheelItemPosition, description: String)
 ```
 
 #### set_wheel_item_icon
 
-```seed
+```wotws
 set_wheel_item_icon(wheel: String, position: WheelItemPosition, icon: Icon)
 ```
 
@@ -1618,19 +1618,19 @@ See [Icons](#icons) for possible values.
 
 #### set_wheel_item_color
 
-```seed
+```wotws
 set_wheel_item_color(wheel: String, position: WheelItemPosition, red: Integer, green: Integer, blue: Integer, alpha: Integer)
 ```
 
 #### set_wheel_item_all_actions
 
-```seed
+```wotws
 set_wheel_item_all_actions(wheel: String, position: WheelItemPosition, action: Action)
 ```
 
 ##### Examples
 
-```seed
+```wotws
 on reload {
     set_wheel_item_data("root", Top, "Echo", "[Ability1]Shout", Ricochet)
     set_wheel_item_all_actions("root", Top, priority_message("Echo"))
@@ -1654,7 +1654,7 @@ See [set_wheel_item_action](#set_wheel_item_action) to control individual binds.
 
 #### set_wheel_item_action
 
-```seed
+```wotws
 set_wheel_item_action(wheel: String, position: WheelItemPosition, bind: WheelBind, action: Action)
 ```
 
@@ -1670,25 +1670,25 @@ See [Wheel Binds](#wheel-binds) for possible values.
 
 #### destroy_wheel_item
 
-```seed
+```wotws
 destroy_wheel_item(wheel: String, position: WheelItemPosition)
 ```
 
 #### switch_wheel
 
-```seed
+```wotws
 switch_wheel(wheel: String)
 ```
 
 #### set_wheel_pinned
 
-```seed
+```wotws
 set_wheel_pinned(wheel: String, pinned: Boolean)
 ```
 
 #### clear_all_wheels
 
-```seed
+```wotws
 clear_all_wheels()
 ```
 
@@ -1698,7 +1698,7 @@ You can create teleporter icons anywhere on the map that the player can warp to.
 
 #### create_warp_icon
 
-```seed
+```wotws
 create_warp_icon(id: String, x: Float, y: Float)
 ```
 
@@ -1708,13 +1708,13 @@ See [warp](#warp) and [instant_warp](#instant_warp) to forcefully warp Ori inste
 
 #### set_warp_icon_label
 
-```seed
+```wotws
 set_warp_icon_label(id: String, label: String)
 ```
 
 #### destroy_warp_icon
 
-```seed
+```wotws
 destroy_warp_icon(id: String)
 ```
 
@@ -1722,7 +1722,7 @@ destroy_warp_icon(id: String)
 
 #### to_integer
 
-```seed
+```wotws
 to_integer(float: Float) -> Integer
 ```
 
@@ -1732,7 +1732,7 @@ Often you don't have to use `to_integer` explicitely since it's inferred when yo
 
 #### to_float
 
-```seed
+```wotws
 to_float(integer: Integer) -> Float
 ```
 
@@ -1742,7 +1742,7 @@ Often you don't have to use `to_float` explicitely since it's inferred when you 
 
 #### to_string
 
-```seed
+```wotws
 to_string(boolean: Boolean) -> String
 to_string(integer: Integer) -> String
 to_string(float: Float) -> String
@@ -1755,37 +1755,37 @@ Often you don't have to use `to_string` explicitely since it's inferred when you
 
 #### current_zone
 
-```seed
+```wotws
 current_zone() -> Zone
 ```
 
 #### save
 
-```seed
+```wotws
 save()
 ```
 
 #### save_to_memory
 
-```seed
+```wotws
 save_to_memory()
 ```
 
 #### save_at
 
-```seed
+```wotws
 save_at(x: Float, y: Float)
 ```
 
 #### save_to_memory_at
 
-```seed
+```wotws
 save_to_memory_at(x: Float, y: Float)
 ```
 
 #### warp
 
-```seed
+```wotws
 warp(x: Float, y: Float)
 ```
 
@@ -1797,7 +1797,7 @@ See [create_warp_icon](#create_warp_icon) to create a permanent icon on the map 
 
 #### instant_warp
 
-```seed
+```wotws
 instant_warp(x: Float, y: Float)
 ```
 
@@ -1809,7 +1809,7 @@ See [create_warp_icon](#create_warp_icon) to create a permanent icon on the map 
 
 #### equip
 
-```seed
+```wotws
 equip(slot: EquipSlot, equipment: Equipment)
 ```
 
@@ -1819,7 +1819,7 @@ See [Equip Slots](#equip-slots) and [Equipment](#equipment) for possible values.
 
 #### unequip
 
-```seed
+```wotws
 unequip(equipment: Equipment)
 ```
 
@@ -1829,7 +1829,7 @@ See [Equipment](#equipment) for possible values.
 
 #### trigger_client_event
 
-```seed
+```wotws
 trigger_client_event(client_event: ClientEvent)
 ```
 
@@ -1841,7 +1841,7 @@ See [Client Events](#client-events) for a list of possible values.
 
 #### trigger_keybind
 
-```seed
+```wotws
 trigger_keybind(bind: String)
 ```
 
@@ -1851,7 +1851,7 @@ See [Randomizer Actions](https://github.com/ori-community/wotw-rando-client/blob
 
 #### enable_server_sync
 
-```seed
+```wotws
 enable_server_sync(uber_identifier: UberIdentifier)
 ```
 
@@ -1861,13 +1861,13 @@ Currently only works to undo [disable_server_sync](#disable_server_sync), you ca
 
 #### disable_server_sync
 
-```seed
+```wotws
 disable_server_sync(uber_identifier: UberIdentifier)
 ```
 
 #### set_trial_hint
 
-```seed
+```wotws
 set_trial_hint(uber_identifier: UberIdentifier, text: String)
 ```
 
@@ -1877,7 +1877,7 @@ Sets the text displayed above an activated trial start pedestal.
 
 #### create_stats_entry
 
-```seed
+```wotws
 create_stats_entry(icon: MapIcon, label: String)
 ```
 
@@ -1889,7 +1889,7 @@ See [Map Icons](#map-icons) for possible values.
 
 #### close_menu
 
-```seed
+```wotws
 close_menu()
 ```
 
@@ -1899,7 +1899,7 @@ Forcefully closes any currently open menu. This is primarily intended to close s
 
 #### close_weapon_wheel
 
-```seed
+```wotws
 close_weapon_wheel()
 ```
 
@@ -1909,7 +1909,7 @@ Forcefully closes the weapon wheel if it is currently open.
 
 #### debug_log
 
-```seed
+```wotws
 debug_log(message: String)
 ```
 
@@ -1923,7 +1923,7 @@ Writes the message into the client log.
 
 ##### Example
 
-```seed
+```wotws
 // This defines a custom function called "exciting_gorlek_ore" which displays a message and gives a gorlek ore.
 fun exciting_gorlek_ore() {
     item_message("It's finally here! Fresh out of the mines!")
@@ -1948,14 +1948,14 @@ You can include existing snippets, or split your plandomizer across multiple fil
 
 #### include
 
-```seed
+```wotws
 !include(<snippet>)
 !include(<snippet>, <identifier>, ...)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !include("wisps")  // wisps is the snippet adding the wisps goal mode
 !include("bonus_item_core", extra_double_jump)
 
@@ -1968,7 +1968,7 @@ If you want to include custom snippets they need to be in the snippet or plandom
 
 When making a plandomizer, you probably want to include some of the official snippets. You don't need to copy them anywhere, simply add them as includes. Most notably, `seed_core` is included in every generated seed and is responsible for many randomizer critical tasks such as enabling teleport anywhere. Here is a selection of includes to get your plandomizer into a similar starting point as a generated seed with the gorlek preset:
 
-```seed
+```wotws
 !include("seed_core")
 !include("progress_helper")
 !include("no_cutscenes")
@@ -1982,13 +1982,13 @@ When making a plandomizer, you probably want to include some of the official sni
 
 #### export
 
-```seed
+```wotws
 !export(<identifier>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 fun cool_custom_item() {
     item_message(":oricool:")
 }
@@ -1998,13 +1998,13 @@ fun cool_custom_item() {
 
 #### augment_fun
 
-```seed
+```wotws
 !augment_fun(<identifier>, <action>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // file: define_event.wotws
 !export(keybind_event)
 fun keybind_event() {}
@@ -2012,13 +2012,13 @@ fun keybind_event() {}
 on binding1 keybind_event()
 ```
 
-```seed
+```wotws
 // file: message_on_event.wotws
 !include("define_event", keybind_event)
 !augment_fun(keybind_event, item_message("Hi!"))
 ```
 
-```seed
+```wotws
 // file: ore_on_event.wotws
 !include("define_event", keybind_event)
 !augment_fun(keybind_event, gorlek_ore())
@@ -2026,13 +2026,13 @@ on binding1 keybind_event()
 
 #### include_icon
 
-```seed
+```wotws
 !include_icon(<identifier>, <path>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !include_icon(explosions_icon, "icons/explosions.png")
 // Now you can use the icon anywhere
 on reload set_wheel_item_icon("root", Bottom, explosions_icon)
@@ -2048,13 +2048,13 @@ Note that the game can only correctly render images with an alpha channel. PNGs 
 
 #### builtin_icon
 
-```seed
+```wotws
 !builtin_icon(<identifier>, <path>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // This icon ships with the randomizer
 !builtin_icon(minimap_icon, "assets/icons/wheel/minimap.png")
 // Now you can use the icon anywhere
@@ -2069,13 +2069,13 @@ The randomizer ships with a set of [preinstalled assets](https://github.com/ori-
 
 #### state
 
-```seed
+```wotws
 !state(<identifier>, <type>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !state(triforce_fragments, Integer)
 
 fun triforce_fragment() {
@@ -2097,13 +2097,13 @@ Only the types `Boolean`, `Integer` and `Float` are allowed here. It's not possi
 
 #### timer
 
-```seed
+```wotws
 !timer(<toggle>, <timer>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !timer(timer_enabled, timer)
 
 on binding1 {
@@ -2122,13 +2122,13 @@ You can provide item data for custom items to get the correct icons etc. in shop
 
 #### item_data
 
-```seed
+```wotws
 !item_data(<action>, <name>, <price>, <description>, <icon>, <map icon>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 fun custom_item() {}
 !item_data(
     custom_item(),
@@ -2148,25 +2148,25 @@ See [Icons](#icons) and [Map Icons](#map-icons) for possible values.
 
 #### item_data_name
 
-```seed
+```wotws
 !item_data_name(<action>, <name>)
 ```
 
 #### item_data_price
 
-```seed
+```wotws
 !item_data_price(<action>, <price>)
 ```
 
 #### item_data_description
 
-```seed
+```wotws
 !item_data_description(<action>, <description>)
 ```
 
 #### item_data_map_icon
 
-```seed
+```wotws
 !item_data_map_icon(<action>, <map icon>)
 ```
 
@@ -2176,7 +2176,7 @@ See [Map Icons](#map-icons) for possible values.
 
 #### item_data_icon
 
-```seed
+```wotws
 !item_data_icon(<action>, <icon>)
 ```
 
@@ -2190,46 +2190,46 @@ Changes to random placements are only relevant for snippets used in seed generat
 
 #### add_item
 
-```seed
+```wotws
 !add_item(<action>, <amount>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // Add a second Burrow to the item pool
 !add_item(skill(Burrow), 1)
 ```
 
 #### remove_item
 
-```seed
+```wotws
 !remove_item(<action>, <amount>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // This is what the No Launch snippet does
 !remove_item(skill(Launch), 1)
 ```
 
 #### add_spirit_light
 
-```seed
+```wotws
 !add_spirit_light(<amount>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // Increase the total spirit light from 20000 to 30000
 !add_spirit_light(10000)
 ```
 
 #### remove_spirit_light
 
-```seed
+```wotws
 !remove_spirit_light(<amount>)
 ```
 
@@ -2239,13 +2239,13 @@ The spirit light placement generator is not made for very small amounts of spiri
 
 #### remove_location
 
-```seed
+```wotws
 !remove_location(<name>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 on Ruins.Wisp skill(Launch)
 // Remove the location to avoid another random item being placed.
 !remove_location(Ruins.Wisp)
@@ -2259,13 +2259,13 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 #### location_slots
 
-```seed
+```wotws
 !location_slots(<name>, <slots>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // Place three items on Seir to make the location more rewarding.
 !location_slots(Ruins.Wisp, 3)
 ```
@@ -2278,7 +2278,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 #### set_logic_state
 
-```seed
+```wotws
 !set_logic_state(<name>)
 ```
 
@@ -2290,13 +2290,13 @@ This is useful when having to write custom logic for a snippet such as no combat
 
 #### preplace
 
-```seed
+```wotws
 !preplace(<action>, <zone>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // Sword will be placed somewhere in Marsh
 !preplace(skill(Sword), Marsh)
 ```
@@ -2313,7 +2313,7 @@ Snippets can be configured by the user during seed generation, or in plandos usi
 
 #### Example
 
-```seed
+```wotws
 !config_integer(treasure_size, 1000, "Treasure Value", "How much money is inside the treasure chest")
 
 fun treasure_chest() {
@@ -2326,7 +2326,7 @@ fun treasure_chest() {
 
 #### config_boolean
 
-```seed
+```wotws
 !config_boolean(<identifier>, <default>, <name>)
 // Or with description
 !config_boolean(<identifier>, <default>, <name>, <description>)
@@ -2334,7 +2334,7 @@ fun treasure_chest() {
 
 #### config_integer
 
-```seed
+```wotws
 !config_integer(<identifier>, <default>, <name>)
 // Or with description
 !config_integer(<identifier>, <default>, <name>, <description>)
@@ -2342,7 +2342,7 @@ fun treasure_chest() {
 
 #### config_integer_range
 
-```seed
+```wotws
 !config_integer_range(<identifier>, <default>, <min>, <max>, <name>)
 // Or with description
 !config_integer_range(<identifier>, <default>, <min>, <max>, <name>, <description>)
@@ -2350,7 +2350,7 @@ fun treasure_chest() {
 
 #### config_float
 
-```seed
+```wotws
 !config_float(<identifier>, <default>, <name>)
 // Or with description
 !config_float(<identifier>, <default>, <name>, <description>)
@@ -2358,7 +2358,7 @@ fun treasure_chest() {
 
 #### config_float_range
 
-```seed
+```wotws
 !config_float_range(<identifier>, <default>, <min>, <max>, <name>)
 // Or with description
 !config_float_range(<identifier>, <default>, <min>, <max>, <name>, <description>)
@@ -2366,13 +2366,13 @@ fun treasure_chest() {
 
 #### set_config
 
-```seed
+```wotws
 !set_config(<snippet>, <identifier>, <value>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // Include knowledge hints (for example, in your plando), but turn off the regen hint (since it doesn't fit your plando's style/progression)
 !include("knowledge_hints")
 !set_config("knowledge_hints", regen_logic_hint, "false")
@@ -2392,13 +2392,13 @@ Some commands can provide functionality in the main menu before starting the see
 
 #### spawn
 
-```seed
+```wotws
 !spawn(<x>, <y>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // This is in a prologue transition where the entire screen is black.
 // Useful if you want to have some kind of menu before starting the plandomizer.
 // Don't forget to set `player.inputLocked` if you do that though.
@@ -2411,20 +2411,20 @@ Setting the spawn location is only relevant for plandos, it does nothing for sni
 
 #### tags
 
-```seed
+```wotws
 !tags(<tag>,...)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // This will be listed as one of the tags when starting a new save file
 !tags("Fun included")
 ```
 
 #### difficulty_visible
 
-```seed
+```wotws
 !difficulty_visible(<difficulty>, <boolean>)
 ```
 
@@ -2438,7 +2438,7 @@ See [Game Difficulties](#game-difficulties) for possible values.
 
 #### difficulty_label
 
-```seed
+```wotws
 !difficulty_label(<difficulty>, <label>)
 ```
 
@@ -2450,7 +2450,7 @@ See [Game Difficulties](#game-difficulties) for possible values.
 
 #### difficulty_confirmation
 
-```seed
+```wotws
 !difficulty_confirmation(<difficulty>, <message>)
 ```
 
@@ -2468,13 +2468,13 @@ You can use compile-time evaluation to conditionally include parts of your code 
 
 #### let
 
-```seed
+```wotws
 !let(<identifier>, <value>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 // In case you can't read hexcolors in your brain, giving them names might help
 !let(lime_green, "<hex_32cd32ff>")
 
@@ -2485,13 +2485,13 @@ on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 
 #### if
 
-```seed
+```wotws
 !if <condition> { ... }
 ```
 
 ##### Example
 
-```seed
+```wotws
 !config(do_shenanigans, "Enable at your own risk", Boolean, false)
 
 // In the resulting seed, only one of the two sections below will be included
@@ -2505,13 +2505,13 @@ on binding1 item_message("<hex_32cd32ff>ooo fancy color")
 
 #### repeat
 
-```seed
+```wotws
 !repeat <amount> { ... }
 ```
 
 ##### Example
 
-```seed
+```wotws
 !config(motay_clones, "How many clones of Motay should assist you", Integer, 1)
 
 !repeat motay_clones {
@@ -2527,46 +2527,46 @@ Values that are random every time even while playing can be read from the `rando
 
 #### random_boolean
 
-```seed
+```wotws
 !random_boolean(<identifier>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !random_boolean(boolean)
 on binding1 item_message(boolean)
 ```
 
 #### random_integer
 
-```seed
+```wotws
 !random_integer(<identifier>, <min>, <max>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !random_integer(number, 1, 100)
 on binding1 item_message(number)
 ```
 
 #### random_float
 
-```seed
+```wotws
 !random_float(<identifier>, <min>, <max>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !random_float(number, 0, 2.5)
 on binding1 item_message(number)
 ```
 
 #### random_pool
 
-```seed
+```wotws
 !random_pool(<identifier>, <type>, [ <value>... ])
 ```
 
@@ -2576,13 +2576,13 @@ See [!random_from_pool](#random_from_pool) for more details.
 
 #### random_from_pool
 
-```seed
+```wotws
 !random_from_pool(<identifier>, <pool identifier>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !random_pool(greetings_pool, String, [
     "Greetings",
     "Welcome",
@@ -2602,13 +2602,13 @@ These are very specialized commands to support our hint systems.
 
 #### zone_of
 
-```seed
+```wotws
 !zone_of(<identifier>, <action>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !zone_of(burrow_zone, skill(Burrow))
 on binding1 item_message("Burrow: " + burrow_zone)
 ```
@@ -2619,26 +2619,26 @@ See [Zones](#zones) for possible values.
 
 #### item_on
 
-```seed
+```wotws
 !item_on(<identifier>, <trigger>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 !item_on(marsh_shrine_item, Marsh.Trial.CombatShrine)
 on binding1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
 ```
 
 #### count_in_zone
 
-```seed
+```wotws
 !count_in_zone([ (<identifier>, <zone>),... ], [ <action>... ])
 ```
 
 ##### Example
 
-```seed
+```wotws
 !count_in_zone(
     [
         (weapons_in_marsh, Marsh),
@@ -2672,7 +2672,7 @@ Snippets may add annotations to influence how they are presented to the user. Th
 
 #### Hidden
 
-```seed
+```wotws
 #hidden
 ```
 
@@ -2682,13 +2682,13 @@ The snippet will be invisible to the user. It only exists to be [included](#incl
 
 #### Category
 
-```seed
+```wotws
 #category(<string>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 #category("World Changes")
 ```
 
@@ -2698,25 +2698,25 @@ Snippets of the same category will be shown together.
 
 #### Name
 
-```seed
+```wotws
 #name(<string>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 #name("Better Hornbug")
 ```
 
 #### Description
 
-```seed
+```wotws
 #description(<string>)
 ```
 
 ##### Example
 
-```seed
+```wotws
 #description("This will change how you play the randomizer forever")
 ```
 
@@ -2728,7 +2728,7 @@ Snippets of the same category will be shown together
 
 ### Skills
 
-```seed
+```wotws
 Bash
 WallJump
 DoubleJump
@@ -2761,7 +2761,7 @@ MarshAncestralLight
 
 ### Shards
 
-```seed
+```wotws
 Overcharge
 TripleJump
 Wingclip
@@ -2797,7 +2797,7 @@ Arcing
 
 ### Teleporters
 
-```seed
+```wotws
 Marsh
 Den
 Hollow
@@ -2820,7 +2820,7 @@ Shriek
 
 ### Weapon Upgrades
 
-```seed
+```wotws
 ExplodingSpear
 HammerShockwave
 StaticShuriken
@@ -2830,7 +2830,7 @@ RapidSentry
 
 ### Zones
 
-```seed
+```wotws
 Marsh
 Hollow
 Glades
@@ -2850,7 +2850,7 @@ Void
 
 ### Corners
 
-```seed
+```wotws
 TopLeft
 TopCenter
 TopRight
@@ -2864,7 +2864,7 @@ BottomRight
 
 ### Alignments
 
-```seed
+```wotws
 Left
 Center
 Right
@@ -2873,7 +2873,7 @@ Justify
 
 ### Horizontal Anchors
 
-```seed
+```wotws
 Left
 Center
 Right
@@ -2881,7 +2881,7 @@ Right
 
 ### Vertical Anchors
 
-```seed
+```wotws
 Top
 Middle
 Bottom
@@ -2889,7 +2889,7 @@ Bottom
 
 ### Coordinate Systems
 
-```seed
+```wotws
 Absolute
 Relative
 World
@@ -2897,7 +2897,7 @@ World
 
 ### Equip Slots
 
-```seed
+```wotws
 Ability1
 Ability2
 Ability3
@@ -2905,7 +2905,7 @@ Ability3
 
 ### Equipment
 
-```seed
+```wotws
 Hammer
 Bow
 Sword
@@ -2956,7 +2956,7 @@ In addition to the icons below, you may use [Shards](#shards) and [Equipments](#
 
 See also [!builtin_icon](#builtin_icon) and [!include_icon](#include_icon) to use images as icons.
 
-```seed
+```wotws
 // Placeholder icon
 Placeholder
 
@@ -2999,7 +2999,7 @@ TheLastSeed
 
 ### Map Icons
 
-```seed
+```wotws
 Keystone
 Mapstone
 BreakableWall
@@ -3087,7 +3087,7 @@ Lever
 
 ### Wheel Item Positions
 
-```seed
+```wotws
 Top
 TopRight
 RightTop
@@ -3104,7 +3104,7 @@ TopLeft
 
 ### Wheel Binds
 
-```seed
+```wotws
 Ability1
 Ability2
 Ability3
@@ -3112,7 +3112,7 @@ Ability3
 
 ### Game Difficulties
 
-```seed
+```wotws
 Easy
 Normal
 Hard

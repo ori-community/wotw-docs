@@ -1,24 +1,22 @@
 import type { LanguageRegistration } from 'shiki'
 
 const seedLanguage: LanguageRegistration = {
-  name: 'seed',
+  name: 'wotws',
   scopeName: 'source.wotws',
   patterns: [
     { include: '#comment' },
     { include: '#keyword' },
     { include: '#type' },
-    { include: '#constant' },
-    { include: '#function' },
     { include: '#command' },
     { include: '#annotation' },
+    { include: '#function' },
     { include: '#uberIdentifier' },
     { include: '#number' },
+    { include: '#constant' },
     { include: '#identifier' },
     { include: '#string' },
   ],
   repository: {
-    $self: {},
-    $base: {},
     comment: {
       match: '//[^\\n]*',
       name: 'comment',
@@ -36,30 +34,13 @@ const seedLanguage: LanguageRegistration = {
       ],
     },
     type: {
-      patterns: [
-        {
-          match: '\\b(?:Boolean|Integer|Float|String)\\b',
-          name: 'entity.name.type',
-        },
-        {
-          match: '(?::|->)\\s*(\\w+)',
-          captures: {
-            '1': {
-              name: 'entity.name.type',
-            },
-          },
-        },
-      ],
+      match: '\\b(?:Boolean|Integer|Float|String)\\b',
+      name: 'entity.name.type',
     },
     constant: {
       patterns: [
         {
-          match:
-            '\\b(?:spawn|reload|respawn|binding1|binding2|binding3|binding4|binding5|teleport|progress_message|tick|inkwater_trial_text_request|hollow_trial_text_request|wellspring_trial_text_request|woods_trial_text_request|reach_trial_text_request|depths_trial_text_request|luma_trial_text_request|wastes_trial_text_request)\\b',
-          name: 'variable.other.constant',
-        },
-        {
-          match: '\\w+::\\w*',
+          match: '[A-Z]\\w*',
           name: 'variable.other.enummember',
         },
       ],
@@ -87,7 +68,7 @@ const seedLanguage: LanguageRegistration = {
           name: 'constant.numeric',
         },
         {
-          match: '\\w+\\.\\w+',
+          match: '\\w+(?:\\.\\w+){1,2}',
           name: 'constant.numeric',
         },
       ],
@@ -97,7 +78,7 @@ const seedLanguage: LanguageRegistration = {
       name: 'constant.numeric',
     },
     identifier: {
-      match: '\\w+',
+      match: '[_a-z]\\w*',
       name: 'variable',
     },
     string: {

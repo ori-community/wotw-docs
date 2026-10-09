@@ -4,39 +4,109 @@ title: Seed Language Documentation
 
 Welcome :orihi:
 
-## File Format
+## File Structure
 
-The Seed Language is used for [snippets](https://wiki.orirando.com/seedgen/headers) and [plandomizers](https://wiki.orirando.com/plando). Both are written in .wotws files.
+The Seed Language is used for [snippets](#snippets) and [plandomizers](#plandomizers). Both are written in files ending with `.wotws`.
 
-Snippets only define a part of a seed. Any amount of them can be used during seed generation and locations not assigned anything by snippets will be randomly filled.
+It's currently available in the v5 alpha.
 
-Plandomizers define the entire seed. They have to be compiled by the seed generator, but it won't add any random placements.
+### Snippets
 
-The randomizer ships with a set of [official snippets](https://github.com/ori-community/wotw-seedgen/tree/v5/assets/snippets). This is how for instance goal modes and hints are implemented. You can use them as a baseline if you want to write similar snippets.
+[Snippets](https://wiki.orirando.com/seedgen/headers) act like settings you can enable when generating a seed - Everything in the Seed Generator from **Goals** to **Logic Changes** is a snippet, which gives you an idea of the various things they can do.
 
-### Editor support
+#### Default Snippets
 
-Seedgen will include a language server (subcommand `lsp`) that can provide features such as UberState autocomplete. A [VSCode extension](https://github.com/ori-community/wotw-seedlang-vscode) integrating it is available. Any other editor supporting the language server protocol should be able to use it as well.
+The default snippets are in your randomizer install at `<install>/seedgen/snippets` (online: [snippets](https://github.com/ori-community/wotw-seedgen/tree/v5/assets/snippets)).
 
-### Using custom snippets
+You shouldn't modify the folder, but they include utility snippets like `goal_mode_core` that you may want to depend on for your own custom snippets.
 
-Initially custom snippets will probably work like custom headers do now: In the launcher you have to paste them into a text field, in local seedgen you can use them with the same level of support as official snippets.
+#### Custom Snippets
 
-### Compiling plandomizers
+Custom snippets are in your user data at `<user>/seedgen/snippets`. You can find your user data folder with one of the small icon buttons in the launcher. If the `seedgen/snippets` folder is missing, you can create it yourself.
 
-A compiler will be integrated into the local seedgen. This is already implemented in the [v5 branch](https://github.com/ori-community/wotw-seedgen/tree/v5), see subcommand `plando`.
+Once you add `.wotws` files to this folder, they will appear in the Seed Generator. This is where you would put a custom snippet someone sent you or that you created.
+
+You can try it out by creating `<user>/seedgen/snippets/test.wotws` with the following content:
+
+```seed
+#name("Test")
+on spawn item_message("Test successful!")
+```
+
+Then check if it shows up in the Seed Generator, enable it, generate and see if the message appears on spawn.
+
+### Plandomizers
+
+[Plandomizers](https://wiki.orirando.com/plando) define the entire seed. They have to be compiled by the seed generator, but it won't add any random placements.
+
+#### Playing Plandomizers
+
+If you download a plandomizer, it should be ready to play and you can start it with a double click. As a backup, you can try dragging it onto `<install>/Ori and the Will of the Wisps Randomizer` (or `<install>/Ori and the Will of the Wisps Randomizer.exe` on Windows).
+
+#### Compiling Plandomizers
+
+Before sending your plandomizer to players, you have to compile it into a `.wotwr` file, which can be started with a double click.
+
+The compiler is built into the Seed Generator as a command-line tool. You can run seedgen from the terminal at `<install>/seedgen/wotw-seedgen` (or `<install>/seedgen/wotw-seedgen.exe` on Windows). You may add it to your path for convenience. Then run `wotw-seedgen plando <path>` for a simple compile or `wotw-seedgen plando --help` for more info. (again, `wotw-seedgen.exe` on Windows).
+
+The terminal should then display where you can find the `.wotwr` file if successful, or any errors otherwise.
+
+## Editor support
+
+When writing nontrivial snippets or plandomizers, you should use a code editor with special language features - this will give you advantages like syntax highlighting and inline errors on every save.
+
+The Seed Generator includes an implementation of the Language Server Protocol, which is compatible with many text editors.
+
+### VSCode
+
+If you use [VSCode](https://vscodium.com/), we provide a [language extension](https://github.com/ori-community/wotw-language-extensions). Scroll down in the linked page for instructions.
+
+### Other editors
+
+Installation depends on your editor. At some point you will have to tell it how to start the language server: `<install>/seedgen/wotw-seedgen seed-lsp` (or `<install>/seedgen/wotw-seedgen.exe seed-lsp` on Windows).
+
+Some editors may also recognize the VSCode extension folder structure if you provide them with the root. To do this, you can download the VSCode extension linked above, unpack the `.vsix` (which is really a zip), then point your editor to the `extension` folder containing `package.json`.
 
 ## UberStates
 
 Ori 2 stores its world data in _UberStates_. It's important to understand them because they are referenced throughout the language.
 
+### UberState identifiers
+
 Every UberState has a unique identifier consisting of two numbers. `21786|49485` is the UberState that tracks whether you collected the spirit light orb right of spawn.
 
-Every UberState has a name, although it might not be unique. The name of `21786|49485` is `swampStateGroup.smallExpA`. However another UberState (`21786|52026`) has the same name, so it's impossible to address this specific UberState by its name.
+```seed
+on 21786|49485 item_message("right is right!")
+```
 
-To help with that we use aliases. The alias for `21786|49485` is `MarshSpawn.FirstPickupEX`. By convention, aliases start with capital letters so you can tell them apart from real UberState names.
+Using the identifiers always works, but you may prefer the other methods below for better readability.
 
-All pickup locations have aliases which you can find in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv). Some selected non-pickup world states also have aliases in [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv).
+### UberState names
+
+Every UberState has a name. The name of `21786|49485` is `swampStateGroup.smallExpA`. However, names are not always unique. Here, `21786|52026` (an unused vanilla UberState) is also called `swampStateGroup.smallExpA`. In such cases, attempting to use the name will produce an error. But names are still often useful, especially with UberStates added by the randomizer.
+
+```seed
+on player.maxHealth >= 100 item_message("You look healthy today!")
+```
+
+### UberState aliases
+
+Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_data.csv` (online: [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv)) and `<install>/seedgen/logic/state_data.csv` (online: [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv)). You cannot add custom aliases.
+
+The alias for `21786|49485` is `MarshSpawn.FirstPickupEX`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
+
+```seed
+// Equivalent to the earlier example, but easier to read
+on MarshSpawn.FirstPickupEX item_message("right is right!")
+```
+
+If an UberState has an alias, this usually means logic was written for it. The example below removes the bone wall between spawn and Opher:
+
+```seed
+on spawn store(MarshSpawn.ToOpherBarrier, true)
+```
+
+Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), you can assume seedgen will understand the consequences and adjust logic accordingly.
 
 ## Triggers
 
@@ -2556,7 +2626,7 @@ See [Zones](#zones) for possible values.
 ##### Example
 
 ```seed
-!item_on(marsh_shrine_item, MarshPastOpher.CombatShrine)
+!item_on(marsh_shrine_item, Marsh.Trial.CombatShrine)
 on binding1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
 ```
 

@@ -91,7 +91,7 @@ on player.maxHealth >= 100 item_message("You look healthy today!")
 
 ### UberState aliases
 
-Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_data.csv` (online: [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv)) and `<install>/seedgen/logic/state_data.csv` (online: [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv)). You cannot add custom aliases.
+Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_data.csv` (online: [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv)) and `<install>/seedgen/logic/state_data.csv` (online: [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/state_data.csv)). You cannot add custom aliases.
 
 The alias for `21786|49485` is `Marsh.Spawn.RightSL`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
 
@@ -2255,7 +2255,7 @@ on Ruins.Wisp skill(Launch)
 
 Removing a location prevents it from receiving a random placement.
 
-This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv), since those are the only locations receiving random placements.
+This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv), since those are the only locations receiving random placements.
 
 #### location_slots
 
@@ -2274,7 +2274,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 The slots correspond to the amount of random placements the location will receive, which is usually one.
 
-This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv), since those are the only locations receiving random placements.
+This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv), since those are the only locations receiving random placements.
 
 #### set_logic_state
 
@@ -2284,7 +2284,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 ##### Notes
 
-This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/main/wotw_seedgen/state_data.csv) is reachable from spawn.
+This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/state_data.csv) is reachable from spawn.
 
 This is useful when having to write custom logic for a snippet such as no combat.
 

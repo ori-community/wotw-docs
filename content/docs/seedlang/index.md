@@ -108,6 +108,14 @@ on spawn store(MarshSpawn.ToOpherBarrier, true)
 
 Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), you can assume seedgen will understand the consequences and adjust logic accordingly.
 
+### Finding UberStates
+
+If you need more than the states in `loc_data` and `state_data`, all UberStates are listed in `<install>/seedgen/uber_state_dump.json` (online: [uber_state_dump.json](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/uber_state_dump.json)). If you have [Editor support](#editor-support) set up, you can use autocomplete to search through them as well.
+
+You can also find UberStates using the Pathfinder Helper, which comes installed with the randomizer. It has a wheel item to turn on UberState logging, which will show UberStates changing, for example when breaking a wall. It also writes them to `<user>/logs/client.log` for you to copy, or you can use autocomplete after learning the name.
+
+Some useful groups to know in general are `player` (health, energy, ...), `input` (mouse position, ...), `randomValueGenerator`, `randoState` (various things vanilla does not have UberStates for) and `randoConfig` (toggles for some of rando's many changes).
+
 ## Triggers
 
 `on <trigger> <action>`

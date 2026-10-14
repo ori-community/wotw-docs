@@ -882,6 +882,8 @@ on binding1 {
 
 Free messages will not interact with other messages in any way. They can appear on top of other messages and on top of eachother. It's your responsibility to control their position. They won't disappear by themselves, you have to set their timeout or destroy them manually.
 
+Free messages are stored in the savefile, so you don't have to worry about your setup breaking if the player dies or reloads.
+
 This function immediately shows the message. If you want to start with an empty, hidden message, use [free_message_uninitialized](#free_message_uninitialized).
 
 #### free_message_uninitialized
@@ -1396,12 +1398,14 @@ You can customize the prices, texts and icons in shops.
 
 If you don't manually specify anything, seedgen will do its best to insert reasonable defaults for you.
 
+Shop data is stored in the savefile, so you don't have to recreate it on reload.
+
 #### Example
 
 ```wotws
 on Twillen.Shop.Slot1 shard(Secret)
 
-on reload set_shop_item_data(
+on spawn set_shop_item_data(
     Twillen.Shop.Slot1,
     1000,
     shard_string(Secret),
@@ -1467,6 +1471,8 @@ set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 You can detect when Ori enters or leaves places in the world using position triggers.
 
 They are generally recommended over using `player.positionX` / `player.positionY`. If you want to detect the current zone as a whole, you can use `player.currentArea`.
+
+Position triggers are **not** stored in the savefile, so you should always create them `on reload` to ensure they don't disappear when the player reloads.
 
 #### position_trigger_rectangle
 
@@ -1557,6 +1563,8 @@ You can customize the randomizer wheel, which is bound by default to V on keyboa
 It looks like the weapon wheel: A ring with 12 selectable items. Each item can have up to three different actions, bound to the three equipment keys.
 
 The `OpenRandoWheel` bind initially opens the `"root"` wheel, which has a default item at `TopLeft` for all the builtin randomizer actions. Any other items in the root wheel you might be familiar with come from snippets, most notably `progress_helper`.
+
+Wheel items are **not** stored in the savefile, so you should always create them `on reload` to ensure they don't disappear when the player reloads.
 
 #### Example
 
@@ -1703,6 +1711,8 @@ clear_all_wheels()
 ### Warp Icons
 
 You can create teleporter icons anywhere on the map that the player can warp to.
+
+Warp Icons are stored in the savefile, so you don't have to recreate them on reload.
 
 #### create_warp_icon
 

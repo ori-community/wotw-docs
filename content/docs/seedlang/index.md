@@ -91,9 +91,9 @@ on player.maxHealth >= 100 item_message("You look healthy today!")
 
 ### UberState aliases
 
-Some UberStates have aliases, which are defined in `<install>/seedgen/logic/loc_data.csv` (online: [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv)) and `<install>/seedgen/logic/state_data.csv` (online: [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/state_data.csv)). You cannot add custom aliases.
+Some UberStates have aliases, which are defined in `<install>/seedgen/logic/pickups.csv` (online: [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv)) and `<install>/seedgen/logic/states.csv` (online: [states.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/states.csv)). You cannot add custom aliases.
 
-The alias for `21786|49485` is `Marsh.Spawn.RightSL`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
+The pickup location `Marsh.Spawn.RightSL` is an alias for `21786|49485`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
 
 ```wotws
 // Equivalent to the earlier example, but easier to read
@@ -108,9 +108,22 @@ on spawn store(MarshSpawn.ToOpherBarrier, true)
 
 Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), you can assume seedgen will understand the consequences and adjust logic accordingly.
 
+Some aliases stand for a comparison, for instance `Reach.HandToHand.Soup` stands for `14019|26318 >= 4`.
+
+```wotws
+on Reach.HandToHand.Soup item_message("You have done well")
+on gameStateGroup.gameFinished if Reach.HandToHand.Soup == false item_message("You won... but at what cost?")
+
+// You cannot do this
+// on binding1 store(Reach.HandToHand.Soup, true)
+
+// You can do this, but keep in mind that it will set the quest to this step, which can skip earlier steps or erase later ones.
+on binding1 store(questUberStateGroup.tradeSequenceQuest, 4)
+```
+
 ### Finding UberStates
 
-If you need more than the states in `loc_data` and `state_data`, all UberStates are listed in `<install>/seedgen/uber_state_dump.json` (online: [uber_state_dump.json](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/uber_state_dump.json)). If you have [Editor support](#editor-support) set up, you can use autocomplete to search through them as well.
+If you need more than the states in `pickups` and `states`, all UberStates are listed in `<install>/seedgen/uber_state_dump.json` (online: [uber_state_dump.json](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/uber_state_dump.json)). If you have [Editor support](#editor-support) set up, you can use autocomplete to search through them as well.
 
 You can also find UberStates using the Pathfinder Helper, which comes installed with the randomizer. It has a wheel item to turn on UberState logging, which will show UberStates changing, for example when breaking a wall. It also writes them to `<user>/logs/client.log` for you to copy, or you can use autocomplete after learning the name.
 
@@ -2273,7 +2286,7 @@ on Ruins.Wisp skill(Launch)
 
 Removing a location prevents it from receiving a random placement.
 
-This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv), since those are the only locations receiving random placements.
+This only has an effect on the locations listed in [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv), since those are the only locations receiving random placements.
 
 #### location_slots
 
@@ -2292,7 +2305,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 The slots correspond to the amount of random placements the location will receive, which is usually one.
 
-This only has an effect on the locations listed in [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv), since those are the only locations receiving random placements.
+This only has an effect on the locations listed in [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv), since those are the only locations receiving random placements.
 
 #### set_logic_state
 
@@ -2302,7 +2315,7 @@ This only has an effect on the locations listed in [loc_data.csv](https://github
 
 ##### Notes
 
-This can manually tell logic that a state from [loc_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/loc_data.csv) or [state_data.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/state_data.csv) is reachable from spawn.
+This can manually tell logic that a state from [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv) or [states.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/states.csv) is reachable from spawn.
 
 This is useful when having to write custom logic for a snippet such as no combat.
 

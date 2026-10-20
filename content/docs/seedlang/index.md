@@ -4,27 +4,23 @@ title: Seed Language Documentation
 
 Welcome :orihi:
 
-## File Structure
+## Basics
 
-The Seed Language is used for [snippets](#snippets) and [plandomizers](#plandomizers). Both are written in files ending with `.wotws`.
+The Seed Language is used for [snippets](#snippets) and [plandomizers](#plandomizers).
 
-It's currently available in the v5 alpha.
+It's currently available in the v5 beta.
 
-### Snippets
+### Install folder
 
-[Snippets](https://wiki.orirando.com/seedgen/headers) act like settings you can enable when generating a seed - Everything in the Seed Generator from **Goals** to **Logic Changes** is a snippet, which gives you an idea of the various things they can do.
+The randomizer installs a set of default snippets at `<install>/seedgen/snippets` (online: [snippets](https://github.com/ori-community/wotw-seedgen/tree/v5/assets/snippets)) and default plandomizers at `<install>/seedgen/plandos`. `<install>` is where you installed the randomizer.
 
-#### Default Snippets
+You shouldn't modify these folders, but they include utility snippets like `goal_mode_core` that you may need to reference when creating your own custom snippets.
 
-The default snippets are in your randomizer install at `<install>/seedgen/snippets` (online: [snippets](https://github.com/ori-community/wotw-seedgen/tree/v5/assets/snippets)).
+### User folder
 
-You shouldn't modify the folder, but they include utility snippets like `goal_mode_core` that you may want to depend on for your own custom snippets.
+You can add custom snippets at `<user>/seedgen/snippets` and custom plandomizers at `<user>/seedgen/plandos`. You can find the `<user>` folder with one of the small icon buttons in the launcher.
 
-#### Custom Snippets
-
-Custom snippets are in your user data at `<user>/seedgen/snippets`. You can find your user data folder with one of the small icon buttons in the launcher. If the `seedgen/snippets` folder is missing, you can create it yourself.
-
-Once you add `.wotws` files to this folder, they will appear in the Seed Generator. This is where you would put a custom snippet someone sent you or that you created.
+This is where you would add any snippets and plandomizers you created or have received from other players. If the `seedgen/snippets` or `seedgen/plandos` folder is missing, you can create it yourself.
 
 You can try it out by creating `<user>/seedgen/snippets/test.wotws` with the following content:
 
@@ -33,29 +29,55 @@ You can try it out by creating `<user>/seedgen/snippets/test.wotws` with the fol
 on spawn item_message("Test successful!")
 ```
 
-Then check if it shows up in the Seed Generator, enable it, generate and see if the message appears on spawn.
+It should show up in the seed generator. Enable it, generate and see if the message appears on spawn.
+
+### Snippets
+
+Snippets act like settings you can enable when generating a seed - Everything in the seed generator from **Goals** to **Logic Changes** is a snippet, which gives you an idea of the various things they can do.
+
+If you add `.wotws` files to `<user>/seedgen/snippets`, they should appear in the seed generator and have a special icon to show that they are user snippets:
+
+![seed generator with custom snippets](/images/customsnippets.png)
 
 ### Plandomizers
 
-[Plandomizers](https://wiki.orirando.com/plando) define the entire seed. They have to be compiled by the seed generator, but it won't add any random placements.
+Plandomizers define the entire seed. It's a portmanteau of _planned_ and _randomizer_!
 
 #### Playing Plandomizers
 
-If you download a plandomizer, it should be ready to play and you can start it with a double click. As a backup, you can try dragging it onto `<install>/Ori and the Will of the Wisps Randomizer` (or `<install>/Ori and the Will of the Wisps Randomizer.exe` on Windows).
+If you download a plandomizer, it should already be compiled and ready to play, which you can recognize from the `.wotwr` extension.
 
-#### Compiling Plandomizers
+You can add it to `<user>/seedgen/plandos` and it should appear in the Plandomizers tab of the launcher. If you have the file extension configured, you can also start `.wotwr` files directly with a double click, but having them in the expected directory may be useful when wanting to update the plandomizer.
 
-Before sending your plandomizer to players, you have to compile it into a `.wotwr` file, which can be started with a double click.
+![plando tab with custom plando](/images/customplando.png)
 
-The compiler is built into the Seed Generator as a command-line tool. You can run seedgen from the terminal at `<install>/seedgen/wotw-seedgen` (or `<install>/seedgen/wotw-seedgen.exe` on Windows). You may add it to your path for convenience. Then run `wotw-seedgen plando <path>` for a simple compile or `wotw-seedgen plando --help` for more info. (again, `wotw-seedgen.exe` on Windows).
+#### Creating Plandomizers
 
-The terminal should then display where you can find the `.wotwr` file if successful, or any errors otherwise.
+When creating your own plandomizer, you will first write it into one or more `.wotws` files - those can be whereever you want.
+
+Before playing it or sending it to other players, you have to compile it into a playable `.wotwr` file.
+
+This currently requires the command-line seed generator at `<install>/seedgen/wotw-seedgen` (or `<install>/seedgen/wotw-seedgen.exe` on Windows). You may add it to your path for convenience. Then run `wotw-seedgen plando <path>` for a simple compile or `wotw-seedgen plando --help` for more info. (again, `wotw-seedgen.exe` on Windows).
+
+By default, the finished `.wotwr` file should be written directly into `<user>/seedgen/plandos`.
+
+An example workflow could be:
+
+1. `wotw-seedgen plando <path> -w -l` (or `--ngss` instead of `-l` if the file extension is not configured)
+2. Start a savefile for testing if it doesn't exist already
+3. Make changes in your plandomizer source
+4. Reload Seed in-game (default bind: F5)
+5. Repeat 3. and 4.
+
+Keep in mind that `on spawn` will not trigger if you Reload Seed on an already started savefile. If you want to add new `on spawn` triggers without starting a new savefile, you can add a temporary `on reload` which will trigger from Reload Seed.
+
+Important note: `seed_core` is a snippet that sets up many randomizer essentials such as enabling fast travel. It's always included in generated seeds, but in your plando you need to explicitely `!include("seed_core")`. You should almost always do this!
 
 ## Editor support
 
 When writing nontrivial snippets or plandomizers, you should use a code editor with special language features - this will give you advantages like syntax highlighting and inline errors on every save.
 
-The Seed Generator includes an implementation of the Language Server Protocol, which is compatible with many text editors.
+The seed generator includes an implementation of the Language Server Protocol, which is compatible with many code editors.
 
 ### VSCode
 
@@ -93,20 +115,20 @@ on player.maxHealth >= 100 item_message("You look healthy today!")
 
 Some UberStates have aliases, which are defined in `<install>/seedgen/logic/pickups.csv` (online: [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv)) and `<install>/seedgen/logic/states.csv` (online: [states.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/states.csv)). You cannot add custom aliases.
 
-The pickup location `Marsh.Spawn.RightSL` is an alias for `21786|49485`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
+The pickup location `Marsh.Spawn.FirstSL` is an alias for `21786|49485`. By convention, aliases start with capital letters so you can tell them apart from "normal" UberState names.
 
 ```wotws
 // Equivalent to the earlier example, but easier to read
-on Marsh.Spawn.RightSL item_message("right is right!")
+on Marsh.Spawn.FirstSL item_message("right is right!")
 ```
 
 If an UberState has an alias, this usually means logic was written for it. The example below removes the bone wall between spawn and Opher:
 
 ```wotws
-on spawn store(MarshSpawn.ToOpherBarrier, true)
+on spawn store(Marsh.CollapsingLog.OpherWall, true)
 ```
 
-Since `MarshSpawn.ToOpherBarrier` is an alias (starts with a capital letter), you can assume seedgen will understand the consequences and adjust logic accordingly.
+Since `Marsh.CollapsingLog.OpherWall` is an alias (starts with a capital letter), you can assume seedgen will understand the consequences and adjust logic accordingly.
 
 Some aliases stand for a comparison, for instance `Reach.HandToHand.Soup` stands for `14019|26318 >= 4`.
 
@@ -121,13 +143,15 @@ on gameStateGroup.gameFinished if Reach.HandToHand.Soup == false item_message("Y
 on binding1 store(questUberStateGroup.tradeSequenceQuest, 4)
 ```
 
+We're still in the process of figuring out how we should call all the aliases, so feedback is welcome!
+
 ### Finding UberStates
 
 If you need more than the states in `pickups` and `states`, all UberStates are listed in `<install>/seedgen/uber_state_dump.json` (online: [uber_state_dump.json](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/uber_state_dump.json)). If you have [Editor support](#editor-support) set up, you can use autocomplete to search through them as well.
 
 You can also find UberStates using the Pathfinder Helper, which comes installed with the randomizer. It has a wheel item to turn on UberState logging, which will show UberStates changing, for example when breaking a wall. It also writes them to `<user>/logs/client.log` for you to copy, or you can use autocomplete after learning the name.
 
-Some useful groups to know in general are `player` (health, energy, ...), `input` (mouse position, ...), `randomValueGenerator`, `randoState` (various things vanilla does not have UberStates for) and `randoConfig` (toggles for some of rando's many changes).
+Some useful groups to know in general are `player` (health, energy, mouse position, ...), `modifications` (rando modifications to vanilla behaviours) and `rng` (random number generator).
 
 ## Triggers
 
@@ -137,7 +161,7 @@ Some useful groups to know in general are `player` (health, energy, ...), `input
 
 ```wotws
 // When collecting the item right of spawn, the player will get 50 Spirit Light.
-on Marsh.Spawn.RightSL spirit_light(50)
+on Marsh.Spawn.FirstSL spirit_light(50)
 ```
 
 ##### Notes
@@ -202,7 +226,7 @@ on change player.gorlekOre item_message("I love ore and now I have " + player.go
 
 ```wotws
 // When collecting the item right of spawn, the player will get a gorlek ore.
-on Marsh.Spawn.RightSL gorlek_ore()
+on Marsh.Spawn.FirstSL gorlek_ore()
 ```
 
 ```wotws
@@ -214,7 +238,7 @@ on player.spiritLight > 4000 item_message("You're rich!")
 
 Conditions trigger when their value changes from `false` to `true`.
 
-For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on Marsh.Spawn.RightSL || Marsh.Spawn.LeftHF` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on Marsh.Spawn.RightSL && Marsh.Spawn.LeftHF` will only trigger once the player collected both pickups.
+For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on Marsh.Spawn.FirstSL || Marsh.Spawn.LeftHF` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on Marsh.Spawn.FirstSL && Marsh.Spawn.LeftHF` will only trigger once the player collected both pickups.
 
 ## Actions
 
@@ -431,7 +455,7 @@ teleporter(teleporter: Teleporter)
 on binding1 teleporter(Shriek)
 // Equivalent to:
 on binding1 {
-    store(WillowsEnd.ShriekTeleporterActive, true)
+    store(Willow.Shriek.Teleporter, true)
     item_message(teleporter_string(Shriek))
 }
 ```
@@ -452,7 +476,7 @@ clean_water()
 on binding1 clean_water()
 // Equivalent to:
 on binding1 {
-    store(randoState.cleanWater, true)
+    store(worldEvents.cleanWater, true)
     item_message(clean_water_string())
 }
 ```
@@ -637,7 +661,7 @@ on binding1 remove_teleporter(Shriek)
 // Equivalent to:
 on binding1 {
     store(mapSegments.segment146432, false)
-    store(WillowsEnd.ShriekTeleporterActive, false)
+    store(Willow.Shriek.Teleporter, false)
     item_message(remove_teleporter_string(Shriek))
 }
 ```
@@ -658,7 +682,7 @@ remove_clean_water()
 on binding1 remove_clean_water()
 // Equivalent to:
 on binding1 {
-    store(randoState.cleanWater, false)
+    store(worldEvents.cleanWater, false)
     item_message(remove_clean_water_string())
 }
 ```
@@ -912,7 +936,7 @@ on spawn {
     free_message_uninitialized("mouse_pos")
     free_message_show("mouse_pos", false, false) // No fade or sound effect
 }
-on tick set_message_text("mouse_pos", input.mouseWorldPositionX + ", " + input.mouseWorldPositionY)
+on tick set_message_text("mouse_pos", player.mouseWorldPositionX + ", " + player.mouseWorldPositionY)
 ```
 
 ##### Notes
@@ -1326,7 +1350,7 @@ store_without_triggers(uber_identifier: UberIdentifier, value: Float)
 ##### Example
 
 ```wotws
-on spawn store_without_triggers(Marsh.Spawn.RightSL, true) // This will make the pickup disappear but not grant the reward
+on spawn store_without_triggers(Marsh.Spawn.FirstSL, true) // This will make the pickup disappear but not grant the reward
 ```
 
 ##### Notes
@@ -1483,7 +1507,7 @@ set_shop_item_locked(uber_identifier: UberIdentifier, locked: Boolean)
 
 You can detect when Ori enters or leaves places in the world using position triggers.
 
-They are generally recommended over using `player.positionX` / `player.positionY`. If you want to detect the current zone as a whole, you can use `player.currentArea`.
+They are generally recommended over using `player.positionX` / `player.positionY`. If you want to detect the current area as a whole, you can use `player.area`.
 
 Position triggers are **not** stored in the savefile, so you should always create them `on reload` to ensure they don't disappear when the player reloads.
 
@@ -1784,10 +1808,10 @@ to_string(string: String) -> String
 
 Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
 
-#### current_zone
+#### current_area
 
 ```wotws
-current_zone() -> Zone
+current_area() -> Area
 ```
 
 #### save
@@ -1961,7 +1985,7 @@ fun exciting_gorlek_ore() {
     gorlek_ore()
 }
 // Now you can reuse the function to avoid repetition.
-on Marsh.Spawn.RightSL exciting_gorlek_ore()
+on Marsh.Spawn.FirstSL exciting_gorlek_ore()
 on Marsh.Spawn.LeftHF exciting_gorlek_ore()
 ```
 
@@ -2322,7 +2346,7 @@ This is useful when having to write custom logic for a snippet such as no combat
 #### preplace
 
 ```wotws
-!preplace(<action>, <zone>)
+!preplace(<action>, <area>)
 ```
 
 ##### Example
@@ -2334,9 +2358,9 @@ This is useful when having to write custom logic for a snippet such as no combat
 
 ##### Notes
 
-Preplacements happen before any logic, they are placed in a random location of the specified zone which is not already occupied by other preplacements.
+Preplacements happen before any logic, they are placed in a random location of the specified area which is not already occupied by other preplacements.
 
-See [Zones](#zones) for possible values.
+See [Areas](#areas) for possible values.
 
 ### Snippet Settings
 
@@ -2631,22 +2655,22 @@ Using `random_from_pool` will remove one random value from the pool created with
 
 These are very specialized commands to support our hint systems.
 
-#### zone_of
+#### area_of
 
 ```wotws
-!zone_of(<identifier>, <action>)
+!area_of(<identifier>, <action>)
 ```
 
 ##### Example
 
 ```wotws
-!zone_of(burrow_zone, skill(Burrow))
-on binding1 item_message("Burrow: " + burrow_zone)
+!area_of(burrow_area, skill(Burrow))
+on binding1 item_message("Burrow: " + burrow_area)
 ```
 
 ##### Notes
 
-See [Zones](#zones) for possible values.
+See [Areas](#areas) for possible values.
 
 #### item_on
 
@@ -2661,16 +2685,16 @@ See [Zones](#zones) for possible values.
 on binding1 item_message("Complete the Marsh Combat Shrine to gain\n" + marsh_shrine_item)
 ```
 
-#### count_in_zone
+#### count_in_area
 
 ```wotws
-!count_in_zone([ (<identifier>, <zone>),... ], [ <action>... ])
+!count_in_area([ (<identifier>, <area>),... ], [ <action>... ])
 ```
 
 ##### Example
 
 ```wotws
-!count_in_zone(
+!count_in_area(
     [
         (weapons_in_marsh, Marsh),
         (weapons_in_hollow, Hollow),
@@ -2695,7 +2719,7 @@ on binding3 item_message("Glades Weapons - " + weapons_in_glades)
 
 ##### Notes
 
-See [Zones](#zones) for possible values.
+See [Areas](#areas) for possible values.
 
 ## Annotations
 
@@ -2859,7 +2883,7 @@ ChargeBlaze
 RapidSentry
 ```
 
-### Zones
+### Areas
 
 ```wotws
 Marsh

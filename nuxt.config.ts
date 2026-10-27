@@ -8,7 +8,7 @@ export default defineNuxtConfig({
   },
   nitro: {
     prerender: {
-      routes: ['/docs/seedlang'],
+      routes: ['/docs/seedlang', '/docs/quest-states'],
     },
   },
   modules: [

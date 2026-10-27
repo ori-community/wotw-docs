@@ -11,6 +11,7 @@
     "@fontsource/nunito-sans": "^5.0.13",
     "@nuxt/content": "^2.12.1",
     "nuxt": "^3.11.2",
+    "remark-heading-id": "^1.0.1",
     "remark-orimoji": "file:./remark/orimoji"
   },
   "devDependencies": {

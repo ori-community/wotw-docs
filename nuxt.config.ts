@@ -37,6 +37,7 @@ export default defineNuxtConfig({
       },
       remarkPlugins: {
         'remark-orimoji': {},
+        'remark-heading-id': {},
       },
     },
     highlight: { langs: [seedLanguage], theme: 'dark-plus' },

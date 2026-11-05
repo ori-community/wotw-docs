@@ -2246,6 +2246,7 @@ Changes to random placements are only relevant for snippets used in seed generat
 #### add_item
 
 ```wotws
+!add_item(<action>)
 !add_item(<action>, <amount>)
 ```
 
@@ -2253,12 +2254,15 @@ Changes to random placements are only relevant for snippets used in seed generat
 
 ```wotws
 // Add a second Burrow to the item pool
-!add_item(skill(Burrow), 1)
+!add_item(skill(Burrow))
+// Add 4 more Blaze to the item pool
+!add_item(skill(Blaze), 4)
 ```
 
 #### remove_item
 
 ```wotws
+!remove_item(<action>)
 !remove_item(<action>, <amount>)
 ```
 
@@ -2266,7 +2270,7 @@ Changes to random placements are only relevant for snippets used in seed generat
 
 ```wotws
 // This is what the No Launch snippet does
-!remove_item(skill(Launch), 1)
+!remove_item(skill(Launch))
 ```
 
 #### add_spirit_light
@@ -2346,6 +2350,7 @@ This is useful when having to write custom logic for a snippet such as no combat
 #### preplace
 
 ```wotws
+!preplace(<action>)
 !preplace(<action>, <area>)
 ```
 
@@ -2358,7 +2363,9 @@ This is useful when having to write custom logic for a snippet such as no combat
 
 ##### Notes
 
-Preplacements happen before any logic, they are placed in a random location of the specified area which is not already occupied by other preplacements.
+Preplacements happen before any logic, they are placed in a random location which is not already occupied by other preplacements.
+
+If you specify an area, the random location will be chosen in that area.
 
 See [Areas](#areas) for possible values.
 

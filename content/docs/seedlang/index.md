@@ -108,7 +108,7 @@ Using the identifiers always works, but you may prefer the other methods below f
 Every UberState has a name. The name of `21786|49485` is `swampStateGroup.smallExpA`. However, names are not always unique. Here, `21786|52026` (an unused vanilla UberState) is also called `swampStateGroup.smallExpA`. In such cases, attempting to use the name will produce an error. But names are still often useful, especially with UberStates added by the randomizer.
 
 ```wotws
-on player.maxHealth >= 100 item_message("You look healthy today!")
+on player.maxLife >= 100 item_message("You look healthy today!")
 ```
 
 ### UberState aliases
@@ -151,7 +151,7 @@ If you need more than the states in `pickups` and `states`, all UberStates are l
 
 You can also find UberStates using the Pathfinder Helper, which comes installed with the randomizer. It has a wheel item to turn on UberState logging, which will show UberStates changing, for example when breaking a wall. It also writes them to `<user>/logs/client.log` for you to copy, or you can use autocomplete after learning the name.
 
-Some useful groups to know in general are `player` (health, energy, mouse position, ...), `modifications` (rando modifications to vanilla behaviours) and `rng` (random number generator).
+Some useful groups to know in general are `player` (life, energy, mouse position, ...), `modifications` (rando modifications to vanilla behaviours) and `rng` (random number generator).
 
 ## Triggers
 
@@ -365,21 +365,21 @@ on binding1 {
 }
 ```
 
-#### health_fragment
+#### life_fragment
 
 ```wotws
-health_fragment()
+life_fragment()
 ```
 
 ##### Example
 
 ```wotws
-on binding1 health_fragment()
+on binding1 life_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.baseMaxHealth, player.baseMaxHealth + 5)
-    store(player.health, player.maxHealth)
-    item_message(health_fragment_string())
+    store(player.baseMaxLife, player.baseMaxLife + 5)
+    store(player.life, player.maxLife)
+    item_message(life_fragment_string())
 }
 ```
 
@@ -572,20 +572,20 @@ on binding1 {
 }
 ```
 
-#### remove_health_fragment
+#### remove_life_fragment
 
 ```wotws
-remove_health_fragment()
+remove_life_fragment()
 ```
 
 ##### Example
 
 ```wotws
-on binding1 remove_health_fragment()
+on binding1 remove_life_fragment()
 // Equivalent to:
 on binding1 {
-    store(player.baseMaxHealth, player.baseMaxHealth - 5)
-    item_message(remove_health_fragment_string())
+    store(player.baseMaxLife, player.baseMaxLife - 5)
+    item_message(remove_life_fragment_string())
 }
 ```
 
@@ -1151,10 +1151,10 @@ keystone_string() -> String
 shard_slot_string() -> String
 ```
 
-#### health_fragment_string
+#### life_fragment_string
 
 ```wotws
-health_fragment_string() -> String
+life_fragment_string() -> String
 ```
 
 #### energy_fragment_string
@@ -1235,10 +1235,10 @@ remove_keystone_string() -> String
 remove_shard_slot_string() -> String
 ```
 
-#### remove_health_fragment_string
+#### remove_life_fragment_string
 
 ```wotws
-remove_health_fragment_string() -> String
+remove_life_fragment_string() -> String
 ```
 
 #### remove_energy_fragment_string
@@ -1332,7 +1332,7 @@ store(uber_identifier: UberIdentifier, value: Float)
 ##### Example
 
 ```wotws
-on binding1 store(player.health, -1) // Setting health to a negative value kills the player
+on binding1 store(player.life, -1) // Setting life to a negative value kills the player
 ```
 
 ##### Notes
@@ -3031,7 +3031,7 @@ FastTravel
 
 // Lupo shop icons
 EnergyFragmentsMap
-HealthFragmentsMap
+LifeFragmentsMap
 ShardsMap
 
 // Grom building icons
@@ -3066,7 +3066,7 @@ EnergyGateOpen
 KeystoneDoorFour
 KeystoneDoorOpen
 AbilityPedestal
-HealthUpgrade
+LifeUpgrade
 EnergyUpgrade
 SavePedestal
 AbilityPoint
@@ -3088,7 +3088,7 @@ Ore
 QuestStart
 QuestEnd
 RaceStart
-HealthFragment
+LifeFragment
 EnergyFragment
 Seed
 RaceEnd

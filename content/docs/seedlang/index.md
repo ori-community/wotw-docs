@@ -1808,10 +1808,10 @@ to_string(string: String) -> String
 
 Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
 
-#### current_area
+#### player_area
 
 ```wotws
-current_area() -> Area
+player_area() -> Area
 ```
 
 #### save

@@ -1968,6 +1968,18 @@ close_weapon_wheel()
 
 Forcefully closes the weapon wheel if it is currently open.
 
+#### deal_enemy_damage
+
+```wotws
+deal_enemy_damage(amount: Float)
+```
+
+#### force_deal_enemy_damage
+
+```wotws
+force_deal_enemy_damage(amount: Float)
+```
+
 #### debug_log
 
 ```wotws

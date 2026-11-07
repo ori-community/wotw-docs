@@ -1814,6 +1814,12 @@ Often you don't have to use `to_string` explicitely since it's inferred when you
 player_area() -> Area
 ```
 
+#### map_focused_area
+
+```wotws
+map_focused_area() -> Area
+```
+
 #### save
 
 ```wotws

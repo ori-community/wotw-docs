@@ -1808,6 +1808,18 @@ to_string(string: String) -> String
 
 Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
 
+#### string_length
+
+```wotws
+string_length(string: String) -> Integer
+```
+
+#### string_contains
+
+```wotws
+string_contains(haystack: String, needle: String) -> Boolean
+```
+
 #### player_area
 
 ```wotws

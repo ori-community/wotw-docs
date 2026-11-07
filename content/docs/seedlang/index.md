@@ -1739,10 +1739,10 @@ switch_wheel(wheel: String)
 set_wheel_pinned(wheel: String, pinned: Boolean)
 ```
 
-#### clear_all_wheels
+#### reset_all_wheels
 
 ```wotws
-clear_all_wheels()
+reset_all_wheels()
 ```
 
 ### Warp Icons

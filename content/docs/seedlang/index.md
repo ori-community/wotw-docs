@@ -2296,37 +2296,35 @@ Changes to random placements are only relevant for snippets used in seed generat
 
 The spirit light placement generator is not made for very small amounts of spirit light, you can't for instance remove all the spirit light.
 
-#### remove_location
+#### no_random_placement
 
 ```wotws
-!remove_location(<name>)
+!no_random_placement(<name>)
 ```
 
 ##### Example
 
 ```wotws
 on Ruins.Wisp skill(Launch)
-// Remove the location to avoid another random item being placed.
-!remove_location(Ruins.Wisp)
+// Prevent another random item being placed.
+!no_random_placement(Ruins.Wisp)
 ```
 
 ##### Notes
 
-Removing a location prevents it from receiving a random placement.
-
 This only has an effect on the locations listed in [pickups.csv](https://github.com/ori-community/wotw-seedgen/blob/v5/assets/logic/pickups.csv), since those are the only locations receiving random placements.
 
-#### location_slots
+#### random_placement_slots
 
 ```wotws
-!location_slots(<name>, <slots>)
+!random_placement_slots(<name>, <slots>)
 ```
 
 ##### Example
 
 ```wotws
 // Place three items on Seir to make the location more rewarding.
-!location_slots(Ruins.Wisp, 3)
+!random_placement_slots(Ruins.Wisp, 3)
 ```
 
 ##### Notes

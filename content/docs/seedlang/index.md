@@ -238,7 +238,7 @@ on player.spiritLight > 4000 item_message("You're rich!")
 
 Conditions trigger when their value changes from `false` to `true`.
 
-For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on Marsh.Spawn.FirstSL || Marsh.Spawn.LeftHF` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on Marsh.Spawn.FirstSL && Marsh.Spawn.LeftHF` will only trigger once the player collected both pickups.
+For example, `on player.spiritLight > 4000` will trigger when the spirit light changes from 4000 to 4100, but it won't trigger again if it then changes from 4100 to 4150. If the player loses spirit light, dropping to 4000 or less and then goes above 4000 a second time, it will trigger again. `on Marsh.Spawn.FirstSL || Marsh.Spawn.LeftLF` will trigger when the player collects the first of these two pickups, but not again when they collect the other. `on Marsh.Spawn.FirstSL && Marsh.Spawn.LeftLF` will only trigger once the player collected both pickups.
 
 ## Actions
 
@@ -257,7 +257,7 @@ There are three different types of actions:
 ##### Example
 
 ```wotws
-on Marsh.Spawn.LeftHF {
+on Marsh.Spawn.LeftLF {
     spirit_light(1)
     item_message("That's why you go team right...")
 }
@@ -286,7 +286,7 @@ on change player.spiritLight {
 ```wotws
 // This function is called "item_message_with_timeout" and has two arguments:
 // The message and the timeout until it disappears in seconds.
-on Marsh.Spawn.LeftHF item_message_with_timeout("The emptyness haunts you...", 60)
+on Marsh.Spawn.LeftLF item_message_with_timeout("The emptyness haunts you...", 60)
 ```
 
 ##### Notes
@@ -2016,7 +2016,7 @@ fun exciting_gorlek_ore() {
 }
 // Now you can reuse the function to avoid repetition.
 on Marsh.Spawn.FirstSL exciting_gorlek_ore()
-on Marsh.Spawn.LeftHF exciting_gorlek_ore()
+on Marsh.Spawn.LeftLF exciting_gorlek_ore()
 ```
 
 ##### Notes

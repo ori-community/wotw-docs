@@ -71,7 +71,7 @@ An example workflow could be:
 
 Keep in mind that `on spawn` will not trigger if you Reload Seed on an already started savefile. If you want to add new `on spawn` triggers without starting a new savefile, you can add a temporary `on reload` which will trigger from Reload Seed.
 
-Important note: `seed_core` is a snippet that sets up many randomizer essentials such as enabling fast travel. It's always included in generated seeds, but in your plando you need to explicitely `!include("seed_core")`. You should almost always do this!
+Important note: `seed_core` is a snippet that sets up many randomizer essentials such as enabling fast travel. It's always included in generated seeds, but in your plando you need to explicitly `!include("seed_core")`. You should almost always do this!
 
 ## Editor support
 
@@ -1319,7 +1319,7 @@ on binding1 item_message("Gorlek Ore: " + player.gorlekOre)
 
 ##### Notes
 
-Often you don't have to use `fetch` explicitely since it's inferred when you use an UberState identifier. The type of the return value depends on the type of the UberState.
+Often you don't have to use `fetch` explicitly since it's inferred when you use an UberState identifier. The type of the return value depends on the type of the UberState.
 
 #### store
 
@@ -1783,7 +1783,7 @@ to_integer(float: Float) -> Integer
 
 ##### Notes
 
-Often you don't have to use `to_integer` explicitely since it's inferred when you need an integer.
+Often you don't have to use `to_integer` explicitly since it's inferred when you need an integer.
 
 #### to_float
 
@@ -1793,7 +1793,7 @@ to_float(integer: Integer) -> Float
 
 ##### Notes
 
-Often you don't have to use `to_float` explicitely since it's inferred when you need a float.
+Often you don't have to use `to_float` explicitly since it's inferred when you need a float.
 
 #### to_string
 
@@ -1806,7 +1806,7 @@ to_string(string: String) -> String
 
 ##### Notes
 
-Often you don't have to use `to_string` explicitely since it's inferred when you need a string.
+Often you don't have to use `to_string` explicitly since it's inferred when you need a string.
 
 #### string_length
 
